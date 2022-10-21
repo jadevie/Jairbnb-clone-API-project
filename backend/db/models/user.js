@@ -37,11 +37,13 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     // Define a static method signup to return the created user using the currentUser scope.
-    static async signup({ username, email, password }) {
+    static async signup({ firstName, lastName, username, email, password }) {
       // Hash the password using the bcryptjs package's hashSync method
       const hashedPassword = bcrypt.hashSync(password);
       // Create a User with the username, email, and hashedPassword
       const user = await User.create({
+        firstName,
+        lastName,
         username,
         email,
         hashedPassword
@@ -54,6 +56,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
