@@ -27,15 +27,16 @@ router.post('/', validateLogin, async (req, res, next) => {
     if (!user) {
         const err = new Error('Login failed');
         err.status = 401;
-        err.title = 'Login failed';
-        err.errors = ['The provided credentials were invalid.'];
+        // err.title = 'Login failed';
+        err.message = 'Invalid credentials';
         return next(err);
     }
 
     //  If there is a user returned from the login static method, call setTokenCookie and return a JSON response with the user information.
     await setTokenCookie(res, user);
-
-    return res.json({ user });
+    let user1 = user.toJSON();
+    user1.token = "";
+    return res.json({ ...user1 });
 });
 
 // Log out
@@ -48,9 +49,8 @@ router.delete('/', (_req, res) => {
 router.get('/', restoreUser, (req, res) => {
     const { user } = req;
     if (user) {
-        return res.json({
-            user: user.toSafeObject()
-        });
+        user.toSafeObject();
+        return res.json(user);
     } else return res.json({});
 });
 
