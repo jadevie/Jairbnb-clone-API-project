@@ -7,17 +7,52 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 
+// Create a Spot
+const validateRequest = [
+    check('address')
+        .exists({ checkFalsy: true })
+        .withMessage("Street address is required"),
+    check('city')
+        .exists({ checkFalsy: true })
+        .withMessage("City is required"),
+    check('state')
+        .exists({ checkFalsy: true })
+        .withMessage("State is required"),
+    check('country')
+        .exists({ checkFalsy: true })
+        .withMessage("Country is required"),
+    check('lat')
+        .exists({ checkFalsy: true })
+        .withMessage("Latitude is not valid"),
+    check('lng')
+        .exists({ checkFalsy: true })
+        .withMessage("Longitude is not valid"),
+    check('name')
+        .exists({ checkFalsy: true })
+        .withMessage("Name must be less than 50 characters"),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage("Description is required"),
+    check('price')
+        .exists({ checkFalsy: true })
+        .withMessage("Price per day is required"),
+    handleValidationErrors
+];
+router.post('/', requireAuth, validateRequest, async (req, res, next) => {
+    try {
+        const ownerId = req.user.id;
+        const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
-// router.post('/', requireAuth, async (req, res, next) => {
-//     const { address, city, state, country, lat, lng, name, description, price } = req.body;
+        const newSpot = await Spot.create({
+            ownerId, address, city, state, country, lat, lng, name, description, price
+        });
+        res.json(newSpot);
+    } catch (e) {
+        console.log(e.message);
+    }
+});
 
-//     const newSpot = await Spot.create({
-//         address, city, state, country, lat, lng, name, description, price
-//     });
-
-//     res.json(newSpot);
-// });
-
+// Get details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const id = req.params.spotId;
     const spot = await Spot.findByPk(id, {
@@ -41,9 +76,17 @@ router.get('/:spotId', async (req, res, next) => {
                 [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']]
         }
     });
+
+    if (!spot.id) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
     res.json(spot);
 });
 
+// Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
     const id = req.user.id;
 
@@ -66,7 +109,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ "Spots": spots });
 });
 
-
+// Get all Spots
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
         include: [
