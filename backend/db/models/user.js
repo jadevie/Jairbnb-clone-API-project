@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     //Define an instance method toSafeObject to return an object with only the User instance information that is safe to save to a JWT
     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+      const { id, firstName, lastName, email, username } = this; // context will be the User instance
+      return { id, firstName, lastName, email, username };
     }
 
     // Define an instance method to check if there is a match with the User instance's hashedPassword.;
@@ -132,7 +132,7 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       currentUser: {
         attributes: {
-          exclude: ['hashedPassword']
+          exclude: ['hashedPassword', 'createdAt', 'updatedAt']
         }
       },
       loginUser: {
