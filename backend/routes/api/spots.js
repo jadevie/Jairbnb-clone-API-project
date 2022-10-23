@@ -1,11 +1,23 @@
 const express = require('express');
 const { Op, sequelize, Sequelize } = require('sequelize');
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, requireProperAuthorization } = require('../../utils/auth');
 const { Spot, SpotImage, Review, User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+// Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, requireProperAuthorization, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const { url, preview } = req.body;
+
+    const newImage = await SpotImage.create({
+        spotId, url, preview
+    });
+    const data = await SpotImage.scope('defaultScope').findByPk(newImage.id);
+    res.json(data);
+
+});
 
 // Create a Spot
 const validateRequest = [
@@ -52,6 +64,33 @@ router.post('/', requireAuth, validateRequest, async (req, res, next) => {
     }
 });
 
+// Get all Spots owned by the Current User
+router.get('/current', requireAuth, async (req, res, next) => {
+    try {
+        const id = req.user.id;
+        const spots = await Spot.findByPk(id, {
+            include: [
+                {
+                    model: Review,
+                    attributes: []
+                },
+                {
+                    model: SpotImage,
+                    attributes: []
+                }
+            ],
+            attributes: {
+                include: [
+                    [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'], [Sequelize.col('SpotImages.url'), 'previewImage']]
+            }
+        });
+        res.json({ "Spots": spots });
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+});
+
 // Get details of a Spot from an id
 router.get('/:spotId', async (req, res, next) => {
     const id = req.params.spotId;
@@ -86,28 +125,6 @@ router.get('/:spotId', async (req, res, next) => {
     res.json(spot);
 });
 
-// Get all Spots owned by the Current User
-router.get('/current', requireAuth, async (req, res, next) => {
-    const id = req.user.id;
-
-    const spots = await Spot.findByPk(id, {
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: []
-            }
-        ],
-        attributes: {
-            include: [
-                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'], [Sequelize.col('SpotImages.url'), 'previewImage']]
-        }
-    });
-    res.json({ "Spots": spots });
-});
 
 // Get all Spots
 router.get('/', async (req, res, next) => {
