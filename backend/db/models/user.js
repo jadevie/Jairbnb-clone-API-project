@@ -45,14 +45,42 @@ module.exports = (sequelize, DataTypes) => {
         firstName,
         lastName,
         username,
-        email,
-        hashedPassword
+        hashedPassword,
+        email
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, {
+        foreignKey: 'ownerId',
+        onDelete: 'CASCADE',
+        hook: true
+        // as: 'OwnedSpot'  // await user.getOwnedSpots()
+      });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Booking,
+      //   foreignKey: 'userId',
+      //   otherKey: 'spotId',
+      //   as: 'BookedSpot'  // await user.getBookedSpots()
+      // });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Review,
+      //   foreignKey: 'userId',
+      //   otherKey: 'spotId',
+      //   as: 'ReviewedSpot'  // await user.getReviewedSpots()
+      // });
+
+      User.hasMany(models.Booking, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hook: true
+      });
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hook: true
+      });
     }
   };
   User.init({
@@ -77,6 +105,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    hashedPassword: {
+      type: DataTypes.STRING.BINARY,
+      allowNull: false,
+      validate: {
+        len: [60, 60]
+      }
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -84,13 +119,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [3, 256],
         isEmail: true
-      }
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60, 60]
       }
     }
   }, {
