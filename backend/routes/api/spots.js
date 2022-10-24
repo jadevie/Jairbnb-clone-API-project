@@ -174,7 +174,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
             const image = await SpotImage.findAll({
                 raw: true,
                 where: {
-                    spotId: spot.id
+                    spotId: spot.id,
+                    preview: true
                 },
                 attributes: {
                     include: ['url']
