@@ -6,6 +6,9 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
+
+
 // Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
     const id = req.user.id;
