@@ -37,7 +37,16 @@ const validateRequest = [
     handleValidationErrors
 ];
 
-
+// Delete a Spot
+router.delete('/:spotId', requireAuth, requireProperAuthorization, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spotToBeDeleted = await Spot.findByPk(spotId);
+    await spotToBeDeleted.destroy();
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
+});
 
 
 // Edit a Spot
