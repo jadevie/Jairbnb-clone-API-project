@@ -6,20 +6,6 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
-// Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, requireProperAuthorization, async (req, res, next) => {
-    const spotId = req.params.spotId;
-    const { url, preview } = req.body;
-
-    const newImage = await SpotImage.create({
-        spotId, url, preview
-    });
-    const data = await SpotImage.scope('defaultScope').findByPk(newImage.id);
-    res.json(data);
-
-});
-
-// Create a Spot
 const validateRequest = [
     check('address')
         .exists({ checkFalsy: true })
@@ -50,6 +36,46 @@ const validateRequest = [
         .withMessage("Price per day is required"),
     handleValidationErrors
 ];
+
+
+
+
+// Edit a Spot
+router.put('/:spotId', requireAuth, requireProperAuthorization, validateRequest, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const editSpot = await Spot.findByPk(spotId);
+
+    if (address) editSpot.address = address;
+    if (city) editSpot.city = city;
+    if (state) editSpot.state = state;
+    if (country) editSpot.country = country;
+    if (lat) editSpot.lat = lat;
+    if (lng) editSpot.lng = lng;
+    if (name) editSpot.name = name;
+    if (description) editSpot.description = description;
+    if (price) editSpot.price = price;
+
+    await editSpot.save();
+    res.json(editSpot);
+});
+
+
+// Add an Image to a Spot based on the Spot's id
+router.post('/:spotId/images', requireAuth, requireProperAuthorization, async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const { url, preview } = req.body;
+
+    const newImage = await SpotImage.create({
+        spotId, url, preview
+    });
+    const data = await SpotImage.scope('defaultScope').findByPk(newImage.id);
+    res.json(data);
+
+});
+
+// Create a Spot
+
 router.post('/', requireAuth, validateRequest, async (req, res, next) => {
     try {
         const ownerId = req.user.id;
