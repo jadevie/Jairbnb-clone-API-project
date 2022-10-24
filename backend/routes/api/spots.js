@@ -170,21 +170,26 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
                 }
             });
+            spot.avgRating = reviews[0]['avgRating'];
 
             const image = await SpotImage.findAll({
                 raw: true,
                 where: {
-                    spotId: spot.id,
-                    preview: true
-                },
-                attributes: {
-                    include: ['url']
+                    [Op.and]: [
+                        {
+                            spotId: spot.id
+                        },
+                        {
+                            preview: true
+                        }
+                    ]
                 }
-
             });
-
-            spot.avgRating = reviews[0]['avgRating'];
-            spot.previewImage = image[0]['url'];
+            if (!image.length) {
+                spot.previewImage = [];
+            } else {
+                spot.previewImage = image[0]['url'];
+            }
 
         }
         res.json({ "Spots": spots });
@@ -263,6 +268,7 @@ router.get('/', async (req, res, next) => {
 
         for (let i = 0; i < spots.length; i++) {
             const spot = spots[i];
+
             const reviews = await Review.findAll({
                 raw: true,
                 where: {
@@ -272,21 +278,27 @@ router.get('/', async (req, res, next) => {
                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
                 }
             });
+            spot.avgRating = reviews[0]['avgRating'];
 
             const image = await SpotImage.findAll({
                 raw: true,
                 where: {
-                    spotId: spot.id
-                },
-                attributes: {
-                    include: ['url']
+                    [Op.and]: [
+                        {
+                            spotId: spot.id
+                        },
+                        {
+                            preview: true
+                        }
+                    ]
                 }
-
             });
 
-            spot.avgRating = reviews[0]['avgRating'];
-            spot.previewImage = image[0]['url'];
-
+            if (!image.length) {
+                spot.previewImage = [];
+            } else {
+                spot.previewImage = image[0]['url'];
+            }
         }
         res.json({ "Spots": spots });
     } catch (e) {

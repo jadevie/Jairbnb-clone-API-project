@@ -80,12 +80,21 @@ router.get('/current', requireAuth, async (req, res, next) => {
             const spotImage = await SpotImage.findAll({
                 raw: true,
                 where: {
-                    spotId: id,
-                    preview: true
-                },
-                attributes: ['url']
+                    [Op.and]: [
+                        {
+                            spotId: spot.id
+                        },
+                        {
+                            preview: true
+                        }
+                    ]
+                }
             });
-            spot.previewImage = spotImage[0].url;
+            if (!spotImage.length) {
+                spot.previewImage = [];
+            } else {
+                spot.previewImage = spotImage[0]['url'];
+            }
         }
         review.Spot = allSpots;
 
