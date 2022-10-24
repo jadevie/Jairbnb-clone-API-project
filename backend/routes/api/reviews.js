@@ -66,7 +66,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         });
         review.User = user;
 
-        const spot = await Spot.findAll({
+        const allSpots = await Spot.findAll({
             where: {
                 ownerId: id
             },
@@ -75,7 +75,19 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 exclude: ['createdAt', 'updatedAt', 'description']
             }
         });
-        review.Spot = spot;
+        for (let i = 0; i < allSpots.length; i++) {
+            const spot = allSpots[i];
+            const spotImage = await SpotImage.findAll({
+                raw: true,
+                where: {
+                    spotId: id,
+                    preview: true
+                },
+                attributes: ['url']
+            });
+            spot.previewImage = spotImage[0].url;
+        }
+        review.Spot = allSpots;
 
         const reviewImages = await ReviewImage.findAll({
             where: {
