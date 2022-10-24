@@ -170,7 +170,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
                 }
             });
-            spot.avgRating = reviews[0]['avgRating'];
+
 
             const image = await SpotImage.findAll({
                 raw: true,
@@ -185,6 +185,9 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     ]
                 }
             });
+
+
+
             if (!image.length) {
                 spot.previewImage = [];
             } else {
@@ -306,4 +309,5 @@ router.get('/', async (req, res, next) => {
     }
 });
 
+// module.exports = router;
 module.exports = router;

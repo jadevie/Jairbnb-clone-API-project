@@ -4,10 +4,40 @@ const { setTokenCookie, requireAuth, requireProperAuthorization } = require('../
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+
 const router = express.Router();
 
+const validateRequestReview = [
+    check('review')
+        .exists({ checkFalsy: true })
+        .withMessage("Review text is required"),
+    check('stars')
+        .exists({ checkFalsy: true })
+        .withMessage("Stars must be an integer from 1 to 5"),
+    handleValidationErrors
+];
 
+router.put('/:reviewId', requireAuth, validateRequestReview, async (req, res, next) => {
+    const id = req.params.reviewId;
+    const reviewTobeEdited = await Review.findOne({
+        where: { id },
+        raw: true
+    });
 
+    if (!reviewTobeEdited) {
+        res.status(404).json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    } else {
+        const { review, stars } = req.body;
+        reviewTobeEdited.review = review;
+        reviewTobeEdited.stars = stars;
+
+        res.json(reviewTobeEdited);
+    }
+
+});
 
 // Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
