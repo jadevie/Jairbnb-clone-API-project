@@ -18,7 +18,7 @@ module.exports = {
       },
       url: {
         type: Sequelize.STRING,
-        allowNull: false
+        // allowNull: false
       },
       preview: {
         type: Sequelize.BOOLEAN,

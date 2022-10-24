@@ -111,4 +111,30 @@ router.get('/current', requireAuth, async (req, res, next) => {
     res.json({ "Reviews": reviews });
 });
 
+// Add an Image to a Review based on the Review's id
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const reviewId = req.params.reviewId;
+
+        const review = await Review.findByPk(reviewId, {
+            raw: true
+        });
+
+        if (!review || review.userId !== userId) {
+            res.status(404).json({
+                "message": "Review couldn't be found",
+                "statusCode": 404
+            });
+        }
+        const { url } = req.body;
+        const newReviewImage = await ReviewImage.create({ reviewId, url });
+        res.json(newReviewImage);
+    }
+    catch (e) {
+        console.log(e.message);
+    }
+
+});
+
 module.exports = router;

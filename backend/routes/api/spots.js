@@ -47,19 +47,26 @@ const validateRequestReview = [
         .withMessage("Stars must be an integer from 1 to 5"),
     handleValidationErrors
 ];
+
 // Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const reviews = await Review.findAll({ where: userId });
-        if (reviews.length) {
-            res.status(403).json({
-                "message": "User already has a review for this spot",
-                "statusCode": 403
-            });
-        }
-
         const spotId = req.params.spotId;
+        const reviews = await Review.findAll({
+            where: { spotId },
+            raw: true
+        });
+        console.log(reviews);
+        reviews.forEach(review => {
+            if (review.userId === userId) {
+                res.status(403).json({
+                    "message": "User already has a review for this spot",
+                    "statusCode": 403
+                });
+            }
+        });
+
         const spot = await Spot.findByPk(spotId);
         if (!spot) {
             res.status(404).json({
@@ -169,29 +176,29 @@ router.get('/current', requireAuth, async (req, res, next) => {
 });
 
 // Get all Reviews by a Spot's id
-// router.get('/:spotId/reviews', async (req, res, next) => {
-//     const spotId = req.params.spotId;
-//     const spots = await Review.findAll({
-//         where: { spotId },
-//         include: [
-//             {
-//                 model: User,
-//                 attributes: ['id', 'firstName', 'lastName']
-//             },
-//             {
-//                 model: ReviewImage,
-//                 attributes: ['id', 'url']
-//             }
-//         ]
-//     });
-//     if (!spots) {
-//         res.status(404).json({
-//             "message": "Spot couldn't be found",
-//             "statusCode": 404
-//         });
-//     }
-//     res.json(spots);
-// });
+router.get('/:spotId/reviews', async (req, res, next) => {
+    const spotId = req.params.spotId;
+    const spots = await Review.findAll({
+        where: { spotId },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ]
+    });
+    if (!spots) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+    res.json(spots);
+});
 
 
 // Get details of a Spot from an id
@@ -229,26 +236,44 @@ router.get('/:spotId', async (req, res, next) => {
 });
 
 
-// Get all Spots
+// Get all Spots // try lazy load later
 router.get('/', async (req, res, next) => {
-    const spots = await Spot.findAll({
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: []
-            }
-        ],
-        attributes: {
-            include: [
-                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'], [Sequelize.col('SpotImages.url'), 'previewImage']]
-        }
-    });
-    res.json({ "Spots": spots });
-});
+    try {
+        const spots = await Spot.findAll({
+            raw: true
+        });
 
+        for (let i = 0; i < spots.length; i++) {
+            const spot = spots[i];
+            const reviews = await Review.findAll({
+                raw: true,
+                where: {
+                    spotId: spot.id
+                },
+                attributes: {
+                    include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
+                }
+            });
+
+            const image = await SpotImage.findAll({
+                raw: true,
+                where: {
+                    spotId: spot.id
+                },
+                attributes: {
+                    include: ['url']
+                }
+
+            });
+
+            spot.avgRating = reviews[0]['avgRating'];
+            spot.previewImage = image[0]['url'];
+
+        }
+        res.json({ "Spots": spots });
+    } catch (e) {
+        console.log(e.message);
+    }
+});
 
 module.exports = router;
