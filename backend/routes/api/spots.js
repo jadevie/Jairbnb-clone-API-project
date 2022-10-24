@@ -152,25 +152,42 @@ router.post('/', requireAuth, validateRequest, async (req, res, next) => {
 router.get('/current', requireAuth, async (req, res, next) => {
     try {
         const id = req.user.id;
-        const spots = await Spot.findByPk(id, {
-            include: [
-                {
-                    model: Review,
-                    attributes: []
-                },
-                {
-                    model: SpotImage,
-                    attributes: []
-                }
-            ],
-            attributes: {
-                include: [
-                    [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'], [Sequelize.col('SpotImages.url'), 'previewImage']]
-            }
+        const spots = await Spot.findAll({
+            where: {
+                ownerId: id
+            },
+            raw: true
         });
+
+        for (let i = 0; i < spots.length; i++) {
+            const spot = spots[i];
+            const reviews = await Review.findAll({
+                raw: true,
+                where: {
+                    spotId: spot.id
+                },
+                attributes: {
+                    include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
+                }
+            });
+
+            const image = await SpotImage.findAll({
+                raw: true,
+                where: {
+                    spotId: spot.id
+                },
+                attributes: {
+                    include: ['url']
+                }
+
+            });
+
+            spot.avgRating = reviews[0]['avgRating'];
+            spot.previewImage = image[0]['url'];
+
+        }
         res.json({ "Spots": spots });
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e.message);
     }
 });
@@ -236,7 +253,7 @@ router.get('/:spotId', async (req, res, next) => {
 });
 
 
-// Get all Spots // try lazy load later
+// Get all Spots
 router.get('/', async (req, res, next) => {
     try {
         const spots = await Spot.findAll({
