@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'Owner',
         foreignKey: 'ownerId',
         onDelete: 'CASCADE',
-        hook: true
+        hooks: true
         // as: 'OwnedSpot'  // await user.getOwnedSpots()
       });
       // User.belongsToMany(models.Spot, {
@@ -75,12 +75,12 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
-        hook: true
+        hooks: true
       });
       User.hasMany(models.Review, {
         foreignKey: 'userId',
         onDelete: 'CASCADE',
-        hook: true
+        hooks: true
       });
     }
   };
