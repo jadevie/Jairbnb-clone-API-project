@@ -283,21 +283,18 @@ router.get('/:spotId', async (req, res, next) => {
                 model: Review,
                 as: 'Review',
                 attributes: [],
-                require: true,
-                duplicating: false
+                require: false
             },
             {
                 model: SpotImage,
                 attributes: ['id', 'url', 'preview'],
-                require: true,
-                duplicating: false
+                require: false
             },
             {
                 model: User,
                 as: 'Owner',
                 attributes: ['id', 'firstName', 'lastName'],
-                require: true,
-                duplicating: false
+                require: false
             }
         ],
         attributes: {
