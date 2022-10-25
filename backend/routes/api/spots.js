@@ -307,6 +307,7 @@ router.get('/:spotId', async (req, res, next) => {
 
 
 // Get all Spots
+// column "Review.id" must appear in the GROUP BY clause or be used in an aggregate function
 router.get('/', async (req, res, next) => {
     try {
         const spots = await Spot.findAll({
@@ -323,7 +324,8 @@ router.get('/', async (req, res, next) => {
                 },
                 attributes: {
                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
-                }
+                },
+                group: ['Review.id']
             });
             spot.avgRating = reviews[0]['avgRating'];
 
