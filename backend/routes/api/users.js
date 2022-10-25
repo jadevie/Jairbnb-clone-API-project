@@ -8,18 +8,18 @@ const router = express.Router();
 const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a first name.'),
+        .withMessage("First Name is required"),
     check('lastName')
         .exists({ checkFalsy: true })
-        .withMessage('Please provide a last name.'),
+        .withMessage("Last Name is required"),
     check('email')
         .exists({ checkFalsy: true })
         .isEmail()
-        .withMessage('Please provide a valid email.'),
+        .withMessage("Invalid email"),
     check('username')
         .exists({ checkFalsy: true })
         .isLength({ min: 4 })
-        .withMessage('Please provide a username with at least 4 characters.'),
+        .withMessage("Username is required"),
     check('username')
         .not()
         .isEmail()
@@ -37,7 +37,6 @@ router.post('/', validateSignup, async (req, res) => {
     const user = await User.signup({ firstName, lastName, email, username, password });
 
     await setTokenCookie(res, user);
-
     return res.json({
         user
     });

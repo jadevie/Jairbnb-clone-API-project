@@ -6,8 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     //Define an instance method toSafeObject to return an object with only the User instance information that is safe to save to a JWT
     toSafeObject() {
-      const { id, username, email } = this; // context will be the User instance
-      return { id, username, email };
+      const { id, firstName, lastName, email, username } = this; // context will be the User instance
+      return { id, firstName, lastName, email, username };
     }
 
     // Define an instance method to check if there is a match with the User instance's hashedPassword.;
@@ -45,14 +45,43 @@ module.exports = (sequelize, DataTypes) => {
         firstName,
         lastName,
         username,
-        email,
-        hashedPassword
+        hashedPassword,
+        email
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
 
     static associate(models) {
-      // define association here
+      User.hasMany(models.Spot, {
+        as: 'Owner',
+        foreignKey: 'ownerId',
+        onDelete: 'CASCADE',
+        hooks: true
+        // as: 'OwnedSpot'  // await user.getOwnedSpots()
+      });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Booking,
+      //   foreignKey: 'userId',
+      //   otherKey: 'spotId',
+      //   as: 'BookedSpot'  // await user.getBookedSpots()
+      // });
+      // User.belongsToMany(models.Spot, {
+      //   through: models.Review,
+      //   foreignKey: 'userId',
+      //   otherKey: 'spotId',
+      //   as: 'ReviewedSpot'  // await user.getReviewedSpots()
+      // });
+
+      User.hasMany(models.Booking, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
     }
   };
   User.init({
@@ -77,6 +106,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    hashedPassword: {
+      type: DataTypes.STRING.BINARY,
+      allowNull: false,
+      validate: {
+        len: [60, 60]
+      }
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -84,13 +120,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [3, 256],
         isEmail: true
-      }
-    },
-    hashedPassword: {
-      type: DataTypes.STRING.BINARY,
-      allowNull: false,
-      validate: {
-        len: [60, 60]
       }
     }
   }, {
@@ -104,7 +133,7 @@ module.exports = (sequelize, DataTypes) => {
     scopes: {
       currentUser: {
         attributes: {
-          exclude: ['hashedPassword']
+          exclude: ['hashedPassword', 'createdAt', 'updatedAt']
         }
       },
       loginUser: {
