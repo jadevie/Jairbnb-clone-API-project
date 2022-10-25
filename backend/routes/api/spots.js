@@ -305,7 +305,7 @@ router.get('/:spotId', async (req, res, next) => {
     res.json(spot);
 });
 
-
+//test comment
 // Get all Spots
 // column "Review.id" must appear in the GROUP BY clause or be used in an aggregate function
 router.get('/', async (req, res, next) => {
