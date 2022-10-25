@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op, sequelize, Sequelize } = require('sequelize');
-const { setTokenCookie, requireAuth, requireProperAuthorization } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, requireProperAuthorization, requireProperAuthorizationForReview } = require('../../utils/auth');
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -20,29 +20,16 @@ const validateRequestReview = [
 
 
 // Delete a review
-router.delete('/:reviewId', requireAuth, async (req, res, next) => {
-    const userId = req.user.id;
+router.delete('/:reviewId', requireAuth, requireProperAuthorizationForReview, async (req, res, next) => {
+
     const id = req.params.reviewId;
-    const reviewTobeDeleted = await Review.findOne({
+    await Review.destroy({
         where: { id }
     });
-
-    if (!reviewTobeDeleted) {
-        res.status(404).json({
-            "message": "Review couldn't be found",
-            "statusCode": 404
-        });
-    }
-
-    if (userId === reviewTobeDeleted.userId) {
-        await Review.destroy({
-            where: { id }
-        });
-        res.json({
-            "message": "Successfully deleted",
-            "statusCode": 200
-        });
-    }
+    res.json({
+        "message": "Successfully deleted",
+        "statusCode": 200
+    });
 });
 
 // Edit a Review
@@ -199,7 +186,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         }
         const { url } = req.body;
         const newReviewImage = await ReviewImage.create({ reviewId, url });
-        res.json(newReviewImage);
+        const imageWithScope = await ReviewImage.scope('defaultScope').findByPk(newReviewImage.id);
+        res.json(imageWithScope);
     }
     catch (e) {
         console.log(e.message);

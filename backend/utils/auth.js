@@ -86,4 +86,26 @@ const requireProperAuthorization = async function (req, res, next) {
 };
 
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorization };
+const requireProperAuthorizationForReview = async function (req, res, next) {
+    const currentUserId = req.user.id;
+    const reviewId = req.params.reviewId;
+    const review = await Review.findByPk(reviewId);
+
+    if (!review) {
+        res.status(404).json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+    if (currentUserId === review.userId) return next();
+
+    const err = new Error("Authentication required");
+    err.message = "Forbidden";
+    err.status = 403;
+    return next(err);
+};
+
+
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorization, requireProperAuthorizationForReview };

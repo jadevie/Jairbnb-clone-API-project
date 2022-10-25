@@ -187,14 +187,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 }
             });
 
-
-
             if (!image.length) {
                 spot.previewImage = [];
             } else {
                 spot.previewImage = image[0]['url'];
             }
-
         }
         res.json({ "Spots": spots });
     } catch (e) {
