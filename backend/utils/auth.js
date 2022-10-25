@@ -85,6 +85,28 @@ const requireProperAuthorizationForSpot = async function (req, res, next) {
     return next(err);
 };
 
+const authenticateSpotNotOwned = async function (req, res, next) {
+    try {
+        const currentUserId = req.user.id;
+        const spotId = req.params.spotId;
+        const spot = await Spot.findByPk(spotId);
+        if (!spot) {
+            res.status(404).json({
+                "message": "Spot couldn't be found",
+                "statusCode": 404
+            });
+        }
+        if (currentUserId !== spot.ownerId) return next();
+        else {
+            const err = new Error("Forbidden");
+            err.message = "Forbidden";
+            err.status = 403;
+            return next(err);
+        }
+    } catch (e) {
+        console.log(e.message);
+    }
+};
 
 const requireProperAuthorizationForReview = async function (req, res, next) {
     const currentUserId = req.user.id;
@@ -108,4 +130,4 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
 
 
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview };
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview, authenticateSpotNotOwned };
