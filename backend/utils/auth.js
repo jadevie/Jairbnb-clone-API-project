@@ -108,4 +108,4 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
 
 
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorization: requireProperAuthorizationForSpot, requireProperAuthorizationForReview };
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview };
