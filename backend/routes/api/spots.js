@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op, sequelize, Sequelize } = require('sequelize');
-const { setTokenCookie, requireAuth, requireProperAuthorization } = require('../../utils/auth');
-const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
+const { setTokenCookie, requireAuth, requireProperAuthorizationForSpot, authenticateSpotNotOwned } = require('../../utils/auth');
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { use } = require('./reviews');
@@ -49,6 +49,49 @@ const validateRequestReview = [
     handleValidationErrors
 ];
 
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, authenticateSpotNotOwned, async (req, res, next) => {
+    const userId = req.user.id;
+    const { startDate, endDate } = req.body;
+    const spotId = req.params.spotId;
+    const bookings = await Booking.findAll({
+        where: { spotId },
+        raw: true
+    });
+    console.log(bookings);
+
+    for (let i = 0; i < bookings.length; i++) {
+        const booking = bookings[i];
+        if (new Date(booking.startDate).toDateString() === new Date(startDate).toDateString()) {
+
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "statusCode": 403,
+                "errors": {
+                    "startDate": "Start date conflicts with an existing booking",
+                    "endDate": "End date conflicts with an existing booking"
+                }
+            });
+        }
+    }
+
+    if (endDate <= startDate) {
+        res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "endDate": "endDate cannot be on or before startDate"
+            }
+        });
+    }
+
+    const newBooking = await Booking.create({
+        userId, spotId,
+        startDate, endDate
+    });
+    res.json(newBooking);
+});
+
 // Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, res, next) => {
     try {
@@ -58,7 +101,7 @@ router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, 
             where: { spotId },
             raw: true
         });
-        console.log(reviews);
+
         reviews.forEach(review => {
             if (review.userId === userId) {
                 res.status(403).json({
@@ -87,7 +130,7 @@ router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, 
 
 
 // Delete a Spot
-router.delete('/:spotId', requireAuth, requireProperAuthorization, async (req, res, next) => {
+router.delete('/:spotId', requireAuth, requireProperAuthorizationForSpot, async (req, res, next) => {
     const spotId = req.params.spotId;
     const spotToBeDeleted = await Spot.findByPk(spotId);
     await spotToBeDeleted.destroy();
@@ -99,7 +142,7 @@ router.delete('/:spotId', requireAuth, requireProperAuthorization, async (req, r
 
 
 // Edit a Spot
-router.put('/:spotId', requireAuth, requireProperAuthorization, validateRequest, async (req, res, next) => {
+router.put('/:spotId', requireAuth, requireProperAuthorizationForSpot, validateRequest, async (req, res, next) => {
     const spotId = req.params.spotId;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const editSpot = await Spot.findByPk(spotId);
@@ -121,7 +164,7 @@ router.put('/:spotId', requireAuth, requireProperAuthorization, validateRequest,
 
 
 // Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, requireProperAuthorization, async (req, res, next) => {
+router.post('/:spotId/images', requireAuth, requireProperAuthorizationForSpot, async (req, res, next) => {
     const spotId = req.params.spotId;
     const { url, preview } = req.body;
 
@@ -187,11 +230,14 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 }
             });
 
+
+
             if (!image.length) {
                 spot.previewImage = [];
             } else {
                 spot.previewImage = image[0]['url'];
             }
+
         }
         res.json({ "Spots": spots });
     } catch (e) {
@@ -308,7 +354,6 @@ router.get('/', async (req, res, next) => {
 });
 
 // Eager loading with aggregate
-
 // router.get('/', async (req, res, next) => {
 //     const spots = await Spot.findAll({
 //         include: [
@@ -332,5 +377,7 @@ router.get('/', async (req, res, next) => {
 //     });
 //     res.json({ "Spots": spots });
 // });
+
+
 
 module.exports = router;
