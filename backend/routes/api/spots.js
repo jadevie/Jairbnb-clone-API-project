@@ -1,7 +1,7 @@
 const express = require('express');
 const { Op, sequelize, Sequelize } = require('sequelize');
-const { setTokenCookie, requireAuth, requireProperAuthorizationForSpot } = require('../../utils/auth');
-const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
+const { setTokenCookie, requireAuth, requireProperAuthorizationForSpot, authenticateSpotNotOwned } = require('../../utils/auth');
+const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { use } = require('./reviews');
@@ -49,6 +49,49 @@ const validateRequestReview = [
     handleValidationErrors
 ];
 
+// Create a Booking from a Spot based on the Spot's id
+router.post('/:spotId/bookings', requireAuth, authenticateSpotNotOwned, async (req, res, next) => {
+    const userId = req.user.id;
+    const { startDate, endDate } = req.body;
+    const spotId = req.params.spotId;
+    const bookings = await Booking.findAll({
+        where: { spotId },
+        raw: true
+    });
+    console.log(bookings);
+
+    for (let i = 0; i < bookings.length; i++) {
+        const booking = bookings[i];
+        if (new Date(booking.startDate).toDateString() === new Date(startDate).toDateString()) {
+
+            res.status(403).json({
+                "message": "Sorry, this spot is already booked for the specified dates",
+                "statusCode": 403,
+                "errors": {
+                    "startDate": "Start date conflicts with an existing booking",
+                    "endDate": "End date conflicts with an existing booking"
+                }
+            });
+        }
+    }
+
+    if (endDate <= startDate) {
+        res.status(400).json({
+            "message": "Validation error",
+            "statusCode": 400,
+            "errors": {
+                "endDate": "endDate cannot be on or before startDate"
+            }
+        });
+    }
+
+    const newBooking = await Booking.create({
+        userId, spotId,
+        startDate, endDate
+    });
+    res.json(newBooking);
+});
+
 // Create a Review for a Spot based on the Spot's id
 router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, res, next) => {
     try {
@@ -58,7 +101,7 @@ router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, 
             where: { spotId },
             raw: true
         });
-        console.log(reviews);
+
         reviews.forEach(review => {
             if (review.userId === userId) {
                 res.status(403).json({
