@@ -18,6 +18,34 @@ const validateRequestReview = [
     handleValidationErrors
 ];
 
+
+// Delete a review
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    const userId = req.user.id;
+    const id = req.params.reviewId;
+    const reviewTobeDeleted = await Review.findOne({
+        where: { id }
+    });
+
+    if (!reviewTobeDeleted) {
+        res.status(404).json({
+            "message": "Review couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+    if (userId === reviewTobeDeleted.userId) {
+        await Review.destroy({
+            where: { id }
+        });
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        });
+    }
+});
+
+// Edit a Review
 router.put('/:reviewId', requireAuth, validateRequestReview, async (req, res, next) => {
     const id = req.params.reviewId;
     const reviewTobeEdited = await Review.findOne({
