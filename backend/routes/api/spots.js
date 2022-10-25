@@ -310,5 +310,30 @@ router.get('/', async (req, res, next) => {
     }
 });
 
-// module.exports = router;
+// Eager loading with aggregate
+
+// router.get('/', async (req, res, next) => {
+//     const spots = await Spot.findAll({
+//         include: [
+//             {
+//                 model: Review,
+//                 attributes: [],
+//                 required: false
+//             },
+//             {
+//                 model: SpotImage,
+//                 attributes: [],
+//                 required: false
+//             }
+//         ],
+//         attributes: {
+//             include: [
+//                 [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+//                 [Sequelize.col('SpotImages.url'), 'previewImage']]
+//         },
+//         group: ['Spot.id']
+//     });
+//     res.json({ "Spots": spots });
+// });
+
 module.exports = router;
