@@ -65,7 +65,7 @@ const requireAuth = function (req, _res, next) {
     return next(err);
 };
 
-const requireProperAuthorization = async function (req, res, next) {
+const requireProperAuthorizationForSpot = async function (req, res, next) {
     const currentUserId = req.user.id;
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
@@ -108,4 +108,4 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
 
 
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorization, requireProperAuthorizationForReview };
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorization: requireProperAuthorizationForSpot, requireProperAuthorizationForReview };
