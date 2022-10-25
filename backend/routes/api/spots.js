@@ -1,6 +1,6 @@
 const express = require('express');
 const { Op, sequelize, Sequelize } = require('sequelize');
-const { setTokenCookie, requireAuth, requireProperAuthorization } = require('../../utils/auth');
+const { setTokenCookie, requireAuth, requireProperAuthorizationForSpot } = require('../../utils/auth');
 const { Spot, SpotImage, Review, User, ReviewImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -87,7 +87,7 @@ router.post('/:spotId/reviews', requireAuth, validateRequestReview, async (req, 
 
 
 // Delete a Spot
-router.delete('/:spotId', requireAuth, requireProperAuthorization, async (req, res, next) => {
+router.delete('/:spotId', requireAuth, requireProperAuthorizationForSpot, async (req, res, next) => {
     const spotId = req.params.spotId;
     const spotToBeDeleted = await Spot.findByPk(spotId);
     await spotToBeDeleted.destroy();
@@ -99,7 +99,7 @@ router.delete('/:spotId', requireAuth, requireProperAuthorization, async (req, r
 
 
 // Edit a Spot
-router.put('/:spotId', requireAuth, requireProperAuthorization, validateRequest, async (req, res, next) => {
+router.put('/:spotId', requireAuth, requireProperAuthorizationForSpot, validateRequest, async (req, res, next) => {
     const spotId = req.params.spotId;
     const { address, city, state, country, lat, lng, name, description, price } = req.body;
     const editSpot = await Spot.findByPk(spotId);
@@ -121,7 +121,7 @@ router.put('/:spotId', requireAuth, requireProperAuthorization, validateRequest,
 
 
 // Add an Image to a Spot based on the Spot's id
-router.post('/:spotId/images', requireAuth, requireProperAuthorization, async (req, res, next) => {
+router.post('/:spotId/images', requireAuth, requireProperAuthorizationForSpot, async (req, res, next) => {
     const spotId = req.params.spotId;
     const { url, preview } = req.body;
 
@@ -187,11 +187,14 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 }
             });
 
+
+
             if (!image.length) {
                 spot.previewImage = [];
             } else {
                 spot.previewImage = image[0]['url'];
             }
+
         }
         res.json({ "Spots": spots });
     } catch (e) {
@@ -308,7 +311,6 @@ router.get('/', async (req, res, next) => {
 });
 
 // Eager loading with aggregate
-
 // router.get('/', async (req, res, next) => {
 //     const spots = await Spot.findAll({
 //         include: [
@@ -332,5 +334,7 @@ router.get('/', async (req, res, next) => {
 //     });
 //     res.json({ "Spots": spots });
 // });
+
+
 
 module.exports = router;
