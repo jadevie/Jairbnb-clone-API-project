@@ -212,7 +212,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 },
                 attributes: {
                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
-                }
+                },
+                group: ['Review.id']
             });
 
 
@@ -293,7 +294,8 @@ router.get('/:spotId', async (req, res, next) => {
         attributes: {
             include: [
                 [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']]
-        }
+        },
+        group: ['Review.id']
     });
 
     if (!spot.id) {
