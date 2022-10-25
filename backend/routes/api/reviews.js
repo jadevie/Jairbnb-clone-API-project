@@ -199,7 +199,8 @@ router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
         }
         const { url } = req.body;
         const newReviewImage = await ReviewImage.create({ reviewId, url });
-        res.json(newReviewImage);
+        const imageWithScope = await ReviewImage.scope('defaultScope').findByPk(newReviewImage.id);
+        res.json(imageWithScope);
     }
     catch (e) {
         console.log(e.message);
