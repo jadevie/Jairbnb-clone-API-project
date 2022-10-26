@@ -21,7 +21,6 @@ const validateRequestReview = [
 
 // Delete a review
 router.delete('/:reviewId', requireAuth, requireProperAuthorizationForReview, async (req, res, next) => {
-
     const id = req.params.reviewId;
     await Review.destroy({
         where: { id }
