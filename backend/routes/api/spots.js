@@ -291,14 +291,11 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        attributes: {
-            include: [
-                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']]
-        },
-        group: ['Review.id']
+        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
+        group: ['Reviews.id']
     });
 
-    if (!spot.id) {
+    if (!spot) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
