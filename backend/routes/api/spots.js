@@ -409,12 +409,12 @@ const validateQueryInput = [
     check('minPrice')
         .optional()
         .exists({ checkFalsy: true })
-        .isInt({ min: 0 })
+        .isFloat({ min: 0 })
         .withMessage("Minimum price must be greater than or equal to 0"),
     check('maxPrice')
         .optional()
         .exists({ checkFalsy: true })
-        .isInt({ max: 0 })
+        .isFloat({ max: 0 })
         .withMessage("Maximum price must be greater than or equal to 0"),
     handleValidationErrors
 ];
