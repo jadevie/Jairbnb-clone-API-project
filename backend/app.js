@@ -71,38 +71,48 @@ app.use((_req, _res, next) => {
 // Process sequelize errors
 app.use((err, _req, _res, next) => {
     // check if error is a Sequelize error:
-    if (err instanceof ValidationError) {
-
-        if (err.fields.includes('email')) {
-            err.message = "User already exists",
-                err.status = 403,
-                err.errors = { "email": "User with that email already exists" };
-        } else if (err.fields.includes('username')) {
-            err.message = "User already exists",
-                err.status = 403,
-                err.errors = { "username": "User with that username already exists" };
-        }
-        else {
+    app.use((err, _req, _res, next) => {
+        // check if error is a Sequelize error:
+        if (err instanceof ValidationError) {
             err.errors = err.errors.map((e) => e.message);
             err.title = 'Validation error';
         }
-    }
-    next(err);
-});
-
-// Error Formatter Error-Handler
-// Error formatter
-app.use((err, _req, res, _next) => {
-    res.status(err.status || 500);
-    console.error(err);
-    res.json({
-        // title: err.title || 'Server Error',
-        message: err.message,
-        statusCode: err.status,
-        errors: err.errors
-        // stack: isProduction ? null : err.stack
+        next(err);
     });
-});
+
+    // custom error only work with local
+    //     if (err instanceof ValidationError) {
+    //         if (err.fields.includes('email')) {
+    //             err.message = "User already exists",
+    //                 err.status = 403,
+    //                 err.errors = { "email": "User with that email already exists" };
+    //         } else if (err.fields.includes('username')) {
+    //             err.message = "User already exists",
+    //                 err.status = 403,
+    //                 err.errors = { "username": "User with that username already exists" };
+    //         }
+    //         else {
+    //             err.errors = err.errors.map((e) => e.message);
+    //             err.title = 'Validation error';
+    //         }
+    //     }
+    //     next(err);
+    // });
 
 
-module.exports = app;
+    // Error Formatter Error-Handler
+    // Error formatter
+    app.use((err, _req, res, _next) => {
+        res.status(err.status || 500);
+        console.error(err);
+        res.json({
+            // title: err.title || 'Server Error',
+            message: err.message,
+            statusCode: err.status,
+            errors: err.errors
+            // stack: isProduction ? null : err.stack
+        });
+    });
+
+
+    module.exports = app;
