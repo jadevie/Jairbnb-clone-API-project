@@ -376,10 +376,54 @@ router.get('/:spotId', async (req, res, next) => {
     res.json(spot);
 });
 
+//  Query parameter validation errors
+const validateQueryInput = [
+    check('page')
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('minLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('maxLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    check('minPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isInt({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isInt({ max: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+];
+
 // Get all Spots
-router.get('/', async (req, res, next) => {
+router.get('/', validateQueryInput, async (req, res, next) => {
     let query = {};
-    let { page, size } = req.query;
+    let { page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    // check if query has page or size
     if (page || size) {
         page = parseInt(page);
         size = parseInt(size);
@@ -390,6 +434,10 @@ router.get('/', async (req, res, next) => {
             query.offset = size * (page - 1);
         }
     }
+
+    // if (maxLat || minLat || minLng || maxLng || minPrice || maxPrice) {
+
+    // }
 
     const spots = await Spot.findAll({
         raw: true,
