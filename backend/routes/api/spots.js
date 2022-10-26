@@ -282,7 +282,7 @@ router.get('/:spotId', async (req, res, next) => {
         include: [
             {
                 model: Review,
-                // attributes: []
+                attributes: []
             },
             {
                 model: SpotImage,
@@ -298,6 +298,7 @@ router.get('/:spotId', async (req, res, next) => {
         group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id']
 
     });
+
     // let sum = 0;
     // spot.Reviews.forEach(review => sum += review.stars);
     // let avgStarRating = sum / spot.Reviews.length;
