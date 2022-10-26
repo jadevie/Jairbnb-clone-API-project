@@ -5,6 +5,7 @@ const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { use } = require('./reviews');
+const { raw } = require('express');
 const router = express.Router();
 
 const validateRequest = [
@@ -249,7 +250,15 @@ router.get('/current', requireAuth, async (req, res, next) => {
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
-    const spots = await Review.findAll({
+    const spots = await Spot.findByPk(spotId);
+    if (!spots) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+    const reviews = await Review.findAll({
         where: { spotId },
         include: [
             {
@@ -262,13 +271,7 @@ router.get('/:spotId/reviews', async (req, res, next) => {
             }
         ]
     });
-    if (!spots) {
-        res.status(404).json({
-            "message": "Spot couldn't be found",
-            "statusCode": 404
-        });
-    }
-    res.json(spots);
+    res.json({ "Reviews": reviews });
 });
 
 
@@ -279,7 +282,7 @@ router.get('/:spotId', async (req, res, next) => {
         include: [
             {
                 model: Review,
-                attributes: []
+                // attributes: []
             },
             {
                 model: SpotImage,
@@ -291,14 +294,18 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        attributes: {
-            include: [
-                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']]
-        },
-        group: ['Review.id']
-    });
+        // attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
+        // group: ['Spot.id']
 
-    if (!spot.id) {
+    });
+    let sum = 0;
+    spot.Reviews.forEach(review => sum += review.stars);
+    let avgStarRating = sum / spot.Reviews.length;
+    spot.dataValues.avgStarRating = avgStarRating;
+
+    delete spot.dataValues.Reviews;
+
+    if (!spot) {
         res.status(404).json({
             "message": "Spot couldn't be found",
             "statusCode": 404
@@ -362,7 +369,5 @@ router.get('/', async (req, res, next) => {
 //     });
 //     res.json({ "Spots": spots });
 // });
-
-
 
 module.exports = router;
