@@ -128,6 +128,25 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
     return next(err);
 };
 
+const validateUpdateForBooking = async function (req, res, next) {
+    const currentUserId = req.user.id;
+    const id = req.params.bookingId;
+    const booking = await Booking.findByPk(id);
+    // Error when couldn't find a Booking
+    if (!booking) {
+        res.status(404).json({
+            "message": "Booking couldn't be found",
+            "statusCode": 404
+        });
+    }
+    // Check booking must belong to user
+    if (currentUserId === booking.userId) return next();
 
+    const err = new Error("Authentication required");
+    err.message = "You can't edit this booking";
+    err.status = 403;
+    return next(err);
 
-module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview, authenticateSpotNotOwned };
+};
+
+module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview, authenticateSpotNotOwned, validateUpdateForBooking };
