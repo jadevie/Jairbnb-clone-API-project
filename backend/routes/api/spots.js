@@ -294,16 +294,16 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        // attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
-        // group: ['Spot.id']
+        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
+        group: ['Spot.id', 'SpotImages.id']
 
     });
-    let sum = 0;
-    spot.Reviews.forEach(review => sum += review.stars);
-    let avgStarRating = sum / spot.Reviews.length;
-    spot.dataValues.avgStarRating = avgStarRating;
+    // let sum = 0;
+    // spot.Reviews.forEach(review => sum += review.stars);
+    // let avgStarRating = sum / spot.Reviews.length;
+    // spot.dataValues.avgStarRating = avgStarRating;
 
-    delete spot.dataValues.Reviews;
+    // delete spot.dataValues.Reviews;
 
     if (!spot) {
         res.status(404).json({
