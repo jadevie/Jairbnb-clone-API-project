@@ -327,6 +327,7 @@ router.get('/', async (req, res, next) => {
             },
             {
                 model: SpotImage,
+                where: { preview: true },
                 attributes: [],
                 // required: false
             }
