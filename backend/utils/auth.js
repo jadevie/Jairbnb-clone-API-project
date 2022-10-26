@@ -143,7 +143,7 @@ const validateUpdateForBooking = async function (req, res, next) {
     if (currentUserId === booking.userId) return next();
 
     const err = new Error("Authentication required");
-    err.message = "You can't edit this booking";
+    err.message = "Authentication required";
     err.status = 403;
     return next(err);
 
