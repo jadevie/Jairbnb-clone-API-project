@@ -5,6 +5,7 @@ const { Spot, SpotImage, Review, User, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { use } = require('./reviews');
+const { raw } = require('express');
 const router = express.Router();
 
 const validateRequest = [
@@ -279,7 +280,7 @@ router.get('/:spotId', async (req, res, next) => {
         include: [
             {
                 model: Review,
-                attributes: []
+                // attributes: []
             },
             {
                 model: SpotImage,
@@ -291,9 +292,16 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
-        group: ['Spot.id']
+        // attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
+        // group: ['Spot.id']
+
     });
+    let sum = 0;
+    spot.Reviews.forEach(review => sum += review.stars);
+    let avgStarRating = sum / spot.Reviews.length;
+    spot.dataValues.avgStarRating = avgStarRating;
+
+    delete spot.dataValues.Reviews;
 
     if (!spot) {
         res.status(404).json({
