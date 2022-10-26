@@ -315,59 +315,60 @@ router.get('/:spotId', async (req, res, next) => {
 });
 
 // Get all Spots
-
+// Eager loading with aggregate
 router.get('/', async (req, res, next) => {
-    try {
-        const spots = await Spot.findAll({ raw: true });
-        for (let i = 0; i < spots.length; i++) {
-            const spot = spots[i];
-
-            const reviews = await Review.findAll({
-                raw: true,
-                where: { spotId: spot.id },
-                attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']] },
-                group: ['Review.id']
-            });
-
-            spot.avgRating = reviews.length ? reviews[0].avgRating : null;
-
-            const image = await SpotImage.findAll({
-                raw: true,
-                where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
-            });
-
-            if (!image.length) { spot.previewImage = []; }
-            else { spot.previewImage = image[0]['url']; }
-        }
-        res.json({ "Spots": spots });
-    } catch (e) {
-        console.log(e.message);
-    }
+    const spots = await Spot.findAll({
+        include: [
+            {
+                model: Review,
+                attributes: [],
+                required: false
+            },
+            {
+                model: SpotImage,
+                attributes: [],
+                required: false
+            }
+        ],
+        attributes: {
+            include: [
+                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+                [Sequelize.col('SpotImages.url'), 'previewImage']]
+        },
+        group: ['Spot.id', 'SpotImage.url']
+    });
+    res.json({ "Spots": spots });
 });
 
-// Eager loading with aggregate
+// Lazy loading
 // router.get('/', async (req, res, next) => {
-//     const spots = await Spot.findAll({
-//         include: [
-//             {
-//                 model: Review,
-//                 attributes: [],
-//                 required: false
-//             },
-//             {
-//                 model: SpotImage,
-//                 attributes: [],
-//                 required: false
-//             }
-//         ],
-//         attributes: {
-//             include: [
-//                 [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-//                 [Sequelize.col('SpotImages.url'), 'previewImage']]
-//         },
-//         group: ['Spot.id']
-//     });
-//     res.json({ "Spots": spots });
+//     try {
+//         const spots = await Spot.findAll({ raw: true });
+//         for (let i = 0; i < spots.length; i++) {
+//             const spot = spots[i];
+
+//             const reviews = await Review.findAll({
+//                 raw: true,
+//                 where: { spotId: spot.id },
+//                 attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']] },
+//                 group: ['Review.id']
+//             });
+
+//             spot.avgRating = reviews.length ? reviews[0].avgRating : null;
+
+//             const image = await SpotImage.findAll({
+//                 raw: true,
+//                 where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
+//             });
+
+//             if (!image.length) { spot.previewImage = []; }
+//             else { spot.previewImage = image[0]['url']; }
+//         }
+//         res.json({ "Spots": spots });
+//     } catch (e) {
+//         console.log(e.message);
+//     }
 // });
+
 
 module.exports = router;
