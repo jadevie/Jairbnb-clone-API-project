@@ -378,16 +378,29 @@ router.get('/:spotId', async (req, res, next) => {
 
 // Get all Spots
 router.get('/', async (req, res, next) => {
+    let query = {};
+    let { page, size } = req.query;
+    if (page || size) {
+        page = parseInt(page);
+        size = parseInt(size);
+        if (!page || page > 10) page = 1;
+        if (!size || size > 20) size = 20;
+        if (page > 0 && size > 0) {
+            query.limit = size;
+            query.offset = size * (page - 1);
+        }
+    }
+
     const spots = await Spot.findAll({
         raw: true,
-        include: [
-            {
-                model: Review,
-                attributes: []
-            }
-        ],
+        include: [{
+            model: Review,
+            attributes: []
+        }],
         attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
-        group: ['Spot.id']
+        group: ['Spot.id'],
+        ...query,
+        subQuery: false
     });
 
     for (let i = 0; i < spots.length; i++) {
@@ -400,7 +413,11 @@ router.get('/', async (req, res, next) => {
         if (!image.length) spot.previewImage = [];
         else { spot.previewImage = image[0].url; }
     }
-    res.json({ "Spots": spots });
+    res.json({
+        "Spots": spots,
+        page,
+        size
+    });
 });
 
 // Full Lazy loading
