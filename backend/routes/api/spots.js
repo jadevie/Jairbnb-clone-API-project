@@ -64,7 +64,7 @@ router.post('/:spotId/bookings', requireAuth, authenticateSpotNotOwned, async (r
 
     for (let i = 0; i < bookings.length; i++) {
         const booking = bookings[i];
-        if (new Date(booking.startDate).toDateString() === new Date(startDate).toDateString()) {
+        if (new Date(booking.startDate).getTime() === new Date(startDate).getTime()) {
 
             res.status(403).json({
                 "message": "Sorry, this spot is already booked for the specified dates",
