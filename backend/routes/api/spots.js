@@ -296,11 +296,11 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     }
 
     if (userId === spot.ownerId) {
-        let bookings = await Booking.findAll({
-            where: { userId },
+        let bookings = await User.findAll({
+            where: { id: userId },
+            attributes: ['id', 'firstName', 'lastName'],
             include: {
-                model: User,
-                attributes: ['id', 'firstName', 'lastName']
+                model: Booking
             }
         });
         res.json({ "Bookings": bookings });
