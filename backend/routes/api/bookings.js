@@ -6,6 +6,30 @@ const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+// Delete a Booking
+router.delete('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
+    const userId = req.user.id;
+    const id = req.params.bookingId;
+    const booking = await Booking.findByPk(id);
+    // Spot must belong to the current user
+    if (booking.userId === userId) {
+        // Bookings that have been started can't be deleted
+        if (booking.startDate.setTime() <= new Date().setTime()) {
+            res.status(403).json({
+                "message": "Bookings that have been started can't be deleted",
+                "statusCode": 403
+            });
+        }
+        await booking.destroy();
+        res.json({
+            "message": "Successfully deleted",
+            "statusCode": 200
+        });
+    } else {
+        throw new Error("Forbidden");
+    }
+});
+
 // Edit a Booking
 router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
     const id = req.params.bookingId;
