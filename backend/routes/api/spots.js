@@ -295,7 +295,7 @@ router.get('/:spotId', async (req, res, next) => {
             }
         ],
         attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
-        group: ['Spot.id', 'SpotImages.id', 'Reviews.id']
+        group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id']
 
     });
     // let sum = 0;
