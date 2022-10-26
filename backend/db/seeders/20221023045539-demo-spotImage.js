@@ -10,12 +10,12 @@ const images = [
   {
     "spotId": 2,
     "url": "image url",
-    "preview": true
+    "preview": false
   },
   {
     "spotId": 3,
     "url": "image url",
-    "preview": true
+    "preview": false
   }
 ];
 
