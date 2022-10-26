@@ -196,57 +196,86 @@ router.post('/', requireAuth, validateRequest, async (req, res, next) => {
 
 // Get all Spots owned by the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
-    try {
-        const id = req.user.id;
-        const spots = await Spot.findAll({
-            where: {
-                ownerId: id
-            },
-            raw: true
+    const id = req.user.id;
+    const spots = await Spot.findAll({
+        where: { ownerId: id },
+        raw: true,
+        include: [
+            {
+                model: Review,
+                attributes: []
+            }
+        ],
+        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
+        group: ['Spot.id']
+    });
+
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i];
+        const image = await SpotImage.findAll({
+            raw: true,
+            where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
         });
 
-        for (let i = 0; i < spots.length; i++) {
-            const spot = spots[i];
-            const reviews = await Review.findAll({
-                raw: true,
-                where: {
-                    spotId: spot.id
-                },
-                attributes: {
-                    include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
-                },
-                group: ['Review.id']
-            });
-
-
-            const image = await SpotImage.findAll({
-                raw: true,
-                where: {
-                    [Op.and]: [
-                        {
-                            spotId: spot.id
-                        },
-                        {
-                            preview: true
-                        }
-                    ]
-                }
-            });
-
-
-
-            if (!image.length) {
-                spot.previewImage = [];
-            } else {
-                spot.previewImage = image[0]['url'];
-            }
-
-        }
-        res.json({ "Spots": spots });
-    } catch (e) {
-        console.log(e.message);
+        if (!image.length) spot.previewImage = [];
+        else { spot.previewImage = image[0].url; }
     }
+    res.json({ "Spots": spots });
 });
+
+// lazy loading
+// router.get('/current', requireAuth, async (req, res, next) => {
+//     try {
+//         const id = req.user.id;
+//         const spots = await Spot.findAll({
+//             where: {
+//                 ownerId: id
+//             },
+//             raw: true
+//         });
+
+//         for (let i = 0; i < spots.length; i++) {
+//             const spot = spots[i];
+//             const reviews = await Review.findAll({
+//                 raw: true,
+//                 where: {
+//                     spotId: spot.id
+//                 },
+//                 attributes: {
+//                     include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
+//                 },
+//                 group: ['Review.id']
+//             });
+
+
+//             const image = await SpotImage.findAll({
+//                 raw: true,
+//                 where: {
+//                     [Op.and]: [
+//                         {
+//                             spotId: spot.id
+//                         },
+//                         {
+//                             preview: true
+//                         }
+//                     ]
+//                 }
+//             });
+
+
+
+//             if (!image.length) {
+//                 spot.previewImage = [];
+//             } else {
+//                 spot.previewImage = image[0]['url'];
+//             }
+
+//         }
+//         res.json({ "Spots": spots });
+//     } catch (e) {
+//         console.log(e.message);
+//     }
+// });
 
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
