@@ -6,6 +6,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { use } = require('./reviews');
 const { raw } = require('express');
+const e = require('express');
 const router = express.Router();
 
 const validateRequest = [
@@ -316,33 +317,33 @@ router.get('/:spotId', async (req, res, next) => {
 });
 
 // Get all Spots
-// Eager loading with aggregate
 router.get('/', async (req, res, next) => {
     const spots = await Spot.findAll({
+        raw: true,
         include: [
             {
                 model: Review,
-                attributes: [],
-                // required: false
-            },
-            {
-                model: SpotImage,
-                where: { preview: true },
-                attributes: [],
-                // required: false
+                attributes: []
             }
         ],
-        attributes: {
-            include: [
-                [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-                [Sequelize.col('SpotImages.url'), 'previewImage']]
-        },
-        group: ['Spot.id', 'SpotImages.url']
+        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
+        group: ['Spot.id']
     });
+
+    for (let i = 0; i < spots.length; i++) {
+        const spot = spots[i];
+        const image = await SpotImage.findAll({
+            raw: true,
+            where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
+        });
+
+        if (!image.length) spot.previewImage = [];
+        else { spot.previewImage = image[0].url; }
+    }
     res.json({ "Spots": spots });
 });
 
-// Lazy loading
+// Full Lazy loading
 // router.get('/', async (req, res, next) => {
 //     try {
 //         const spots = await Spot.findAll({ raw: true });
