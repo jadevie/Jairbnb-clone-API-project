@@ -244,7 +244,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         console.log(e.message);
     }
 });
-
+// "test"
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
