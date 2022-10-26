@@ -322,12 +322,12 @@ router.get('/', async (req, res, next) => {
             {
                 model: Review,
                 attributes: [],
-                required: false
+                // required: false
             },
             {
                 model: SpotImage,
                 attributes: [],
-                required: false
+                // required: false
             }
         ],
         attributes: {
@@ -335,7 +335,7 @@ router.get('/', async (req, res, next) => {
                 [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
                 [Sequelize.col('SpotImages.url'), 'previewImage']]
         },
-        group: ['Spot.id', 'SpotImage.url']
+        group: ['Spot.id', 'SpotImages.url']
     });
     res.json({ "Spots": spots });
 });
