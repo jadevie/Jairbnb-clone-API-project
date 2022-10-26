@@ -311,44 +311,26 @@ router.get('/:spotId', async (req, res, next) => {
 
 router.get('/', async (req, res, next) => {
     try {
-        const spots = await Spot.findAll({
-            raw: true
-        });
-
+        const spots = await Spot.findAll({ raw: true });
         for (let i = 0; i < spots.length; i++) {
             const spot = spots[i];
 
             const reviews = await Review.findAll({
                 raw: true,
-                where: {
-                    spotId: spot.id
-                },
-                attributes: {
-                    include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']]
-                },
+                where: { spotId: spot.id },
+                attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']] },
                 group: ['Review.id']
             });
-            spot.avgRating = reviews[0]['avgRating'];
+
+            spot.avgRating = reviews.length ? reviews[0].avgRating : null;
 
             const image = await SpotImage.findAll({
                 raw: true,
-                where: {
-                    [Op.and]: [
-                        {
-                            spotId: spot.id
-                        },
-                        {
-                            preview: true
-                        }
-                    ]
-                }
+                where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
             });
 
-            if (!image.length) {
-                spot.previewImage = [];
-            } else {
-                spot.previewImage = image[0]['url'];
-            }
+            if (!image.length) { spot.previewImage = []; }
+            else { spot.previewImage = image[0]['url']; }
         }
         res.json({ "Spots": spots });
     } catch (e) {
