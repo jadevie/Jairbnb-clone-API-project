@@ -4,21 +4,21 @@ const { Op } = require('sequelize');
 const bookings = [
   {
     "spotId": 1,
-    "userId": 2,
-    "startDate": "2021-11-19",
-    "endDate": "2021-11-20"
+    "userId": 3,
+    "startDate": "2023-11-20",
+    "endDate": "2023-11-30"
   },
   {
     "spotId": 2,
     "userId": 1,
-    "startDate": "2022-11-19",
-    "endDate": "2022-11-30"
+    "startDate": "2023-11-20",
+    "endDate": "2023-11-30"
   },
   {
     "spotId": 3,
     "userId": 2,
-    "startDate": "2022-12-10",
-    "endDate": "2022-12-20"
+    "startDate": "2023-11-20",
+    "endDate": "2023-11-30"
   }
 ];
 

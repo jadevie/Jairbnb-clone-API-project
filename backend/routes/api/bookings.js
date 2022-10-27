@@ -11,9 +11,8 @@ router.delete('/:bookingId', requireAuth, validateUpdateForBooking, async (req, 
     const userId = req.user.id;
     const id = req.params.bookingId;
     const booking = await Booking.findByPk(id);
-    // Spot must belong to the current user
-    if (booking.userId === userId) {
-        // Bookings that have been started can't be deleted
+
+    if (booking.userId === userId) {  // Spot must belong to the current user
         if (booking.startDate.setTime() <= new Date().setTime()) {
             res.status(403).json({
                 "message": "Bookings that have been started can't be deleted",
@@ -25,20 +24,20 @@ router.delete('/:bookingId', requireAuth, validateUpdateForBooking, async (req, 
             "message": "Successfully deleted",
             "statusCode": 200
         });
-    } else {
-        throw new Error("Forbidden");
     }
+    else { throw new Error("Forbidden"); }
 });
+
 
 // Edit a Booking
 router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
     const id = req.params.bookingId;
     const { startDate, endDate } = req.body;
-
     const bookingRequest = await Booking.findByPk(id);
     const bookingList = await Booking.findAll(
         { where: { spotId: bookingRequest.spotId } },
         { raw: true });
+
     for (let booking of bookingList) {
         // Can't edit booking that past end date
         if (new Date(endDate).getTime()
@@ -58,6 +57,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
                 }
             });
         }
+
         if (new Date(startDate).getTime() === new Date(booking.startDate).getTime()) {
             res.status(403).json({
                 "message": "Sorry, this spot is already booked for the specified dates",
@@ -74,7 +74,6 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
     bookingRequest.endDate = endDate;
     await bookingRequest.save();
     res.json(bookingRequest);
-
 });
 
 // Get all the bookings from current user
@@ -95,56 +94,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
     for (let booking of bookings) {
         let spotId = booking.Spot.id;
         const image = await SpotImage.findOne({
-            where: {
-                [Op.and]: [{ spotId }, { preview: true }]
-            }
+            where: { [Op.and]: [{ spotId }, { preview: true }] }
         });
         booking.Spot.previewImage = image.url;
     }
     res.json({ 'Bookings': bookings });
 });
 
-// Follow the order as readme file:
-// router.get('/current', requireAuth, async (req, res, next) => {
-//     const userId = req.user.id;
-//     const bookings = await Booking.findAll({
-//         where: { userId },
-//         raw: true
-//     });
-//     let result = [];
-//     for (let i = 0; i < bookings.length; i++) {
-//         const booking = bookings[i];
-
-
-//         const spots = await Spot.findOne({
-//             where: { onwerId: userId },
-//             include: [
-//                 {
-//                     model: SpotImage,
-//                     attributes: [],
-//                     required: false
-//                 }
-//             ],
-//             attributes: {
-//                 include: [
-//                     [Sequelize.col('SpotImages.url'), 'previewImage']]
-//             },
-//         });
-
-//         let bookingData = {};
-//         bookingData.id = booking['id'];
-//         bookingData.spotId = booking['spotId'];
-//         bookingData.Spot = spots;
-//         bookingData.userId = userId;
-//         bookingData.startDate = booking["startDate"];
-//         bookingData.endDate = booking["endDate"];
-//         bookingData.createdAt = booking["createdAt"];
-//         bookingData.updatedAt = booking["updatedAt"];
-
-//         result.push(bookingData);
-
-//     }
-//     res.json({ 'Bookings': result });
-// });
 
 module.exports = router;
