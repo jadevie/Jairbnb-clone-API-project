@@ -98,7 +98,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 [Op.and]: [{ spotId }, { preview: true }]
             }
         });
-        booking.Spot.previewImage = image.url;
+        if (image) booking.Spot.previewImage = image.url;
     }
     res.json({ 'Bookings': bookings });
 });
