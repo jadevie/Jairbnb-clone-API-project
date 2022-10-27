@@ -448,7 +448,7 @@ router.get('/', validateQueryInput, async (req, res, next) => {
         attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
         group: ['Spot.id'],
         ...query,
-        subQuery: false
+        subQuery: false //to remove the subquery generation.
     });
 
     for (let i = 0; i < spots.length; i++) {
