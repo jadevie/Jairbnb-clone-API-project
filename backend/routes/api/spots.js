@@ -64,7 +64,7 @@ router.post('/:spotId/bookings', requireAuth, authenticateSpotNotOwned, async (r
 
     for (let i = 0; i < bookings.length; i++) {
         const booking = bookings[i];
-        if (new Date(booking.startDate).toDateString() === new Date(startDate).toDateString()) {
+        if (new Date(booking.startDate).getTime() === new Date(startDate).getTime()) {
 
             res.status(403).json({
                 "message": "Sorry, this spot is already booked for the specified dates",
@@ -277,6 +277,37 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //     }
 // });
 
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    const userId = req.user.id;
+    const spotId = req.params.spotId;
+    const spot = await Spot.findByPk(spotId);
+    if (!spot) {
+        res.status(404).json({
+            "message": "Spot couldn't be found",
+            "statusCode": 404
+        });
+    }
+    if (userId !== spot.ownerId) {
+        let bookings = await Booking.findAll({
+            where: { userId },
+            attributes: ['spotId', 'startDate', 'endDate']
+        });
+        res.json({ "Bookings": bookings });
+    }
+
+    if (userId === spot.ownerId) {
+        let bookings = await Booking.findAll({
+            where: { userId },
+            include: {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        });
+        res.json({ "Bookings": bookings });
+    }
+
+});
+
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
@@ -345,18 +376,79 @@ router.get('/:spotId', async (req, res, next) => {
     res.json(spot);
 });
 
+//  Query parameter validation errors
+const validateQueryInput = [
+    check('page')
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('minLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('maxLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    check('minPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isFloat({ max: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+];
+
 // Get all Spots
-router.get('/', async (req, res, next) => {
+router.get('/', validateQueryInput, async (req, res, next) => {
+    let query = {};
+    let { page, size, maxLat, minLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+    // check if query has page or size
+    if (page || size) {
+        page = parseInt(page);
+        size = parseInt(size);
+        if (!page || page > 10) page = 1;
+        if (!size || size > 20) size = 20;
+        if (page > 0 && size > 0) {
+            query.limit = size;
+            query.offset = size * (page - 1);
+        }
+    }
+
+    // if (maxLat || minLat || minLng || maxLng || minPrice || maxPrice) {
+
+    // }
+
     const spots = await Spot.findAll({
         raw: true,
-        include: [
-            {
-                model: Review,
-                attributes: []
-            }
-        ],
+        include: [{
+            model: Review,
+            attributes: []
+        }],
         attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
-        group: ['Spot.id']
+        group: ['Spot.id'],
+        ...query,
+        subQuery: false //to remove the subquery generation.
     });
 
     for (let i = 0; i < spots.length; i++) {
@@ -369,7 +461,11 @@ router.get('/', async (req, res, next) => {
         if (!image.length) spot.previewImage = [];
         else { spot.previewImage = image[0].url; }
     }
-    res.json({ "Spots": spots });
+    res.json({
+        "Spots": spots,
+        page,
+        size
+    });
 });
 
 // Full Lazy loading
