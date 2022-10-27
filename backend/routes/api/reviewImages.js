@@ -18,6 +18,13 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         }
     });
 
+    if (!reviewImage) {
+        res.status(404).json({
+            "message": "Review Image couldn't be found",
+            "statusCode": 404
+        });
+    }
+
     if (reviewImage.Review.userId === userId) {
         await ReviewImage.destroy({ where: { id } });
         res.json({
