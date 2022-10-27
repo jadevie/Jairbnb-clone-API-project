@@ -5,7 +5,10 @@ const usersRouter = require('./users.js');
 const spotsRouter = require('./spots.js');
 const bookingsRouter = require('./bookings.js');
 const reviewsRouter = require('./reviews.js');
+<<<<<<< HEAD
 const imagesRouter = require('./images.js');
+=======
+>>>>>>> refactor
 const spotImagesRouter = require('./spotImages.js');
 const reviewImagesRouter = require('./reviewImages.js');
 const { restoreUser } = require('../../utils/auth.js');
@@ -25,12 +28,16 @@ router.use('/bookings', bookingsRouter);
 
 router.use('/reviews', reviewsRouter);
 
+<<<<<<< HEAD
 router.use('/images', imagesRouter);
 
+=======
+>>>>>>> refactor
 router.use('/spot-images', spotImagesRouter);
 
 router.use('/review-images', reviewImagesRouter);
 
+<<<<<<< HEAD
 // test route
 router.post('/test', function (req, res) {
     res.json({ requestBody: req.body });
@@ -68,5 +75,7 @@ router.post('/test', function (req, res) {
 //         return res.json(req.user);
 //     }
 // );
+=======
+>>>>>>> refactor
 
 module.exports = router;

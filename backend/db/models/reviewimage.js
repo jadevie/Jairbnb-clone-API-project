@@ -4,11 +4,6 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class ReviewImage extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       ReviewImage.belongsTo(models.Review, {
         foreignKey: 'reviewId'
@@ -28,9 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'ReviewImage',
     defaultScope: {
-      attributes: {
-        exclude: ['createdAt', 'updatedAt', 'reviewId']
-      }
+      attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] }
     }
   });
   return ReviewImage;

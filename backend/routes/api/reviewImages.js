@@ -18,6 +18,16 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
         }
     });
 
+<<<<<<< HEAD
+=======
+    if (!reviewImage) {
+        res.status(404).json({
+            "message": "Review Image couldn't be found",
+            "statusCode": 404
+        });
+    }
+
+>>>>>>> refactor
     if (reviewImage.Review.userId === userId) {
         await ReviewImage.destroy({ where: { id } });
         res.json({
@@ -25,6 +35,7 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
             "statusCode": 200
         });
     }
+<<<<<<< HEAD
     if (!reviewImage) {
         res.status(404).json({
             "message": "Review Image couldn't be found",
@@ -33,4 +44,9 @@ router.delete('/:imageId', requireAuth, async (req, res, next) => {
     }
 });
 
+=======
+});
+
+
+>>>>>>> refactor
 module.exports = router;

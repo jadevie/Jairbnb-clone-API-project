@@ -57,8 +57,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'ownerId',
         onDelete: 'CASCADE',
         hooks: true
-        // as: 'OwnedSpot'  // await user.getOwnedSpots()
+        // as: 'OwnedSpot'
       });
+      User.hasMany(models.Booking, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      User.hasMany(models.Review, {
+        foreignKey: 'userId',
+        onDelete: 'CASCADE',
+        hooks: true
+      });
+      // Many-Many relationship:
       // User.belongsToMany(models.Spot, {
       //   through: models.Booking,
       //   foreignKey: 'userId',
@@ -71,17 +82,6 @@ module.exports = (sequelize, DataTypes) => {
       //   otherKey: 'spotId',
       //   as: 'ReviewedSpot'  // await user.getReviewedSpots()
       // });
-
-      User.hasMany(models.Booking, {
-        foreignKey: 'userId',
-        onDelete: 'CASCADE',
-        hooks: true
-      });
-      User.hasMany(models.Review, {
-        foreignKey: 'userId',
-        onDelete: 'CASCADE',
-        hooks: true
-      });
     }
   };
   User.init({

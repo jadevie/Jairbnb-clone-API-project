@@ -24,7 +24,6 @@ const setTokenCookie = (res, user) => {
         secure: isProduction,
         sameSite: isProduction && "Lax"
     });
-
     return token;
 };
 
@@ -66,7 +65,7 @@ const requireAuth = function (req, _res, next) {
 };
 
 const requireProperAuthorizationForSpot = async function (req, res, next) {
-    const currentUserId = req.user.id;
+    const userId = req.user.id;
     const spotId = req.params.spotId;
     const spot = await Spot.findByPk(spotId);
 
@@ -77,7 +76,7 @@ const requireProperAuthorizationForSpot = async function (req, res, next) {
         });
     }
 
-    if (currentUserId === spot.ownerId) return next();
+    if (userId === spot.ownerId) return next();
 
     const err = new Error("Authentication required");
     err.message = "Forbidden";
@@ -87,7 +86,7 @@ const requireProperAuthorizationForSpot = async function (req, res, next) {
 
 const authenticateSpotNotOwned = async function (req, res, next) {
     try {
-        const currentUserId = req.user.id;
+        const userId = req.user.id;
         const spotId = req.params.spotId;
         const spot = await Spot.findByPk(spotId);
         if (!spot) {
@@ -96,7 +95,7 @@ const authenticateSpotNotOwned = async function (req, res, next) {
                 "statusCode": 404
             });
         }
-        if (currentUserId !== spot.ownerId) return next();
+        if (userId !== spot.ownerId) return next();
         else {
             const err = new Error("Forbidden");
             err.message = "Forbidden";
@@ -109,7 +108,7 @@ const authenticateSpotNotOwned = async function (req, res, next) {
 };
 
 const requireProperAuthorizationForReview = async function (req, res, next) {
-    const currentUserId = req.user.id;
+    const userId = req.user.id;
     const reviewId = req.params.reviewId;
     const review = await Review.findByPk(reviewId);
 
@@ -120,7 +119,7 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
         });
     }
 
-    if (currentUserId === review.userId) return next();
+    if (userId === review.userId) return next();
 
     const err = new Error("Authentication required");
     err.message = "Forbidden";
@@ -129,10 +128,10 @@ const requireProperAuthorizationForReview = async function (req, res, next) {
 };
 
 const validateUpdateForBooking = async function (req, res, next) {
-    const currentUserId = req.user.id;
+    const userId = req.user.id;
     const id = req.params.bookingId;
     const booking = await Booking.findByPk(id);
-    // Error when couldn't find a Booking
+
     if (!booking) {
         res.status(404).json({
             "message": "Booking couldn't be found",
@@ -140,13 +139,12 @@ const validateUpdateForBooking = async function (req, res, next) {
         });
     }
     // Check booking must belong to user
-    if (currentUserId === booking.userId) return next();
+    if (userId === booking.userId) return next();
 
     const err = new Error("Authentication required");
     err.message = "Authentication required";
     err.status = 403;
     return next(err);
-
 };
 
 module.exports = { setTokenCookie, restoreUser, requireAuth, requireProperAuthorizationForSpot, requireProperAuthorizationForReview, authenticateSpotNotOwned, validateUpdateForBooking };
