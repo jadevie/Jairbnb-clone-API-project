@@ -53,11 +53,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     lat: {
-      type: DataTypes.NUMBERIC,
+      type: DataTypes.NUMERIC,
       allowNull: false
     },
     lng: {
-      type: DataTypes.NUMBERIC,
+      type: DataTypes.NUMERIC,
       allowNull: false
     },
     name: {
@@ -69,7 +69,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     price: {
-      type: DataTypes.NUMBERIC,
+      type: DataTypes.NUMERIC,
       allowNull: false
     }
   }, {
