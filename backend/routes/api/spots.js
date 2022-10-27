@@ -423,10 +423,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']] },
-        attributes: {
-            include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']]
-        },
+        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)), 'avgStarRating']] },
         group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id']
 
     });
@@ -463,22 +460,22 @@ const validateQueryInput = [
     check('maxLat')
         .optional()
         .exists({ checkFalsy: true })
-        .isDecimal()
+        .isNumeric()
         .withMessage("Maximum latitude is invalid"),
     check('minLat')
         .optional()
         .exists({ checkFalsy: true })
-        .isDecimal()
+        .isNumeric()
         .withMessage("Minimum latitude is invalid"),
     check('minLng')
         .optional()
         .exists({ checkFalsy: true })
-        .isDecimal()
+        .isNumeric()
         .withMessage("Minimum latitude is invalid"),
     check('maxLng')
         .optional()
         .exists({ checkFalsy: true })
-        .isDecimal()
+        .isNumeric()
         .withMessage("Minimum longitude is invalid"),
     check('minPrice')
         .optional()
@@ -517,7 +514,7 @@ router.get('/', validateQueryInput, async (req, res, next) => {
             model: Review,
             attributes: []
         }],
-        attributes: { include: [[Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating']] },
+        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)), 'avgRating']] },
         group: ['Spot.id'],
         ...query,
         subQuery: false //to remove the subquery generation.
