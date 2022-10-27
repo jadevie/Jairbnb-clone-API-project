@@ -423,7 +423,7 @@ router.get('/:spotId', async (req, res, next) => {
                 attributes: ['id', 'firstName', 'lastName']
             }
         ],
-        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)), 'avgStarRating']] },
+        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 1), 'avgStarRating']] },
         group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id']
 
     });
@@ -514,7 +514,7 @@ router.get('/', validateQueryInput, async (req, res, next) => {
             model: Review,
             attributes: []
         }],
-        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars'), 1)), 'avgRating']] },
+        attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 1), 'avgRating']] },
         group: ['Spot.id'],
         ...query,
         subQuery: false //to remove the subquery generation.
