@@ -33,9 +33,9 @@ router.post('/', validateLogin, async (req, res, next) => {
     }
 
     //  If there is a user returned from the login static method, call setTokenCookie and return a JSON response with the user information.
-    await setTokenCookie(res, user);
+    const token = await setTokenCookie(res, user);
     let user1 = user.toJSON();
-    user1.token = "";
+    user1.token = token;
     return res.json({ ...user1 });
 });
 

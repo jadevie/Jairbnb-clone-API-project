@@ -117,7 +117,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
             });
 
-            if (!spotImage.length) { spot.previewImage = []; }
+            if (!spotImage.length) { spot.previewImage = null; }
             else { spot.previewImage = spotImage[0]['url']; }
         }
         review.Spot = allSpots;
@@ -127,7 +127,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             raw: true,
             attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] }
         });
-        review.ReviewImage = reviewImages;
+        review.ReviewImages = reviewImages;
     }
     res.json({ "Reviews": reviews });
 

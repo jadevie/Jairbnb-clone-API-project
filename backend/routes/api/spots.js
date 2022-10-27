@@ -203,7 +203,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
         });
 
-        if (!image.length) spot.previewImage = [];
+        if (!image.length) spot.previewImage = null;
         else { spot.previewImage = image[0].url; }
     }
     res.json({ "Spots": spots });
@@ -527,7 +527,7 @@ router.get('/', validateQueryInput, async (req, res, next) => {
             where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
         });
 
-        if (!image.length) spot.previewImage = [];
+        if (!image.length) spot.previewImage = null;
         else { spot.previewImage = image[0].url; }
     }
     res.json({
