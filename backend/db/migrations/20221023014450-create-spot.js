@@ -1,5 +1,5 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Spots', {
@@ -33,11 +33,11 @@ module.exports = {
         allowNull: false
       },
       lat: {
-        type: Sequelize.NUMBERIC,
+        type: Sequelize.NUMERIC,
         allowNull: false
       },
       lng: {
-        type: Sequelize.NUMBERIC,
+        type: Sequelize.NUMERIC,
         allowNull: false
       },
       name: {
@@ -49,7 +49,7 @@ module.exports = {
         allowNull: false
       },
       price: {
-        type: Sequelize.NUMBERIC,
+        type: Sequelize.NUMERIC,
         allowNull: false
       },
       createdAt: {
