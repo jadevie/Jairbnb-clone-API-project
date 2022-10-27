@@ -6,6 +6,7 @@ const { check, Result } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
 // Delete a Booking
 router.delete('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
     const userId = req.user.id;
