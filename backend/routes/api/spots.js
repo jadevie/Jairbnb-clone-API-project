@@ -53,51 +53,6 @@ const validateRequestReview = [
     handleValidationErrors
 ];
 
-//  Query parameter validation errors
-const validateQueryInput = [
-    check('page')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isInt({ gt: 0 })
-        .withMessage("Page must be greater than or equal to 1"),
-    check('size')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isInt({ gt: 0 })
-        .withMessage("Size must be greater than or equal to 1"),
-    check('maxLat')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage("Maximum latitude is invalid"),
-    check('minLat')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage("Minimum latitude is invalid"),
-    check('minLng')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage("Minimum latitude is invalid"),
-    check('maxLng')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isDecimal()
-        .withMessage("Minimum longitude is invalid"),
-    check('minPrice')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isFloat({ min: 0 })
-        .withMessage("Minimum price must be greater than or equal to 0"),
-    check('maxPrice')
-        .optional()
-        .exists({ checkFalsy: true })
-        .isFloat({ max: 0 })
-        .withMessage("Maximum price must be greater than or equal to 0"),
-    handleValidationErrors
-];
-
 
 // Create a Booking from a Spot based on the Spot's id
 router.post('/:spotId/bookings', requireAuth, authenticateSpotNotOwned, async (req, res, next) => {
@@ -491,6 +446,52 @@ router.get('/:spotId', async (req, res, next) => {
     }
     res.json(spot);
 });
+
+
+//  Query parameter validation errors
+const validateQueryInput = [
+    check('page')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Page must be greater than or equal to 1"),
+    check('size')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
+        .withMessage("Size must be greater than or equal to 1"),
+    check('maxLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Maximum latitude is invalid"),
+    check('minLat')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('minLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum latitude is invalid"),
+    check('maxLng')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isDecimal()
+        .withMessage("Minimum longitude is invalid"),
+    check('minPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isFloat({ min: 0 })
+        .withMessage("Minimum price must be greater than or equal to 0"),
+    check('maxPrice')
+        .optional()
+        .exists({ checkFalsy: true })
+        .isFloat({ max: 0 })
+        .withMessage("Maximum price must be greater than or equal to 0"),
+    handleValidationErrors
+];
 
 
 // Get all Spots
