@@ -40,8 +40,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
         { raw: true });
     for (let booking of bookingList) {
         // Can't edit booking that past end date
-        if (new Date(endDate).getTime()
-            < new Date().getTime()) {
+        if (new Date(endDate).getTime() < new Date().getTime()) {
             res.status(403).json({
                 "message": "Past bookings can't be modified",
                 "statusCode": 403
@@ -64,16 +63,19 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
         let endDateBookingString = new Date(booking.endDate);
 
         // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
-        if (!(startDateInput.getTime() < startDateBookingString.getTime() ||
-            endDateInput.getTime() > startDateBookingString.getTime())) {
-            return res.status(403).json({
-                "message": "Sorry, this spot is already booked for the specified dates",
-                "statusCode": 403,
-                "errors": {
-                    "startDate": "Start date conflicts with an existing booking",
-                    "endDate": "End date conflicts with an existing booking"
-                }
-            });
+        // only compare other user's booking timeline
+        if (booking.id !== id) {
+            if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
+                endDateInput.getTime() <= startDateBookingString.getTime())) {
+                return res.status(403).json({
+                    "message": "Sorry, this spot is already booked for the specified dates",
+                    "statusCode": 403,
+                    "errors": {
+                        "startDate": "Start date conflicts with an existing booking",
+                        "endDate": "End date conflicts with an existing booking"
+                    }
+                });
+            }
         }
     }
 
