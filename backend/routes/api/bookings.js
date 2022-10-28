@@ -57,8 +57,16 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
                 }
             });
         }
-        if (new Date(startDate).getTime() === new Date(booking.startDate).getTime()) {
-            res.status(403).json({
+
+        let startDateInput = new Date(startDate);
+        let endDateInput = new Date(endDate);
+        let startDateBookingString = new Date(booking.startDate);
+        let endDateBookingString = new Date(booking.endDate);
+
+        // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
+        if (!(startDateInput.getTime() < startDateBookingString.getTime() ||
+            endDateInput.getTime() > startDateBookingString.getTime())) {
+            return res.status(403).json({
                 "message": "Sorry, this spot is already booked for the specified dates",
                 "statusCode": 403,
                 "errors": {
@@ -99,6 +107,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         });
         if (image) booking.Spot.previewImage = image.url;
+        else booking.Spot.previewImage = null;
     }
     res.json({ 'Bookings': bookings });
 });
