@@ -40,8 +40,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
         { raw: true });
     for (let booking of bookingList) {
         // Can't edit booking that past end date
-        if (new Date(endDate).getTime()
-            < new Date().getTime()) {
+        if (new Date(endDate).getTime() < new Date().getTime()) {
             res.status(403).json({
                 "message": "Past bookings can't be modified",
                 "statusCode": 403
@@ -57,15 +56,26 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
                 }
             });
         }
-        if (new Date(startDate).getTime() === new Date(booking.startDate).getTime()) {
-            res.status(403).json({
-                "message": "Sorry, this spot is already booked for the specified dates",
-                "statusCode": 403,
-                "errors": {
-                    "startDate": "Start date conflicts with an existing booking",
-                    "endDate": "End date conflicts with an existing booking"
-                }
-            });
+
+        let startDateInput = new Date(startDate);
+        let endDateInput = new Date(endDate);
+        let startDateBookingString = new Date(booking.startDate);
+        let endDateBookingString = new Date(booking.endDate);
+
+        // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
+        // only compare other user's booking timeline
+        if (booking.id !== id) {
+            if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
+                endDateInput.getTime() <= startDateBookingString.getTime())) {
+                return res.status(403).json({
+                    "message": "Sorry, this spot is already booked for the specified dates",
+                    "statusCode": 403,
+                    "errors": {
+                        "startDate": "Start date conflicts with an existing booking",
+                        "endDate": "End date conflicts with an existing booking"
+                    }
+                });
+            }
         }
     }
 
@@ -99,6 +109,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             }
         });
         if (image) booking.Spot.previewImage = image.url;
+        else booking.Spot.previewImage = null;
     }
     res.json({ 'Bookings': bookings });
 });
