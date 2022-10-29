@@ -35,9 +35,8 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
     const { startDate, endDate } = req.body;
 
     const bookingRequest = await Booking.findByPk(id);
-    const bookingList = await Booking.findAll(
-        { where: { spotId: bookingRequest.spotId } },
-        { raw: true });
+    const bookingList = await Booking.findAll({where: { spotId: bookingRequest.spotId }, raw: true });
+
     for (let booking of bookingList) {
         // Can't edit booking that past end date
         if (new Date(endDate).getTime() < new Date().getTime()) {
@@ -64,7 +63,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
 
         // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
         // only compare other user's booking timeline
-        if (booking.id !== id) {
+        if (booking.id !== +id) {
             if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
                 endDateInput.getTime() <= startDateBookingString.getTime())) {
                 return res.status(403).json({
@@ -82,7 +81,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
     bookingRequest.startDate = startDate;
     bookingRequest.endDate = endDate;
     await bookingRequest.save();
-    res.json(bookingRequest);
+    return res.json(bookingRequest);
 
 });
 
@@ -144,7 +143,14 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
             });
         }
 
-        if (new Date(startDate).getTime() === new Date(booking.startDate).getTime()) {
+        let startDateInput = new Date(startDate);
+        let endDateInput = new Date(endDate);
+        let startDateBookingString = new Date(booking.startDate);
+        let endDateBookingString = new Date(booking.endDate);
+
+        // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
+        if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
+            endDateInput.getTime() <= startDateBookingString.getTime())) {
             res.status(403).json({
                 "message": "Sorry, this spot is already booked for the specified dates",
                 "statusCode": 403,
