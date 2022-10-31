@@ -29,6 +29,7 @@ router.delete('/:bookingId', requireAuth, validateUpdateForBooking, async (req, 
     else { throw new Error("Forbidden"); }
 });
 
+
 // Edit a Booking
 router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
     const id = req.params.bookingId;
@@ -61,7 +62,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
         let startDateBookingString = new Date(booking.startDate);
         let endDateBookingString = new Date(booking.endDate);
 
-        // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
+        // booking example: 11/20-11/25 / only available before 20 && after 25
         // only compare other user's booking timeline
         if (booking.id !== +id) {
             if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
@@ -77,13 +78,12 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
             }
         }
     }
-
     bookingRequest.startDate = startDate;
     bookingRequest.endDate = endDate;
     await bookingRequest.save();
     return res.json(bookingRequest);
-
 });
+
 
 // Get all the bookings from current user
 router.get('/current', requireAuth, async (req, res, next) => {
@@ -112,6 +112,36 @@ router.get('/current', requireAuth, async (req, res, next) => {
     }
     res.json({ 'Bookings': bookings });
 });
+
+// router.get('/current', requireAuth, async (req, res, next) => {
+//     const userId = req.user.id;
+//     const bookings = await Booking.findAll({
+//         raw: true,
+//         nest: true,
+//         where: { userId },
+//         include: {
+//             model: Spot,
+//             include: {
+//                 model: SpotImage,
+//                 where: { preview: true },// consider every spot has at least 1 image that set preview to true
+//             },
+//             attributes: {
+//                 exclude: ['createdAt', 'updatedAt']
+//             }
+//         }
+//     });
+
+//     for (let booking of bookings) {
+//         const value = booking.Spot.SpotImages.url;
+//         if (value) booking.Spot.previewImage = value;
+//         else booking.Spot.previewImage = null;
+//         delete booking.Spot.SpotImages;
+//     }
+//     res.json({ 'Bookings': bookings });
+// });
+
+
+
 
 //         const spots = await Spot.findOne({
 //             where: { onwerId: userId },

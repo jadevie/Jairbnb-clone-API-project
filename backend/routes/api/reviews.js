@@ -29,6 +29,7 @@ router.delete('/:reviewId', requireAuth, requireProperAuthorizationForReview, as
     });
 });
 
+
 // Edit a Review
 router.put('/:reviewId', requireAuth, validateRequestReview, async (req, res, next) => {
     const id = req.params.reviewId;
@@ -50,88 +51,91 @@ router.put('/:reviewId', requireAuth, validateRequestReview, async (req, res, ne
     }
 });
 
+
 // Get all Reviews of the Current User
 router.get('/current', requireAuth, async (req, res, next) => {
-    // eager loading
-    // const id = req.user.id;
-    // const reviews = await Review.findAll({
-    //     raw: true,
-    //     nest: true,
-    //     where: { userId: id },
-    //     include: [
-    //         {
-    //             model: User,
-    //             attributes: ['id', 'firstName', 'lastName']
-    //         },
-    //         {
-    //             model: Spot,
-    //             include: [{
-    //                 model: SpotImage
-    //             }],
-    //             attributes: {
-    //                 exclude: ['createdAt', 'updatedAt', 'description']
-    //             }
-    //         },
-    //         {
-    //             model: ReviewImage,
-    //             attributes: {
-    //                 exclude: ['createdAt', 'updatedAt', 'reviewId']
-    //             }
-    //         }
-    //     ]
-    // });
-
-    // const value = reviews[0].Spot.SpotImages.url; // image url
-
-    // reviews[0]['Spot']['previewImage'] = value; // assign for new pair
-
-    // delete reviews[0]['Spot']["SpotImages"];
-
-    // res.json({ "Reviews": reviews });
-
     // lazy loading
-    const id = req.user.id;
-    const reviews = await Review.findAll({
-        where: { userId: id },
-        raw: true
-    });
-
-    for (let i = 0; i < reviews.length; i++) {
-        const review = reviews[i];
-        const user = await User.findByPk(id, {
-            raw: true,
-            attributes: ['id', 'firstName', 'lastName']
-        });
-        review.User = user;
-
-        const allSpots = await Spot.findAll({
-            where: { ownerId: id },
-            raw: true,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'description'] }
+        const id = req.user.id;
+        const reviews = await Review.findAll({
+            where: { userId: id },
+            raw: true
         });
 
-        for (let i = 0; i < allSpots.length; i++) {
-            const spot = allSpots[i];
-            const spotImage = await SpotImage.findAll({
+        for (let i = 0; i < reviews.length; i++) {
+            const review = reviews[i];
+            const user = await User.findByPk(id, {
                 raw: true,
-                where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
+                attributes: ['id', 'firstName', 'lastName']
+            });
+            review.User = user;
+
+            const allSpots = await Spot.findAll({
+                where: { ownerId: id },
+                raw: true,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'description'] }
             });
 
-            if (!spotImage.length) { spot.previewImage = null; }
-            else { spot.previewImage = spotImage[0]['url']; }
+            for (let i = 0; i < allSpots.length; i++) {
+                const spot = allSpots[i];
+                const spotImage = await SpotImage.findAll({
+                    raw: true,
+                    where: { [Op.and]: [{ spotId: spot.id }, { preview: true }] }
+                });
+
+                if (!spotImage.length) { spot.previewImage = null; }
+                else { spot.previewImage = spotImage[0]['url']; }
+            }
+            review.Spot = allSpots;
+
+            const reviewImages = await ReviewImage.findAll({
+                where: { reviewId: review.id },
+                raw: true,
+                attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] }
+            });
+            review.ReviewImages = reviewImages;
         }
-        review.Spot = allSpots;
+        res.json({ "Reviews": reviews });
+    });
 
-        const reviewImages = await ReviewImage.findAll({
-            where: { reviewId: review.id },
-            raw: true,
-            attributes: { exclude: ['createdAt', 'updatedAt', 'reviewId'] }
-        });
-        review.ReviewImages = reviewImages;
-    }
-    res.json({ "Reviews": reviews });
+    // eager loading
+//     const id = req.user.id;
+//     const reviews = await Review.findAll({
+//         raw: true,
+//         nest: true,
+//         where: { userId: id },
+//         include: [
+//             {
+//                 model: User,
+//                 attributes: ['id', 'firstName', 'lastName']
+//             },
+//             {
+//                 model: Spot,
+//                 include: [{
+//                     model: SpotImage,
+//                     where: { preview: true }
+//                 }],
+//                 attributes: {
+//                     exclude: ['createdAt', 'updatedAt', 'description']
+//                 }
+//             },
+//             {
+//                 model: ReviewImage,
+//                 attributes: {
+//                     exclude: ['createdAt', 'updatedAt', 'reviewId']
+//                 }
+//             }
+//         ]
+//     });
 
-});
+//     for (let i = 0; i < reviews.length; i++) {
+//         const review = reviews[i];
+
+//         const value = review.Spot.SpotImages.url; // image url
+//         review.Spot.previewImage = value; // assign for new pair
+//         delete review.Spot.SpotImages;
+//     }
+//     res.json({ "Reviews": reviews });
+// });
 
 // Add an Image to a Review based on the Review's id
 router.post('/:reviewId/images', requireAuth, async (req, res, next) => {

@@ -9,6 +9,7 @@ const { raw } = require('express');
 const e = require('express');
 const router = express.Router();
 
+
 // Handling validation error for review
 const validateRequestForSpot = [
     check('address')
@@ -40,6 +41,7 @@ const validateRequestForSpot = [
         .withMessage("Price per day is required"),
     handleValidationErrors
 ];
+
 
 // Handling validation error for review
 const validateRequestReview = [
@@ -263,6 +265,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
 // });
 
 
+// Get all bookings by a Spot's Id
 router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
     const userId = req.user.id;
     const spotId = req.params.spotId;
@@ -293,7 +296,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
         });
         res.json({ "Bookings": bookings });
     }
-    res.json({ "Spots": spots });
 });
 
 // lazy loading
@@ -350,6 +352,7 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
 //     }
 // });
 
+
 // Get all Reviews by a Spot's id
 router.get('/:spotId/reviews', async (req, res, next) => {
     const spotId = req.params.spotId;
@@ -399,7 +402,6 @@ router.get('/:spotId', async (req, res, next) => {
         ],
         attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 1), 'avgStarRating']] },
         group: ['Spot.id', 'SpotImages.id', 'Reviews.id', 'Owner.id']
-
     });
 
     // let sum = 0;
@@ -491,7 +493,7 @@ router.get('/', validateQueryInput, async (req, res, next) => {
         attributes: { include: [[Sequelize.fn(`ROUND`, Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 1), 'avgRating']] },
         group: ['Spot.id'],
         ...query,
-        subQuery: false //to remove the subquery generation.
+        subQuery: false // to remove the subquery generation.
     });
 
     for (let i = 0; i < spots.length; i++) {
