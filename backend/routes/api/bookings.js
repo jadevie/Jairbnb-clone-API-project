@@ -35,7 +35,7 @@ router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res
     const { startDate, endDate } = req.body;
 
     const bookingRequest = await Booking.findByPk(id);
-    const bookingList = await Booking.findAll({where: { spotId: bookingRequest.spotId }, raw: true });
+    const bookingList = await Booking.findAll({ where: { spotId: bookingRequest.spotId }, raw: true });
 
     for (let booking of bookingList) {
         // Can't edit booking that past end date
@@ -109,87 +109,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
         });
         if (image) booking.Spot.previewImage = image.url;
         else booking.Spot.previewImage = null;
-    }
-    res.json({ 'Bookings': bookings });
-});
-
-
-// Edit a Booking
-router.put('/:bookingId', requireAuth, validateUpdateForBooking, async (req, res, next) => {
-    const id = req.params.bookingId;
-    const { startDate, endDate } = req.body;
-    const bookingRequest = await Booking.findByPk(id);
-    const bookingList = await Booking.findAll(
-        { where: { spotId: bookingRequest.spotId } },
-        { raw: true });
-
-    for (let booking of bookingList) {
-        // Can't edit booking that past end date
-        if (new Date(endDate).getTime()
-            < new Date().getTime()) {
-            res.status(403).json({
-                "message": "Past bookings can't be modified",
-                "statusCode": 403
-            });
-        }
-        // Body validation errors:
-        if (new Date(endDate).getTime() < new Date(startDate).getTime()) {
-            res.status(400).json({
-                "message": "Validation error",
-                "statusCode": 400,
-                "errors": {
-                    "endDate": "endDate cannot come before startDate"
-                }
-            });
-        }
-
-        let startDateInput = new Date(startDate);
-        let endDateInput = new Date(endDate);
-        let startDateBookingString = new Date(booking.startDate);
-        let endDateBookingString = new Date(booking.endDate);
-
-        // booking: 20-25 / F: 21-24 / F: 21 -26 /  F: 19-24/ T: before 20 after 25
-        if (!(startDateInput.getTime() >= endDateBookingString.getTime() ||
-            endDateInput.getTime() <= startDateBookingString.getTime())) {
-            res.status(403).json({
-                "message": "Sorry, this spot is already booked for the specified dates",
-                "statusCode": 403,
-                "errors": {
-                    "startDate": "Start date conflicts with an existing booking",
-                    "endDate": "End date conflicts with an existing booking"
-                }
-            });
-        }
-    }
-
-    bookingRequest.startDate = startDate;
-    bookingRequest.endDate = endDate;
-    await bookingRequest.save();
-    res.json(bookingRequest);
-});
-
-
-// Get all the bookings from current user
-router.get('/current', requireAuth, async (req, res, next) => {
-    const userId = req.user.id;
-    const bookings = await Booking.findAll({
-        raw: true,
-        nest: true,
-        where: { userId },
-        include: {
-            model: Spot,
-            attributes: {
-                exclude: ['createdAt', 'updatedAt']
-            }
-        }
-    });
-
-    for (let booking of bookings) {
-        let spotId = booking.Spot.id;
-        const image = await SpotImage.findOne({
-            where: { [Op.and]: [{ spotId }, { preview: true }] }
-        });
-        if (image) booking.Spot.previewImage = image.url;
     }
     res.json({ 'Bookings': bookings });
 });
