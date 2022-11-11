@@ -1,0 +1,23 @@
+Here are possible topics to talk about or demonstrate for an endpoint:
+
+What you struggled with most when implementing the endpoint
+-- Edit a booking endpoint: I was testing the booking to check for error and really struggle to put my understanding about date into code.
+
+
+Was there something that you really struggled with and had to come up with a creative solution for?
+-- Get all Spots route: I can't get limit and offset to work with eager loading, so I did some research and found out that sequelize don't allow some implementation that use Limit and offset with subquery so I set it to false and it works
+
+
+Is there something that you're excited about working on more in the future?
+-- I'm excited to work with React to see how my application will work with UI
+
+
+Is there any code logic or syntax that you're proud of?
+-- get reviews of current user: eager loading syntax with subqueries
+
+
+Is there any section of code that you think is particularly clean/maintainable?
+-- Add an image: router.post('/:reviewId/images
+
+Was there anything you did to make the code DRYer?
+-- Get all reviews of current user: I could eager loading it to make it more efficient
