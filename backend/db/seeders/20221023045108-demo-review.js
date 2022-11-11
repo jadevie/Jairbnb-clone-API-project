@@ -4,19 +4,19 @@ const { Op } = require('sequelize');
 const reviews = [
   {
     "spotId": 1,
-    "userId": 1,
+    "userId": 2,
     "review": "This was an awesome spot!",
     "stars": 5
   },
   {
     "spotId": 2,
-    "userId": 2,
+    "userId": 1,
     "review": "It's a great distance to downtown!",
     "stars": 4
   },
   {
     "spotId": 3,
-    "userId": 3,
+    "userId": 2,
     "review": "Food is not so good and the air condition is not working",
     "stars": 3
   },

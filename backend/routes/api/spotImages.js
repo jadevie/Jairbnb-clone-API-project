@@ -9,6 +9,7 @@ const { raw } = require('express');
 const e = require('express');
 const router = express.Router();
 
+
 router.delete('/:imageId', requireAuth, async (req, res) => {
     const userId = req.user.id;
     const id = req.params.imageId;
@@ -27,6 +28,7 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
             "statusCode": 404
         });
     }
+    
     if (spotImage.Spot.ownerId === userId) {
         await SpotImage.destroy({ where: { id } });
         res.json({

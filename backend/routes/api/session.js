@@ -6,6 +6,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
 // Validate Login check these keys and validate them
 const validateLogin = [
     check('credential')
@@ -17,6 +18,7 @@ const validateLogin = [
         .withMessage('Please provide a password.'),
     handleValidationErrors
 ];
+
 
 // Log in
 router.post('/', validateLogin, async (req, res, next) => {
@@ -38,6 +40,7 @@ router.post('/', validateLogin, async (req, res, next) => {
     user1.token = token;
     return res.json({ ...user1 });
 });
+
 
 // Log out
 router.delete('/', (_req, res) => {

@@ -5,6 +5,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
 const validateSignup = [
     check('firstName')
         .exists({ checkFalsy: true })
@@ -30,6 +31,7 @@ const validateSignup = [
         .withMessage('Password must be 6 characters or more.'),
     handleValidationErrors
 ];
+
 
 // Sign up
 router.post('/', validateSignup, async (req, res) => {
