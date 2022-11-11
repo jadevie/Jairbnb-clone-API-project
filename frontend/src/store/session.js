@@ -43,7 +43,7 @@ export const loginUserThunk = user => async (dispatch) => {
 export const restoreUser = () => async dispatch => {
     const response = await csrfFetch('/api/session');
     const data = await response.json();
-    dispatch(loginUser(data));
+    dispatch(loginUser(data.user));
     return response;
 };
 
@@ -56,7 +56,7 @@ export const logoutUserThunk = user => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        dispatch(logoutUser(data.user));
+        dispatch(logoutUser());
         return response;
     }
 };
