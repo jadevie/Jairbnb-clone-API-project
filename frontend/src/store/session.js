@@ -61,6 +61,23 @@ export const logoutUserThunk = user => async (dispatch) => {
     }
 };
 
+// Sign up
+export const signup = (user) => async (dispatch) => {
+    const { firstName, lastName, username, email, password } = user;
+    const response = await csrfFetch("/api/users", {
+        method: "POST",
+        body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+        }),
+    });
+    const data = await response.json();
+    dispatch(loginUser(data.user));
+    return response;
+};
 
 //* Reducer *//
 const initialState = { user: null };
