@@ -18,6 +18,7 @@ const LogInFormPage = () => {
 
     const onSubmit = e => {
         e.preventDefault();
+        setErrors([]);
         return dispatch(sessionActions.loginUserThunk({ credential, password }))
             .catch(async res => {
                 const data = await res.json();

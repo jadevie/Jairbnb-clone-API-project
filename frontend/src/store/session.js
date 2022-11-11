@@ -62,7 +62,7 @@ export const logoutUserThunk = user => async (dispatch) => {
 };
 
 // Sign up
-export const signup = (user) => async (dispatch) => {
+export const signupUserThunk = (user) => async (dispatch) => {
     const { firstName, lastName, username, email, password } = user;
     const response = await csrfFetch("/api/users", {
         method: "POST",
