@@ -48,17 +48,12 @@ export const restoreUser = () => async dispatch => {
 };
 
 // Log out
-export const logoutUserThunk = user => async (dispatch) => {
+export const logoutUserThunk = () => async (dispatch) => {
     const response = await csrfFetch(`/api/session`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        method: 'DELETE'
     });
-    if (response.ok) {
-        const data = await response.json();
-        dispatch(logoutUser());
-        return response;
-    }
+    dispatch(logoutUser());
+    return response;
 };
 
 // Sign up
