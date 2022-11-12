@@ -1,22 +1,16 @@
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './LoginForm.css';
 
-const LogInFormPage = () => {
+const LoginForm = () => {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
-
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-    if (sessionUser) return (
-        <Redirect to="/" />
-    );
 
-    const onSubmit = e => {
+    const handleSubmit = e => {
         e.preventDefault();
         setErrors([]);
         return dispatch(sessionActions.loginUserThunk({ credential, password }))
@@ -29,7 +23,7 @@ const LogInFormPage = () => {
     return (
         <div>
             <h2>Sign in</h2>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
@@ -56,4 +50,4 @@ const LogInFormPage = () => {
     );
 };
 
-export default LogInFormPage;
+export default LoginForm;
