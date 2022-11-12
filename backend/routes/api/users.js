@@ -42,7 +42,7 @@ router.post('/', validateSignup, async (req, res) => {
     let user1 = user.toJSON();
     user1.token = token;
     return res.json({
-        ...user1
+        user: user1
     });
 }
 );

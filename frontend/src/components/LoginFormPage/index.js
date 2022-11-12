@@ -10,7 +10,7 @@ const LogInFormPage = () => {
 
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState(''); // use [] if there more than 2 errors
+    const [errors, setErrors] = useState([]);
 
     if (sessionUser) return (
         <Redirect to="/" />
@@ -18,17 +18,21 @@ const LogInFormPage = () => {
 
     const onSubmit = e => {
         e.preventDefault();
-        return dispatch(sessionActions.loginUserThunk({ credential, password })).catch(async res => {
-            const data = await res.json();
-            if (data && data.message) setErrors(data.message);
-        });
+        setErrors([]);
+        return dispatch(sessionActions.loginUserThunk({ credential, password }))
+            .catch(async res => {
+                const data = await res.json();
+                if (data && data.message) setErrors([data.message]);
+            });
     };
 
     return (
         <div>
             <h2>Sign in</h2>
             <form onSubmit={onSubmit}>
-                <p>{errors}</p>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
                 <label>Username or Email
                     <input
                         type='text'
