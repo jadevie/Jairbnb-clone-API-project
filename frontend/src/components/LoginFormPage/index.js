@@ -22,7 +22,6 @@ const LogInFormPage = () => {
         return dispatch(sessionActions.loginUserThunk({ credential, password }))
             .catch(async res => {
                 const data = await res.json();
-                console.log(errors);
                 if (data && data.message) setErrors([data.message]);
             });
     };
