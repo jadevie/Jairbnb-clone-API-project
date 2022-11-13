@@ -12,11 +12,11 @@ const spots = [
     "lng": -122.4730327,
     "name": "App Academy",
     "description": "Place where web developers are created",
-    "price": 123
+    "price": 250
   },
   {
     "ownerId": 2,
-    "address": '123 Tahiti Lane',
+    "address": '23 Tahiti Lane',
     "city": 'Alameda',
     "state": 'CA',
     "country": 'USA',
@@ -24,7 +24,7 @@ const spots = [
     "lng": -245.4567329,
     "name": "Humby",
     "description": "It's peaceful town",
-    "price": 456
+    "price": 280
   },
   {
     "ownerId": 3,
@@ -36,7 +36,7 @@ const spots = [
     "lng": -145.4567562,
     "name": "Aspen",
     "description": "It's a great place to visit",
-    "price": 450
+    "price": 350
   }
 ];
 module.exports = {

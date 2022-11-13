@@ -45,3 +45,4 @@ const ProfileButton = ({ user }) => {
 };
 
 export default ProfileButton;
+
