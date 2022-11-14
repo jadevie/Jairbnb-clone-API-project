@@ -20,33 +20,47 @@ const LoginForm = () => {
             });
     };
 
+    const loginDemo = e => {
+        e.preventDefault();
+        return dispatch(sessionActions.loginUserThunk({
+            credential: 'Demo-lition',
+            password: 'password'
+        }));
+    };
+
     return (
-        <div>
-            <h2>Sign in</h2>
-            <form onSubmit={handleSubmit}>
-                <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                </ul>
-                <label>Username or Email
-                    <input
-                        type='text'
-                        value={credential}
-                        onChange={e => setCredential(e.target.value)}
-                        required
-                    />
-                </label>
-                <label>
-                    Password
-                    <input
-                        type='password'
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    />
-                </label>
-                <button type='submit'>Log In</button>
-            </form>
-        </div>
+        <>
+
+            <div>
+                <h2>Sign in</h2>
+                <form onSubmit={handleSubmit}>
+                    <ul>
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </ul>
+                    <label>Username or Email
+                        <input
+                            type='text'
+                            value={credential}
+                            onChange={e => setCredential(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <label>
+                        Password
+                        <input
+                            type='password'
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            required
+                        />
+                    </label>
+                    <button type='submit'>Log In</button>
+                </form>
+            </div>
+            <div>
+                <button onClick={loginDemo}>Log in as Demo User</button>
+            </div>
+        </>
     );
 };
 

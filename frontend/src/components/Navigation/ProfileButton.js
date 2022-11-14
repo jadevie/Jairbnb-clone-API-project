@@ -27,22 +27,21 @@ const ProfileButton = ({ user }) => {
 
     return (
         <>
-            <button onClick={openMenu}>
-                <i className="fa-solid fa-bars"></i>
-                <i className="fa-regular fa-user"></i>
+            <button onClick={openMenu} id="profile-button">
+                <i className="fa-solid fa-bars" style={{ padding: '0px 5px' }}></i>
+                <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
             </button>
             {showMenu && (
-                <ul className="profile-dropdown">
-                    <li>{user.username}</li>
-                    <li>{user.email}</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
-                    </li>
-                </ul>
+                    <ul className="profile-dropdown">
+                        <li>{user.username}</li>
+                        <li>{user.email}</li>
+                        <li>
+                            <button onClick={logout}>Log Out</button>
+                        </li>
+                    </ul>
             )}
         </>
     );
 };
 
 export default ProfileButton;
-

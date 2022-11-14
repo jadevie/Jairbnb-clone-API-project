@@ -3,3 +3,18 @@
     justify-content: space-between;
     padding: 20px 40px;
 }
+
+#profile-button {
+    width: 77px;
+    height: 42px;
+    padding: 5px 5px 5px 12px;
+    background: #FFFFFF;
+    border: 1px solid #dddddd;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.profile-dropdown {
+    z-index: 1;
+    position: absolute
+}

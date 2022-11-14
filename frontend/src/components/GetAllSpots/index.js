@@ -26,7 +26,8 @@ const GetAllSpots = () => {
                             <div>
                                 {`${spot.city}, ${spot.state}`}
                             </div>
-                            <div>
+                            <div style={{ fontWeight: "300" }}>
+                                <i class="fa-solid fa-star"></i>
                                 {(spot.avgRating).toFixed(1)}
                             </div>
                         </div>

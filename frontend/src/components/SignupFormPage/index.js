@@ -19,13 +19,14 @@ const SignupFormPage = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        setErrors([]);
         if (password === confirmPassword) {
             return dispatch(sessionActions.signupUserThunk({ firstName, lastName, email, username, password }))
                 .catch(async res => {
                     const data = await res.json();
-                    if (data & data.errors) setErrors(data.errors);
+                    if (data) setErrors(Object.values(data.errors));
                 });
-        }
+        };
         return setErrors(['Confirm Password field must be the same as the Password field']);
     };
 
