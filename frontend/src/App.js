@@ -25,6 +25,9 @@ function App() {
           <Route exact path="/spots">
             <GetAllSpots />
           </Route>
+          <Route exact path="/">
+            <GetAllSpots />
+          </Route>
         </Switch>
       )}
     </>

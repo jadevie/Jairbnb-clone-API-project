@@ -1,0 +1,29 @@
+.spot-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    row-gap: 50px;
+    margin: 16px 0 40px;
+    padding: 0 40px;
+    grid-auto-rows: minmax(100px, auto);
+}
+
+.city-avg-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.each-spot {
+    display: flex;
+    flex-direction: column;
+}
+
+a>img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 10px;
+}

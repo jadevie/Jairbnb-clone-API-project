@@ -10,8 +10,9 @@ export const getAllSpots = (spots) => {
     };
 };
 
+
 //* Thunk *//
-export const getAllSpotsThunk = () => async (dispatch) => {
+export const getAllSpotsThunk = () => async dispatch => {
     const response = await fetch(`/api/spots`);
     if (response.ok) {
         const data = await response.json();
@@ -20,12 +21,12 @@ export const getAllSpotsThunk = () => async (dispatch) => {
     }
 };
 
+
 //* Reducer *//
 const spotsReducer = (state = {}, action) => {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case GET_ALL_SPOTS:
-            // action.payload.map(spot => newState[spot.id] = spot);
             newState.Spots = action.payload;
             return newState;
         default:
