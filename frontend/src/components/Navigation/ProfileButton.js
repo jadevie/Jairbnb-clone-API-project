@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import CreateSpotForm from "../CreateSpotForm";
 
 const ProfileButton = ({ user }) => {
     const dispatch = useDispatch();
@@ -32,13 +33,13 @@ const ProfileButton = ({ user }) => {
                 <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
             </button>
             {showMenu && (
-                    <ul className="profile-dropdown">
-                        <li>{user.username}</li>
-                        <li>{user.email}</li>
-                        <li>
-                            <button onClick={logout}>Log Out</button>
-                        </li>
-                    </ul>
+                <ul className="profile-dropdown">
+                    <a href="/create-listing">Create a listing</a>
+                    <li>Trips</li>
+                    <li>
+                        <button onClick={logout}>Log Out</button>
+                    </li>
+                </ul>
             )}
         </>
     );

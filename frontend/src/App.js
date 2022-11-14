@@ -5,6 +5,7 @@ import SignupFormPage from './components/SignupFormPage';
 import * as sessionActions from "./store/session";
 import Navigation from './components/Navigation';
 import GetAllSpots from './components/GetAllSpots';
+import CreateSpotForm from './components/CreateSpotForm';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route exact path="/">
             <GetAllSpots />
+          </Route>
+          <Route exact path='/create-listing'>
+            <CreateSpotForm />
           </Route>
         </Switch>
       )}

@@ -28,7 +28,7 @@ const GetAllSpots = () => {
                             </div>
                             <div style={{ fontWeight: "300" }}>
                                 <i class="fa-solid fa-star"></i>
-                                {(spot.avgRating).toFixed(1)}
+                                {spot.avgRating && (spot.avgRating).toFixed(1)}
                             </div>
                         </div>
                         <p style={{ fontWeight: "300" }}>91 miles away</p>
