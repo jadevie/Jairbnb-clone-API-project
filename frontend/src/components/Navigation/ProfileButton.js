@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import CreateSpotForm from "../CreateSpotForm";
 
-const ProfileButton = ({ user }) => {
+const ProfileButton = ({ user, setLogin, setShowModal }) => {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
 
@@ -33,13 +33,24 @@ const ProfileButton = ({ user }) => {
                 <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
             </button>
             {showMenu && (
-                <ul className="profile-dropdown">
+                user ? <ul className="profile-dropdown">
                     <a href="/create-listing">Create a listing</a>
                     <li>Trips</li>
                     <li>
                         <button onClick={logout}>Log Out</button>
                     </li>
-                </ul>
+                </ul> :
+                    <ul className="profile-dropdown">
+                        <li><button onClick={() => {
+                            setLogin(true);
+                            setShowModal(true);
+                        }}>Log in</button></li>
+                        <li><button
+                            onClick={() => {
+                                setLogin(false);
+                                setShowModal(true);
+                            }}>Sign up</button></li>
+                    </ul>
             )}
         </>
     );

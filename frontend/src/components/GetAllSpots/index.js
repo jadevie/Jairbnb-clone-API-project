@@ -17,25 +17,25 @@ const GetAllSpots = () => {
             <div className="spot-container">
                 {allSpots.Spots?.length > 0 && allSpots.Spots.map(spot => (
                     <div className="each-spot">
-                        <div className="spot-img">
+                        <div className="spot-img" key={"img" + spot.id}>
                             <a href={`/spots/${spot.id}`}>
                                 <img src={spot.previewImage} alt="house" />
                             </a>
                         </div>
                         <div className="city-avg-container">
-                            <div>
+                            <div key={"state" + spot.id}>
                                 {`${spot.city}, ${spot.state}`}
                             </div>
-                            <div style={{ fontWeight: "300" }}>
+                            <div style={{ fontWeight: "300" }} key={"rating" + spot.id}>
                                 <i class="fa-solid fa-star"></i>
                                 {spot.avgRating && (spot.avgRating).toFixed(1)}
                             </div>
                         </div>
-                        <p style={{ fontWeight: "300" }}>91 miles away</p>
-                        <p style={{ fontWeight: "300" }}>Dec 10-15</p>
+                        <p style={{ fontWeight: "300" }} key={"miles" + spot.id}>91 miles away</p>
+                        <p style={{ fontWeight: "300" }} key={"date" + spot.id}>Dec 10-15</p>
                         <div>
-                            <span style={{ fontWeight: "bold" }}>{`$${spot.price}`} </span>
-                            <span style={{ fontWeight: "300" }}> night</span>
+                            <span style={{ fontWeight: "bold" }} key={"price" + spot.id}>{`$${spot.price}`} </span>
+                            <span style={{ fontWeight: "300" }} key={"night" + spot.id}> night</span>
                         </div>
                     </div>
                 ))}

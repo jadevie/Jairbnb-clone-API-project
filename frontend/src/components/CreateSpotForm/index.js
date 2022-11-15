@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createSpotThunk } from "../../store/spots";
+import { addSpotImageThunk, createSpotThunk } from "../../store/spots";
 import { useHistory } from 'react-router-dom';
 
-const CreateSpotForm = (spot) => {
+const CreateSpotForm = () => {
     const dispatch = useDispatch();
     const history = useHistory();
     const [address, setAddress] = useState('');
@@ -13,23 +13,28 @@ const CreateSpotForm = (spot) => {
     const [name, setName] = useState(''); // backend data uses name, frontend shows Title
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState("");
+    const [url, setUrl] = useState("");
+    const [preview, setPreview] = useState(true);
     const [errors, setErrors] = useState([]);
 
     const handleSubmit = async e => {
         e.preventDefault();
         setErrors([]);
-        const spot = {
-            address, city, state, country, name, description, price
-        };
-        console.log(spot);
+        const spot = { address, city, state, country, name, description, price };
+        const image = { url, preview };
         if (spot) {
-            const newSpot = await dispatch(createSpotThunk(spot));
-            // .catch(async response => {
-            //     const data = await response.json();
-            //     if (data) setErrors(Object.values(data.errors));
-            // });
+            const newSpot = await dispatch(createSpotThunk(spot))
+                .catch(async response => {
+                    const data = await response.json();
+                    if (data) setErrors(Object.values(data.errors));
+                });
+            const id = newSpot.id;
+            const newImage = await dispatch(addSpotImageThunk(image, id))
+                .catch(async response => {
+                    const data = await response.json();
+                    if (data) setErrors(Object.values(data.errors));
+                });
             history.push(`/spots/${newSpot.id}`);
-            return newSpot;
         }
     };
 
@@ -93,6 +98,17 @@ const CreateSpotForm = (spot) => {
                         type='number'
                         value={price}
                         onChange={e => setPrice(e.target.value)}
+                        require
+                    />
+                </label>
+                <label>Preview Image
+                    <input
+                        type='text'
+                        value={url}
+                        onChange={e => {
+                            setUrl(e.target.value);
+                            setPreview(true);
+                        }}
                         require
                     />
                 </label>

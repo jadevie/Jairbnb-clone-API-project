@@ -2,6 +2,8 @@ import { csrfFetch } from './csrf';
 //* Create Types *//
 const GET_ALL_SPOTS = 'spots/GET_ALL_SPOTS';
 const CREATE_SPOT = 'spots/CREATE_SPOT';
+const ADD_SPOT_IMAGE = 'spots/ADD_SPOT_IMAGE';
+const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS';
 
 //* Action creater *//
 export const getAllSpots = (spots) => {
@@ -18,6 +20,20 @@ export const createSpot = (spot) => {
     };
 };
 
+export const addSpotImage = (image) => {
+    return {
+        type: ADD_SPOT_IMAGE,
+        image
+    };
+};
+
+export const getSpotDetails = (spot) => {
+    return {
+        type: GET_SPOT_DETAILS,
+        spot
+    };
+};
+
 //* Thunk *//
 export const getAllSpotsThunk = () => async dispatch => {
     const response = await fetch(`/api/spots`);
@@ -29,7 +45,7 @@ export const getAllSpotsThunk = () => async dispatch => {
 };
 
 export const createSpotThunk = (data) => async dispatch => {
-    const response = await csrfFetch(`api/spots`, {
+    const response = await csrfFetch(`/api/spots`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -42,6 +58,28 @@ export const createSpotThunk = (data) => async dispatch => {
     }
 };
 
+
+export const addSpotImageThunk = (data, spotId) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    if (response.ok) {
+        const image = await response.json();
+        dispatch(addSpotImage(image));
+        return image;
+    }
+};
+
+export const getSpotDetailsThunk = id => async dispatch => {
+    const response = await fetch(`/api/spots/${id}`);
+    if (response.ok) {
+        const spot = await response.json();
+        dispatch(getSpotDetails(spot));
+    }
+};
+
 //* Reducer *//
 const spotsReducer = (state = {}, action) => {
     let newState = Object.assign({}, state);
@@ -51,6 +89,19 @@ const spotsReducer = (state = {}, action) => {
             return newState;
         case CREATE_SPOT:
             newState = {
+                ...action.spot,
+            };
+            return newState;
+        case ADD_SPOT_IMAGE:
+            newState = {
+                ...state,
+                ...action.image
+            };
+            return newState;
+        case GET_SPOT_DETAILS:
+
+            newState = {
+                ...state,
                 ...action.spot
             };
             return newState;
