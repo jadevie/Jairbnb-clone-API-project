@@ -34,11 +34,10 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
             </button>
             {showMenu && (
                 user ? <ul className="profile-dropdown">
-                    <a href="/create-listing">Create a listing</a>
-                    <li>Trips</li>
-                    <li>
+                    <a href="/hosting">Host an experience</a>
+                    <div>
                         <button onClick={logout}>Log Out</button>
-                    </li>
+                    </div>
                 </ul> :
                     <ul className="profile-dropdown">
                         <li><button onClick={() => {

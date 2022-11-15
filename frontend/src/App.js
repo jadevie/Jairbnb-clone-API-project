@@ -33,11 +33,16 @@ function App() {
           <Route exact path="/spots">
             <GetAllSpots />
           </Route>
-          <Route exact path='/create-listing'>
+          <Route exact path='/hosting'>
             <CreateSpotForm />
           </Route>
           <Route exact path="/">
             <GetAllSpots />
+          </Route>
+          <Route>
+            <h1>Oops!</h1>
+            <p>We can't seem to find the page you're looking for.</p>
+            <p>Error code: 404</p>
           </Route>
         </Switch>
       )}
