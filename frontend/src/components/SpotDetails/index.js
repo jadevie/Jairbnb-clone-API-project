@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 
 const SpotDetails = () => {
     const [errors, setErrors] = useState([]);
-
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -39,16 +38,15 @@ const SpotDetails = () => {
                     <div>{spot.avgStarRating}</div>
                     <div>{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
                     <div>
-                        {user.id === spot.ownerId ? (
+                        {user && user.id === spot.ownerId ? (
                             <div>
-                                <button>Add more images</button>
                                 <button onClick={handleRemove}>Remove listing</button>
                                 <button>Edit listing</button>
                             </div>) : <div></div>}
                     </div>
                     <div>
                         {spot.SpotImages && (spot.SpotImages).map(image => (
-                            <img src={image.url} alt='spot-img' />
+                            <img src={image.url} />
                         ))}
                     </div>
                     <div>

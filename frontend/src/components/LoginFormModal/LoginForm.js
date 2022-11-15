@@ -26,12 +26,12 @@ const LoginForm = ({ setShowModal }) => {
         return dispatch(sessionActions.loginUserThunk({
             credential: 'Demo-lition',
             password: 'password'
-        }));
+        }))
+            .then(setShowModal(false));
     };
 
     return (
         <>
-
             <div>
                 <h2>Sign in</h2>
                 <form onSubmit={handleSubmit}>
@@ -56,10 +56,8 @@ const LoginForm = ({ setShowModal }) => {
                         />
                     </label>
                     <button type='submit'>Log In</button>
+                    <button onClick={loginDemo}>Log in as Demo User</button>
                 </form>
-            </div>
-            <div>
-                <button onClick={loginDemo}>Log in as Demo User</button>
             </div>
         </>
     );

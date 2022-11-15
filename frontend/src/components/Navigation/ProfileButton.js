@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import CreateSpotForm from "../CreateSpotForm";
 
 const ProfileButton = ({ user, setLogin, setShowModal }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const [showMenu, setShowMenu] = useState(false);
 
     const openMenu = () => {
@@ -24,6 +26,7 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
     const logout = e => {
         e.preventDefault();
         dispatch(sessionActions.logoutUserThunk());
+        history.push("/");
     };
 
     return (

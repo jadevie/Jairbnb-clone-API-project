@@ -100,7 +100,7 @@ export const deleteSpotThunk = (id) => async dispatch => {
     }
     else if (!response.ok) {
         if (response.statusCode === 404) {
-           let error = await response.json();
+            let error = await response.json();
             throw new Error(error.message);
         }
     }
