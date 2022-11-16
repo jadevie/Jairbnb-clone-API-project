@@ -14,7 +14,7 @@ const LoginForm = ({ setShowModal }) => {
         e.preventDefault();
         setErrors([]);
         return dispatch(sessionActions.loginUserThunk({ credential, password }))
-            .then(setShowModal(false))
+            .then(() => setShowModal(false))
             .catch(async res => {
                 const data = await res.json();
                 if (data && data.message) setErrors([data.message]);
@@ -27,7 +27,7 @@ const LoginForm = ({ setShowModal }) => {
             credential: 'Demo-lition',
             password: 'password'
         }))
-            .then(setShowModal(false));
+            .then(() => setShowModal(false));
     };
 
     return (
