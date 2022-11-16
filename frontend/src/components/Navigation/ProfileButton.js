@@ -40,7 +40,7 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
                     user ? <ul className="profile-dropdown">
                         <a href="/hosting">Host an experience</a>
                         <div>
-                            <button onClick={logout}>Log Out</button>
+                            <button onClick={logout} className='logout-btn'>Log Out</button>
                         </div>
                     </ul> :
                         <ul className="dropdown-menu">
