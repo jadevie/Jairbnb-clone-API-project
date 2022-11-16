@@ -33,8 +33,8 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
         <>
             <div className="profile-container">
                 <button onClick={openMenu} id="profile-button">
-                    <i className="fa-solid fa-bars" style={{ padding: '0px 5px' }}></i>
-                    <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
+                    <i className="fa-solid fa-bars" style={{ padding: '0px 5px', fontSize: '20px' }}></i>
+                    <i class="fa-solid fa-circle-user" style={{ padding: '5px', fontSize: '20px' }}></i>
                 </button>
                 {showMenu && (
                     user ? <ul className="profile-dropdown">

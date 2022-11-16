@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots';
-import EditSpotForm from '../EditSpotFormModal/EditSpotForm';
-import { Modal } from '../../context/Modal';
+// import EditSpotForm from '../EditSpotFormModal/EditSpotForm';
+// import { Modal } from '../../context/Modal';
 import EditFormModal from '../EditSpotFormModal/EditSpotFormModal';
+import CreateReview from '../CreateReview/CreateReview';
+import { getReviewsThunk } from '../../store/reviews';
 
 
 const SpotDetails = () => {
@@ -17,6 +19,9 @@ const SpotDetails = () => {
     const spotObj = useSelector(state => state.spots);
     const spot = spotObj.singleSpot;
     const user = useSelector(state => state.session.user);
+    const reviews = useSelector(state => state.reviews);
+    const reviewsArray = Object.values(reviews.spotReviews);
+
 
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
@@ -24,6 +29,7 @@ const SpotDetails = () => {
                 const data = await res.json();
                 if (data && data.message) setErrors([data.message]);
             });
+        dispatch(getReviewsThunk(spotId));
     }, [dispatch, spotId]);
 
     const handleRemove = e => {
@@ -41,10 +47,6 @@ const SpotDetails = () => {
                     <div>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </div>
-                    {/* {showModal && <Modal onClose={() => setShowModal(false)}>
-                        <EditSpotForm setShowModal={() => setShowModal(false)} />
-                        <EditSpotForm onClose={setShowModal} />
-                    </Modal>} */}
                     <div>{spot.name}</div>
                     <div>{spot.avgStarRating}</div>
                     <div>{`${spot.city}, ${spot.state}, ${spot.country}`}</div>
@@ -56,7 +58,7 @@ const SpotDetails = () => {
                     </div>
                     <div>
                         {spot.SpotImages && (spot.SpotImages).map(image => (
-                            <img src={image.url} />
+                            <img src={image.url} alt='spot' />
                         ))}
                     </div>
                     <div>
@@ -67,6 +69,10 @@ const SpotDetails = () => {
                     <div>{spot.price}</div>
                 </div>
             </div>
+            {reviewsArray.length > 0 && reviewsArray.map(review => <li>{review.review}</li>)}
+            <div>
+            </div>
+            <CreateReview />
         </>
     );
 };

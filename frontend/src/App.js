@@ -7,6 +7,7 @@ import Navigation from './components/Navigation';
 import GetAllSpots from './components/GetAllSpots';
 import CreateSpotForm from './components/CreateSpotForm';
 import SpotDetails from './components/SpotDetails';
+import CreateReview from './components/CreateReview/CreateReview';
 
 function App() {
   const dispatch = useDispatch();

@@ -132,7 +132,7 @@ export const editSpotThunk = (data, id) => async dispatch => {
 //* Reducer *//
 const initialState = { allSpots: {}, singleSpot: {} };
 
-const spotsReducer = (state = initialState, action) => {  
+const spotsReducer = (state = initialState, action) => {
     let newState = Object.assign({}, state);
     switch (action.type) {
         case GET_ALL_SPOTS:
