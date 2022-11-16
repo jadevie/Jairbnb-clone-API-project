@@ -57,6 +57,7 @@
     font-weight: 600;
     min-width: 160px;
     text-align: left;
+    padding: 5px
 }
 
 .login-button:hover {
@@ -74,11 +75,9 @@
     font-weight: 400;
     min-width: 160px;
     text-align: left;
-
+    padding: 5px
 }
 
 .signup-button:hover {
     background-color: #DDDDDD;
 }
-
-

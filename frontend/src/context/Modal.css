@@ -24,6 +24,7 @@
     border: 1px solid #dddddd;
     border-radius: 15px;
     box-shadow: 1px 1px 1px 1px #DDDDDD;
-    min-width: 570px;
-    min-height: 440px;
+    min-width: 600px;
+    /* min-height: 440px; */
+    min-height: 510px;
 }

@@ -46,7 +46,7 @@ const LoginForm = ({ setShowModal }) => {
                         value={credential}
                         onChange={e => setCredential(e.target.value)}
                         required
-                        className='input'
+                        className='input border-top'
                     />
                     <input
                         placeholder=' Password'
@@ -54,7 +54,7 @@ const LoginForm = ({ setShowModal }) => {
                         value={password}
                         onChange={e => setPassword(e.target.value)}
                         required
-                        className='input'
+                        className='input border-bottom'
                     />
                     <button type='submit' className='login-btn'>Log In</button>
                     <button onClick={loginDemo} className='login-btn'>Log in as Demo User</button>
