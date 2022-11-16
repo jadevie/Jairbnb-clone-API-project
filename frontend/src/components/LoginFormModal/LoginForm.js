@@ -32,31 +32,32 @@ const LoginForm = ({ setShowModal }) => {
 
     return (
         <>
-            <div>
-                <h2>Sign in</h2>
-                <form onSubmit={handleSubmit}>
+            <div >
+                <h3>Log in or sign up</h3>
+                <h2>Welcome to Jairbnb</h2>
+                <form onSubmit={handleSubmit} className='login-form'>
                     <ul>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
-                    <label>Username or Email
-                        <input
-                            type='text'
-                            value={credential}
-                            onChange={e => setCredential(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <label>
-                        Password
-                        <input
-                            type='password'
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            required
-                        />
-                    </label>
-                    <button type='submit'>Log In</button>
-                    <button onClick={loginDemo}>Log in as Demo User</button>
+
+                    <input
+                        placeholder=' Username or Email'
+                        type='text'
+                        value={credential}
+                        onChange={e => setCredential(e.target.value)}
+                        required
+                        className='input'
+                    />
+                    <input
+                        placeholder=' Password'
+                        type='password'
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        required
+                        className='input'
+                    />
+                    <button type='submit' className='login-btn'>Log In</button>
+                    <button onClick={loginDemo} className='login-btn'>Log in as Demo User</button>
                 </form>
             </div>
         </>

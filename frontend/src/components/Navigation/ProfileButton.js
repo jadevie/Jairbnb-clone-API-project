@@ -31,29 +31,31 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
 
     return (
         <>
-            <button onClick={openMenu} id="profile-button">
-                <i className="fa-solid fa-bars" style={{ padding: '0px 5px' }}></i>
-                <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
-            </button>
-            {showMenu && (
-                user ? <ul className="profile-dropdown">
-                    <a href="/hosting">Host an experience</a>
-                    <div>
-                        <button onClick={logout}>Log Out</button>
-                    </div>
-                </ul> :
-                    <ul className="profile-dropdown">
-                        <li><button onClick={() => {
-                            setLogin(true);
-                            setShowModal(true);
-                        }}>Log in</button></li>
-                        <li><button
-                            onClick={() => {
-                                setLogin(false);
+            <div className="profile-container">
+                <button onClick={openMenu} id="profile-button">
+                    <i className="fa-solid fa-bars" style={{ padding: '0px 5px' }}></i>
+                    <i className="fa-regular fa-user" style={{ padding: '5px' }}></i>
+                </button>
+                {showMenu && (
+                    user ? <ul className="profile-dropdown">
+                        <a href="/hosting">Host an experience</a>
+                        <div>
+                            <button onClick={logout}>Log Out</button>
+                        </div>
+                    </ul> :
+                        <ul className="dropdown-menu">
+                            <div ><button className="login-button" onClick={() => {
+                                setLogin(true);
                                 setShowModal(true);
-                            }}>Sign up</button></li>
-                    </ul>
-            )}
+                            }}>Log in</button></div>
+                            <div><button className="signup-button"
+                                onClick={() => {
+                                    setLogin(false);
+                                    setShowModal(true);
+                                }}>Sign up</button></div>
+                        </ul>
+                )}
+            </div>
         </>
     );
 };

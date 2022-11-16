@@ -4,6 +4,12 @@
     padding: 20px 40px;
 }
 
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
 #profile-button {
     width: 77px;
     height: 42px;
@@ -12,9 +18,67 @@
     border: 1px solid #dddddd;
     border-radius: 25px;
     cursor: pointer;
+    /* position: relative */
+}
+
+#profile-button:hover {
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    transition: 0.2s;
 }
 
 .profile-dropdown {
     z-index: 1;
-    position: absolute
+    position: relative;
 }
+
+.dropdown-menu {
+    /* float: right; */
+    position: absolute;
+    border: 1px solid #dddddd;
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    min-width: 160px;
+    margin: 50px 0px 0px;
+    padding: 12px 16px;
+    z-index: 2;
+}
+
+
+
+.login-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 600;
+    min-width: 160px;
+    text-align: left;
+}
+
+.login-button:hover {
+    background-color: #DDDDDD;
+}
+
+.signup-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 400;
+    min-width: 160px;
+    text-align: left;
+
+}
+
+.signup-button:hover {
+    background-color: #DDDDDD;
+}
+
+
