@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { Redirect, useHistory } from "react-router-dom";
+import { Link, Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
 import CreateSpotForm from "../CreateSpotForm";
 
@@ -38,7 +38,7 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
                 </button>
                 {showMenu && (
                     user ? <ul className="profile-dropdown">
-                        <a href="/hosting">Host an experience</a>
+                        <Link to="/hosting" className='link'>Host an experience</Link>
                         <div>
                             <button onClick={logout} className='logout-btn'>Log Out</button>
                         </div>

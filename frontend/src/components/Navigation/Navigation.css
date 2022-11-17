@@ -1,3 +1,10 @@
+#logo {
+    width: 100px;
+    height: 30px;
+    text-decoration: none;
+    
+}
+
 .header-container {
     display: flex;
     justify-content: space-between;
@@ -51,18 +58,17 @@
     z-index: 2;
 }
 
-a:link,
-a:visited {
+.link {
     text-decoration: none;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #222222;
     font-weight: 400;
-    min-width: 160px;
+    width: 100%;
     text-align: left;
     padding: 5px;
 }
 
-a:hover {
+.link:hover {
     background-color: #DDDDDD;
 }
 

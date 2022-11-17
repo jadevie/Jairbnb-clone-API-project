@@ -7,6 +7,7 @@ import './Navigation.css';
 import LoginForm from '../LoginFormModal/LoginForm';
 import SignupFormPage from "../SignupFormPage";
 import { Modal } from "../../context/Modal";
+import logo from '../logo.png';
 
 const Navigation = ({ isLoaded }) => {
     const sessionUser = useSelector(state => state.session.user);
@@ -28,7 +29,9 @@ const Navigation = ({ isLoaded }) => {
     return (
         <div className='header-container'>
             <div>
-                <NavLink exact to="/">Home</NavLink>
+                <NavLink exact to="/">
+                    <img src={logo} alt='logo' id='logo' />
+                </NavLink>
             </div>
             <div>
                 {isLoaded && <ProfileButton
@@ -45,4 +48,4 @@ const Navigation = ({ isLoaded }) => {
     );
 };
 
-export default Navigation;
+export default Navigation;;
