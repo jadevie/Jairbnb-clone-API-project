@@ -27,15 +27,17 @@ const CreateSpotForm = () => {
             const newSpot = await dispatch(createSpotThunk(spot))
                 .catch(async response => {
                     const data = await response.json();
-                    if (data) setErrors(Object.values(data.errors));
+                    if (data && data.errors) setErrors(Object.values(data.errors));
                 });
-            const id = newSpot.id;
-            const newImage = await dispatch(addSpotImageThunk(image, id))
-                .catch(async response => {
-                    const data = await response.json();
-                    if (data) setErrors(Object.values(data.errors));
-                });
-            history.push(`/spots/${newSpot.id}`);
+            if (newSpot) {
+                const id = newSpot.id;
+                const newImage = await dispatch(addSpotImageThunk(image, id))
+                    .catch(async response => {
+                        const data = await response.json();
+                        if (data && data.errors) setErrors(Object.values(data.errors));
+                    });
+                history.push(`/spots/${newSpot.id}`);
+            }
         }
     };
 
@@ -43,15 +45,15 @@ const CreateSpotForm = () => {
         <div>
             <h2 id='createListingTitle'>Create New Listing </h2>
             <form onSubmit={handleSubmit} className='createListing-form'>
-                <ul>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                <ul style={{ color: 'red', paddingLeft: '40px', paddingTop: '40px' }}>
+                    {errors.length > 0 && errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label className='label'> Address
                     <input
                         type='text'
                         value={address}
                         onChange={e => setAddress(e.target.value)}
-                        require
+                        required
                         className="create-input"
                     />
                 </label>
@@ -60,7 +62,7 @@ const CreateSpotForm = () => {
                         type='text'
                         value={city}
                         onChange={e => setCity(e.target.value)}
-                        require
+                        required
                         className="create-input"
                     />
                 </label>
@@ -69,7 +71,7 @@ const CreateSpotForm = () => {
                         type='text'
                         value={state}
                         onChange={e => setState(e.target.value)}
-                        require
+                        required
                         className="create-input"
                     />
                 </label >

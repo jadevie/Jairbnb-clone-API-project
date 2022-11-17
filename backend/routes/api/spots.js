@@ -38,6 +38,7 @@ const validateRequestForSpot = [
         .withMessage("Description is required"),
     check('price')
         .exists({ checkFalsy: true })
+        .isInt({ gt: 0 })
         .withMessage("Price per day is required"),
     handleValidationErrors
 ];
