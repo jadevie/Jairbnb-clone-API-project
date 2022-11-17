@@ -7,6 +7,7 @@ import { getReviewsThunk } from '../../store/reviews';
 import CreateReviewModal from '../CreateReview/CreateReviewModal';
 
 
+
 const SpotDetails = () => {
     const [errors, setErrors] = useState([]);
 

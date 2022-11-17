@@ -8,6 +8,26 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 1,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 1,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 1,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 1,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 2,
     "url": "https://images.pexels.com/photos/4450329/pexels-photo-4450329.jpeg",
     "preview": true

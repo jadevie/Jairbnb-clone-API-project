@@ -102,7 +102,7 @@ const CreateSpotForm = () => {
                 </label>
                 <label className='label'> Price
                     <input
-                        type='currency'
+                        type='number'
                         value={price}
                         onChange={e => setPrice(e.target.value)}
                         required
