@@ -61,9 +61,11 @@ const reviewsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_REVIEWS:
-            newState = { ...state };
+            newState = {
+                spotReviews: {}
+            };
             const reviewsArrayFromDb = action.reviews.Reviews;
-            reviewsArrayFromDb.map(review => newState.spotReviews[review.id] = review);
+            reviewsArrayFromDb.forEach(review => newState.spotReviews[review.id] = review);
             return newState;
         case CREATE_REVIEW:
             newState = {

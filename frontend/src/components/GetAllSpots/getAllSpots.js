@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpotsThunk } from "../../store/spots";
 import "./getAllSpots.css";
+import { Link } from "react-router-dom";
 
 
 const GetAllSpots = () => {
@@ -18,9 +19,9 @@ const GetAllSpots = () => {
                 {allSpots && Object.values(allSpots.allSpots).map(spot => (
                     <div className="each-spot">
                         <div className="spot-img" key={"img" + spot.id}>
-                            <a href={`/spots/${spot.id}`}>
+                            <Link to={`/spots/${spot.id}`}>
                                 <img src={spot.previewImage} alt="house" />
-                            </a>
+                            </Link>
                         </div>
                         <div className="city-avg-container">
                             <div key={"state" + spot.id}>

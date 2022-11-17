@@ -2,15 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots';
-// import EditSpotForm from '../EditSpotFormModal/EditSpotForm';
-// import { Modal } from '../../context/Modal';
 import EditFormModal from '../EditSpotFormModal/EditSpotFormModal';
-import CreateReview from '../CreateReview/CreateReview';
 import { getReviewsThunk } from '../../store/reviews';
+import CreateReviewModal from '../CreateReview/CreateReviewModal';
 
 
 const SpotDetails = () => {
-    // const [showModal, setShowModal] = useState(false);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -43,7 +40,6 @@ const SpotDetails = () => {
         <>
             <div>
                 <div>
-                    <EditFormModal />
                     <div>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </div>
@@ -53,7 +49,12 @@ const SpotDetails = () => {
                     <div>
                         {user && user.id === spot.ownerId ? (
                             <div>
-                                <button onClick={handleRemove}>Remove listing</button>
+                                <div>
+                                    <button onClick={handleRemove}>Remove listing</button>
+                                </div>
+                                <div>
+                                    <EditFormModal />
+                                </div>
                             </div>) : <div></div>}
                     </div>
                     <div>
@@ -69,10 +70,18 @@ const SpotDetails = () => {
                     <div>{spot.price}</div>
                 </div>
             </div>
-            {reviewsArray.length > 0 && reviewsArray.map(review => <li>{review.review}</li>)}
+            <div>{`${spot.avgStarRating} - ${reviewsArray.length} reviews`}</div>
             <div>
+                {reviewsArray.length > 0 && reviewsArray.map(review => (
+                    <div>
+                        <li>{review.stars}</li>
+                        <li>{review.review}</li>
+                    </div>
+                ))}
             </div>
-            <CreateReview />
+            <div>
+                <CreateReviewModal />
+            </div>
         </>
     );
 };

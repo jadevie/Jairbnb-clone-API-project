@@ -14,7 +14,8 @@ const EditSpotForm = ({ onComplete }) => {
     const [errors, setErrors] = useState([]);
     const spot = useSelector(state => state.spots);
     const id = spot.singleSpot.id;
-
+    // const spotImagesArray = spot.singleSpot.SpotImages;
+    // const spotImages = spotImagesArray.map(image => image.url);
 
     const handleSubmitChange = e => {
         e.preventDefault();
