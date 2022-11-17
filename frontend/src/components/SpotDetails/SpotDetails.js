@@ -22,6 +22,13 @@ const SpotDetails = () => {
     const reviews = useSelector(state => state.reviews);
     const reviewsArray = Object.values(reviews.spotReviews);
 
+    let sum = 0;
+    let avgRating = 0;
+    reviewsArray.forEach(review => {
+        sum += review.stars;
+        avgRating = sum / reviewsArray.length;
+    });
+
     useEffect(() => {
         dispatch(getSpotDetailsThunk(spotId))
             .catch(async res => {
@@ -51,7 +58,7 @@ const SpotDetails = () => {
                     <div className='first-detail-container'>
                         <div>
                             <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
-                            {spot.avgStarRating && `${(spot.avgStarRating).toFixed(1)} - ${reviewsArray.length} reviews - `}
+                            {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews - `}
                             {`${spot.city}, ${spot.state}, ${spot.country}`}
                         </div>
                         <div>
@@ -94,9 +101,7 @@ const SpotDetails = () => {
                     <div>{spot.price}</div>
                 </div>
             </div>
-            <div>{spot.avgStarRating ?
-                `${spot.avgStarRating} - ${reviewsArray.length} reviews` :
-                `0 -${reviewsArray.length} reviews `}</div>
+            <div>{spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}</div>
             <div>
                 {reviewsArray.length > 0 && reviewsArray.map(review => (
                     <div>

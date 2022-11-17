@@ -13,11 +13,12 @@ const GetAllSpots = () => {
         dispatch(getAllSpotsThunk());
     }, [dispatch]);
 
+
     return (
         <>
             <div className="spot-container">
                 {allSpots && Object.values(allSpots.allSpots).map(spot => (
-                    <div className="each-spot">
+                    < div className="each-spot" >
                         <div className="spot-img" key={"img" + spot.id}>
                             <Link to={`/spots/${spot.id}`}>
                                 <img src={spot.previewImage} alt="house" />
@@ -29,7 +30,7 @@ const GetAllSpots = () => {
                             </div>
                             <div style={{ fontWeight: "300" }} key={"rating" + spot.id}>
                                 <i class="fa-solid fa-star"></i>
-                                {spot.avgRating && (spot.avgRating).toFixed(1)}
+                                {spot.avgRating && (spot.avgRating)}
                             </div>
                         </div>
                         <p style={{ fontWeight: "300" }} key={"miles" + spot.id}>91 miles away</p>
