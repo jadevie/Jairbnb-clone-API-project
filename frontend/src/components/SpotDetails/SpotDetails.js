@@ -9,6 +9,7 @@ import CreateReviewModal from '../CreateReview/CreateReviewModal';
 
 const SpotDetails = () => {
     const [errors, setErrors] = useState([]);
+
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -70,7 +71,9 @@ const SpotDetails = () => {
                     <div>{spot.price}</div>
                 </div>
             </div>
-            <div>{`${spot.avgStarRating} - ${reviewsArray.length} reviews`}</div>
+            <div>{spot.avgStarRating ?
+                `${spot.avgStarRating} - ${reviewsArray.length} reviews` :
+                `0 -${reviewsArray.length} reviews `}</div>
             <div>
                 {reviewsArray.length > 0 && reviewsArray.map(review => (
                     <div>

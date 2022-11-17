@@ -8,10 +8,9 @@ function CreateReviewModal() {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)}>Create Review</button>
+            <button onClick={() => setShowModal(true)}>Leave Review</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    {/* <EditSpotForm setShowModal={setShowModal} /> */}
                     {<CreateReview onComplete={() => setShowModal(false)} />}
                 </Modal>
             )}

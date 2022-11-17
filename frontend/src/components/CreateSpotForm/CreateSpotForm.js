@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { addSpotImageThunk, createSpotThunk } from "../../store/spots";
 import { useHistory } from 'react-router-dom';
+import './createSpotForm.css';
 
 const CreateSpotForm = () => {
     const dispatch = useDispatch();
@@ -40,68 +41,75 @@ const CreateSpotForm = () => {
 
     return (
         <div>
-            <h2>Create New Listing </h2>
-            <form onSubmit={handleSubmit}>
+            <h2 id='createListingTitle'>Create New Listing </h2>
+            <form onSubmit={handleSubmit} className='createListing-form'>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <label>Address
+                <label className='label'> Address
                     <input
                         type='text'
                         value={address}
                         onChange={e => setAddress(e.target.value)}
                         require
+                        className="create-input"
                     />
                 </label>
-                <label>City
+                <label className='label'> City
                     <input
                         type='text'
                         value={city}
                         onChange={e => setCity(e.target.value)}
                         require
+                        className="create-input"
                     />
                 </label>
-                <label>State
+                <label className='label'> State
                     <input
                         type='text'
                         value={state}
                         onChange={e => setState(e.target.value)}
                         require
+                        className="create-input"
                     />
-                </label>
-                <label>Country
+                </label >
+                <label className='label'> Country
                     <input
                         type='text'
                         value={country}
                         onChange={e => setCountry(e.target.value)}
-                        require
+                        required
+                        className="create-input"
                     />
                 </label>
-                <label>Title
+                <label className='label'> Title
                     <input
                         type='text'
                         value={name}
                         onChange={e => setName(e.target.value)}
-                        require
+                        required
+                        className="create-input"
                     />
                 </label>
-                <label>Description
-                    <input
+                <label className='label'> Description
+                    <textarea
                         type='text'
                         value={description}
                         onChange={e => setDescription(e.target.value)}
-                        require
+                        required
+                        className="create-input description"
                     />
                 </label>
-                <label>Price
+                <label className='label'> Price
                     <input
-                        type='number'
+                        type='currency'
                         value={price}
                         onChange={e => setPrice(e.target.value)}
-                        require
+                        required
+                        className="create-input"
                     />
                 </label>
-                <label>Preview Image
+                <label className='label'> Preview Image
                     <input
                         type='text'
                         value={url}
@@ -109,10 +117,11 @@ const CreateSpotForm = () => {
                             setUrl(e.target.value);
                             setPreview(true);
                         }}
-                        require
+                        required
+                        className="create-input"
                     />
                 </label>
-                <button type="submit">Create</button>
+                <button type="submit" className="create-btn">Create</button>
             </form>
         </div >
     );

@@ -1,0 +1,61 @@
+#createListingTitle {
+    color: #222222;
+    text-align: center;
+}
+
+.createListing-form {
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    /* max-width: 800px;
+    min-height: 600px; */
+    margin: 0px 30% 30%;
+    max-width: 800px;
+    height: 500px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+}
+
+.label {
+    font-size: 16px;
+    padding-top: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    font-size: 16px;
+}
+
+.create-input {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    font-size: 16px;
+    border: 1px solid #717171;
+    width: 100%;
+    border-radius: 10px;
+}
+
+.description {
+    resize: none;
+    height: 100px
+}
+
+.create-btn {
+    background-color: #e31c5f;
+    color: #FFFFFF;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-bottom: 40px
+}
+
+.create-btn:hover {
+    /* transition: linear-gradient(to right, #BD1E59 0%, #92174D 50%, #861453 100%); */
+    transition: opacity 1.25s ease 0s;
+}
