@@ -103,7 +103,7 @@ export const deleteSpotThunk = (id) => async dispatch => {
         method: 'DELETE'
     });
     if (response.ok) {
-        const { id: spot } = await response.json();
+        const spot = await response.json();
         dispatch(deleteSpot(spot));
         return spot;
     }
@@ -137,7 +137,7 @@ const spotsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_ALL_SPOTS:
-            newState = { ...state };
+            newState = { allSpots: {}, singleSpot: {} };
             const spotsArrayFromDb = action.spots.Spots;
             spotsArrayFromDb.forEach(spot => (
                 newState.allSpots[spot.id] = spot));

@@ -1,7 +1,7 @@
 import { csrfFetch } from './csrf';
 
 const CREATE_REVIEW = 'reviews/CREATE_REVIEW';
-// const DELETE_REVIEW = 'reviews/DELETE_REVIEW';
+const DELETE_REVIEW = 'reviews/DELETE_REVIEW';
 const GET_REVIEWS = 'reviews/GET_REVIEWS';
 
 export const createReview = review => {
@@ -18,15 +18,15 @@ export const getReviews = reviews => {
     };
 };
 
-// export const deleteReview = id => {
-//     return {
-//         type: DELETE_REVIEW,
-//         id
-//     };
-// };
+export const deleteReview = id => {
+    return {
+        type: DELETE_REVIEW,
+        id
+    };
+};
 
 
-export const getReviewsThunk = (spotId) => async dispatch => {
+export const getReviewsThunk = spotId => async dispatch => {
     const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
         method: 'GET'
     });
@@ -52,27 +52,35 @@ export const createReviewThunk = (spotId, data) => async dispatch => {
     }
 };
 
-// export const deleteReviewThunk = id => async dispatch => {
-//     const response = await csrfFetch(`/api/reviews/${id}`);
-// };
+export const deleteReviewThunk = id => async dispatch => {
+    const response = await csrfFetch(`/api/reviews/${id}`, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        const review = await response.json();
+        dispatch(deleteReview(id));
+        return review;
+    }
+};
 
 const initialState = { spotReviews: {} };
 const reviewsReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case GET_REVIEWS:
-            newState = {
-                spotReviews: {}
-            };
+            newState = { spotReviews: {} };
             const reviewsArrayFromDb = action.reviews.Reviews;
             reviewsArrayFromDb.forEach(review => newState.spotReviews[review.id] = review);
             return newState;
         case CREATE_REVIEW:
-            newState = {
-                ...state
-            };
+            newState = { ...state };
             newState.spotReviews[action.review.id] = action.review;
             return newState;
+        case DELETE_REVIEW:
+            newState = { ...state };
+            delete newState.spotReviews[action.id];
+            return newState;
+
         default:
             return state;
     }

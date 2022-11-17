@@ -31,9 +31,9 @@ function App() {
           <Route exact path="/signup">
             <SignupFormPage />
           </Route>
-          <Route exact path="/spots">
+          {/* <Route exact path="/spots">
             <GetAllSpots />
-          </Route>
+          </Route> */}
           <Route exact path='/hosting'>
             <CreateSpotForm />
           </Route>
