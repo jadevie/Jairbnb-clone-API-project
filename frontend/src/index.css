@@ -1,1 +1,18 @@
 /* TODO Add site wide styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    font-size: 16px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-x: hidden;
+}

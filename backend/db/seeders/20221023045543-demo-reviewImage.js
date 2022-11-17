@@ -13,6 +13,42 @@ const reviewImages = [
   {
     "reviewId": 3,
     "url": "image url"
+  },
+  {
+    "reviewId": 4,
+    "url": ""
+  },
+  {
+    "reviewId": 5,
+    "url": ""
+  },
+  {
+    "reviewId": 6,
+    "url": ""
+  },
+  {
+    "reviewId": 7,
+    "url": ""
+  },
+  {
+    "reviewId": 8,
+    "url": ""
+  },
+  {
+    "reviewId": 9,
+    "url": ""
+  },
+  {
+    "reviewId": 10,
+    "url": ""
+  },
+  {
+    "reviewId": 11,
+    "url": ""
+  },
+  {
+    "reviewId": 12,
+    "url": ""
   }
 ];
 module.exports = {

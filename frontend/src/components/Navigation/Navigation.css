@@ -1,0 +1,128 @@
+#logo {
+    width: 100px;
+    height: 30px;
+    text-decoration: none;
+    
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 40px;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#profile-button {
+    width: 77px;
+    height: 42px;
+    padding: 5px 5px 5px 12px;
+    background: #FFFFFF;
+    border: 1px solid #dddddd;
+    border-radius: 25px;
+    cursor: pointer;
+    /* position: relative */
+}
+
+#profile-button:hover {
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    transition: 0.2s;
+}
+
+.profile-dropdown {
+    position: absolute;
+    border: 1px solid #dddddd;
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    min-width: 160px;
+    margin: 50px 0px 0px;
+    padding: 12px 16px;
+    z-index: 2;
+}
+
+.dropdown-menu {
+    /* float: right; */
+    position: absolute;
+    border: 1px solid #dddddd;
+    background: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 1px 1px 1px 1px #DDDDDD;
+    min-width: 160px;
+    margin: 50px 0px 0px;
+    padding: 12px 16px;
+    z-index: 2;
+}
+
+.link {
+    text-decoration: none;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 400;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+}
+
+.link:hover {
+    background-color: #DDDDDD;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 400;
+    min-width: 160px;
+    text-align: left;
+    padding: 5px
+}
+
+.logout-btn:hover {
+    background-color: #DDDDDD;
+}
+
+
+.login-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 600;
+    min-width: 160px;
+    text-align: left;
+    padding: 5px
+}
+
+.login-button:hover {
+    background-color: #DDDDDD;
+}
+
+.signup-button {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222222;
+    font-weight: 400;
+    min-width: 160px;
+    text-align: left;
+    padding: 5px
+}
+
+.signup-button:hover {
+    background-color: #DDDDDD;
+}
