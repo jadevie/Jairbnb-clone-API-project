@@ -21,7 +21,7 @@ const GetAllSpots = () => {
                     < div className="each-spot" >
                         <div className="spot-img" key={"img" + spot.id}>
                             <Link to={`/spots/${spot.id}`}>
-                                <img src={spot.previewImage} alt="house" />
+                                <img src={spot.previewImage} alt="house" className="spot-img" />
                             </Link>
                         </div>
                         <div className="city-avg-container">

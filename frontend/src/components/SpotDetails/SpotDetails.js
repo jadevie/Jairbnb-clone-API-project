@@ -75,7 +75,7 @@ const SpotDetails = () => {
                         </div>
                     </div>
                     <div className='image-container'>
-                        <div>
+                        <div className='default-img-container'>
                             {spot.SpotImages && (spot.SpotImages).map(image => (
                                 image.preview === true ?
                                     <div>
@@ -87,7 +87,7 @@ const SpotDetails = () => {
                         <div className='other-img-container'>
                             {spot.SpotImages && (spot.SpotImages).map(image => (
                                 image.preview === false ?
-                                    <div>
+                                    <div className='each-img-container'>
                                         <img src={image.url} alt='spot' className='other-img' />
                                     </div> : null
                             ))}
