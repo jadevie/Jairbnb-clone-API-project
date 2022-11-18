@@ -4,21 +4,21 @@
 }
 
 .first-detail-container {
-    display: flex
-}
-
-.remove-edit-listing-container {
     display: flex;
+    justify-content: space-between;
+    margin-right: 40px;
 }
 
+
+/* container for whole images session */
 .image-container {
     min-width: 80vw;
     height: 55vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     overflow: hidden;
-    margin: 0px auto;
-    /*horizontally centers the container */
+    margin: 20px 40px auto;
+    /* centers the container */
     border-radius: 15px;
     column-gap: 10px;
 }
@@ -39,6 +39,7 @@
     object-fit: cover;
 }
 
+/* container for 4 images*/
 .other-img-container {
     display: grid;
     width: 100%;
@@ -52,18 +53,111 @@
     position: relative;
 }
 
+/* set container for each image in grid of 4 images so we can adjust the image size to fit in the container*/
 .each-img-container {
     overflow: hidden;
     position: relative;
 }
 
+/* 4 other images*/
 .other-img {
     width: 100%;
     height: 100%;
-    /* aspect-ratio: 1; */
     object-fit: cover;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.title {
+    font-weight: 500;
+    font-size: 28px;
+    color: #222;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 40px
+}
+
+.brief-detail {
+    font-size: 14px;
+    margin-left: 40px;
+    font-weight: 500;
+}
+
+.remove-edit-listing-container {
+    display: flex;
+    margin-left: 40px;
+    margin-bottom: 10px;
+}
+
+/* remove listing - edit listing btn*/
+.btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #e31c5f;
+    color: #FFFFFF;
+    padding: 5px 15px;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.spot-content {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dddddd;
+}
+
+.owner-content {
+    font-size: 22px;
+    font-weight: 500;
+    color: #222;
+}
+
+.house-content {
+    font-weight: 400;
+    color: #222;
+}
+
+.price {
+    margin-right: 40px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #222;
+}
+
+.spot-des {
+    margin-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #dddddd;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.review-layout {
+    margin-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.review-content {
+    margin-left: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }

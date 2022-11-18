@@ -26,7 +26,7 @@ const SpotDetails = () => {
     let avgRating = 0;
     reviewsArray.forEach(review => {
         sum += review.stars;
-        avgRating = sum / reviewsArray.length;
+        avgRating = (sum / reviewsArray.length).toFixed(1);
     });
 
     useEffect(() => {
@@ -52,11 +52,11 @@ const SpotDetails = () => {
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </div>
                 <div className='spot-detail-container'>
-                    <div>
+                    <div className='title'>
                         {spot.name}
                     </div>
                     <div className='first-detail-container'>
-                        <div>
+                        <div className='brief-detail'>
                             <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
                             {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews - `}
                             {`${spot.city}, ${spot.state}, ${spot.country}`}
@@ -65,13 +65,12 @@ const SpotDetails = () => {
                             {user && user.id === spot.ownerId ? (
                                 <div className='remove-edit-listing-container'>
                                     <div>
-                                        <button onClick={handleRemove}>Remove listing</button>
+                                        <button onClick={handleRemove} className='btn'>Remove listing</button>
                                     </div>
                                     <div>
                                         <EditFormModal />
                                     </div>
-                                </div>) :
-                                <div></div>}
+                                </div>) : null}
                         </div>
                     </div>
                     <div className='image-container'>
@@ -93,19 +92,22 @@ const SpotDetails = () => {
                             ))}
                         </div>
                     </div>
-                    <div>
-                        <p> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
-                        <p> 6 guests - 2 bedrooms - 3 beds - 1 bath</p>
+                    <div className='spot-content'>
+                        <div>
+                            <p className='owner-content'> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
+                            <p className='house-content'>6 guests - 2 bedrooms - 3 beds - 1 bath</p>
+                        </div>
+                        <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px' }}> per night</span></div>
                     </div>
-                    <div>{spot.description}</div>
-                    <div>{spot.price}</div>
+                    <div className='spot-des'>{spot.description}</div>
                 </div>
             </div>
-            <div>{spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}</div>
+            <div className='review-layout'>
+                <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
+                {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}</div>
             <div>
                 {reviewsArray.length > 0 && reviewsArray.map(review => (
-                    <div>
-                        <li>{review.stars}</li>
+                    <div className='review-content'>
                         <li>{review.review}</li>
                         {user && user.id === review.userId ? (
                             <button onClick={e => {

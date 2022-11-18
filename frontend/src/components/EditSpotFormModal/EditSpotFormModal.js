@@ -7,7 +7,7 @@ function EditFormModal() {
 
     return (
         <>
-            <button onClick={() => setShowModal(true)}>Edit listing</button>
+            <button className='btn' onClick={() => setShowModal(true)}>Edit listing</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     {/* <EditSpotForm setShowModal={setShowModal} /> */}

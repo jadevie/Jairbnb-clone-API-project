@@ -5,6 +5,7 @@
 }
 
 .label {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 16px;
     padding-top: 20px;
     padding-left: 40px;
@@ -12,21 +13,29 @@
 }
 
 .edit-input {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
-    font-size: 16px;
     border: 1px solid #717171;
     width: 100%;
     border-radius: 10px;
+    outline: none;
+}
+
+.edit-input:focus {
+    border: 2px solid #222222
 }
 
 .description {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     resize: none;
     height: 100px
 }
 
 .submit-btn {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #e31c5f;
     color: #FFFFFF;
     padding-top: 15px;
@@ -36,10 +45,9 @@
     margin-top: 20px;
     cursor: pointer;
     font-size: 18px;
-    margin-bottom: 40px
+    margin-bottom: 40px;
 }
 
 .submit-btn:hover {
-    /* transition: linear-gradient(to right, #BD1E59 0%, #92174D 50%, #861453 100%); */
-    transition: opacity 1.25s ease 0s;
+    transition: linear-gradient(to right, #BD1E59 0%, #92174D 50%, #861453 100%);
 }
