@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editSpotThunk } from '../../store/spots';
+import { editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import './editSpotForm.css';
 
 const EditSpotForm = ({ onComplete }) => {
@@ -17,11 +17,16 @@ const EditSpotForm = ({ onComplete }) => {
     const id = spot.singleSpot.id;
     // const spotImagesArray = spot.singleSpot.SpotImages;
     // const spotImages = spotImagesArray.map(image => image.url);
+    // const spotImagesArray = spot.singleSpot.SpotImages;
 
     const handleSubmitChange = e => {
         e.preventDefault();
         setErrors([]);
         const editedSpot = { address, city, state, country, name, description, price };
+
+        // spotImagesArray.map(image => {
+        //     return dispatch(addSpotImageThunk(image, id));
+        // });
 
         const newData = dispatch(editSpotThunk(editedSpot, id))
             .then(() => onComplete())
@@ -29,6 +34,7 @@ const EditSpotForm = ({ onComplete }) => {
                 const data = await response.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
+        dispatch(getSpotDetailsThunk(id));
         return newData;
     };
 

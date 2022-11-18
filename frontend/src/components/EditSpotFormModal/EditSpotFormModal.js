@@ -11,7 +11,7 @@ function EditFormModal() {
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     {/* <EditSpotForm setShowModal={setShowModal} /> */}
-                    {<EditSpotForm onComplete={() => setShowModal(false)} />}
+                    {<EditSpotForm onComplete={() => setShowModal(false)}  />}
                 </Modal>
             )}
         </>
