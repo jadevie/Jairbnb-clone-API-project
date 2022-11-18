@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import EditFormModal from '../EditSpotFormModal/EditSpotFormModal';
 import { deleteReviewThunk, getReviewsThunk } from '../../store/reviews';
@@ -22,6 +22,7 @@ const SpotDetails = () => {
     const reviews = useSelector(state => state.reviews);
     const reviewsArray = Object.values(reviews.spotReviews);
 
+    if (!spot) { (<Redirect to='/unknown' />); }
     let sum = 0;
     let avgRating = 0;
     reviewsArray.forEach(review => {
@@ -37,6 +38,7 @@ const SpotDetails = () => {
             });
         dispatch(getReviewsThunk(spotId));
     }, [dispatch, spotId]);
+
 
     const handleRemove = e => {
         e.preventDefault();
