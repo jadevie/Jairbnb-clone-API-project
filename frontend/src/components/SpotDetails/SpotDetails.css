@@ -1,3 +1,7 @@
+.detail-page {
+    margin: 20px 100px auto
+}
+
 .spot-detail-container {
     display: flex;
     flex-direction: column;
@@ -6,7 +10,6 @@
 .first-detail-container {
     display: flex;
     justify-content: space-between;
-    margin-right: 40px;
 }
 
 
@@ -87,7 +90,7 @@
 
 .remove-edit-listing-container {
     display: flex;
-    margin-left: 40px;
+    margin-right: 40px;
     margin-bottom: 10px;
 }
 
@@ -145,6 +148,7 @@
 }
 
 .review-layout {
+    display: flex;
     margin-left: 40px;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -155,13 +159,32 @@
 }
 
 .review-content {
+    max-width: 100vw;
     margin-left: 40px;
+    margin-right: 40px;
     padding-top: 20px;
     padding-bottom: 20px;
     color: #222;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    overflow-wrap: break-word;
 }
 
 .leave-review {
     margin-left: 40px;
 }
+
+.review-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 14px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 5px;
+    font-weight: 500;
+}
+
+.review-list {}

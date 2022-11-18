@@ -7,7 +7,7 @@
 .header-container {
     display: flex;
     justify-content: space-between;
-    padding: 20px 40px;
+    padding: 20px 80px;
     border: 1px solid #dddddd;
 }
 
