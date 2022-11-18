@@ -1,14 +1,14 @@
 #logo {
-    width: 100px;
-    height: 30px;
+    width: 110px;
+    height: 40px;
     text-decoration: none;
-    
 }
 
 .header-container {
     display: flex;
     justify-content: space-between;
     padding: 20px 40px;
+    border: 1px solid #dddddd;
 }
 
 .profile-container {
@@ -20,12 +20,11 @@
 #profile-button {
     width: 77px;
     height: 42px;
-    padding: 5px 5px 5px 12px;
+    padding: 5px 5px 5px 10px;
     background: #FFFFFF;
     border: 1px solid #dddddd;
     border-radius: 25px;
     cursor: pointer;
-    /* position: relative */
 }
 
 #profile-button:hover {

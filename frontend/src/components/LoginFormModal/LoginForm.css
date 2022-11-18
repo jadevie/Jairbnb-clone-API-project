@@ -3,16 +3,19 @@ h3 {
     font-size: 16px;
     text-align: center;
     border-bottom: 1px solid #dddddd;
-    padding: 25px
+    padding: 25px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 h2 {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #222;
     font-size: 28px;
-    padding: 30px
+    padding: 20px
 }
 
 .login-form {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     display: flex;
     flex-direction: column;
     padding-left: 30px;
@@ -22,7 +25,10 @@ h2 {
 .input {
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: 16px
+    padding-left: 10px;
+    font-size: 16px;
+    outline: none;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .border-top {
@@ -48,9 +54,19 @@ h2 {
     margin-top: 40px;
     cursor: pointer;
     font-size: 18px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .login-btn:hover {
-    /* transition: linear-gradient(to right, #BD1E59 0%, #92174D 50%, #861453 100%); */
-    transition: opacity 1.25s ease 0s;
+    transition: linear-gradient(to right, #BD1E59 0%, #92174D 50%, #861453 100%)
+}
+
+input:focus {
+    border: 2px solid #222222
+}
+
+.error-render {
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 16px;
+    color: rgb(246, 18, 18);
 }

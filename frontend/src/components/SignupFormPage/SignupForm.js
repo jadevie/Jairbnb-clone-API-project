@@ -35,7 +35,7 @@ const SignupFormPage = ({ setShowModal }) => {
         <div>
             <h2 className='sign-up'>Sign Up</h2>
             <form onSubmit={handleSubmit} className='signup-form'>
-                <ul>{errors.map((error, i) => <li key={i}>{error}</li>)}</ul>
+                <ul className='error-render'>{errors.map((error, i) => <li key={i}>{error}</li>)}</ul>
                 <input
                     placeholder=' First Name'
                     type='text'

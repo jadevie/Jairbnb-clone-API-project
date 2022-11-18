@@ -36,7 +36,7 @@ const LoginForm = ({ setShowModal }) => {
                 <h3>Log in or sign up</h3>
                 <h2>Welcome to Jairbnb</h2>
                 <form onSubmit={handleSubmit} className='login-form'>
-                    <ul>
+                    <ul className='error-render'>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </ul>
 

@@ -45,7 +45,7 @@ const CreateSpotForm = () => {
         <div>
             <h2 id='createListingTitle'>Create New Listing </h2>
             <form onSubmit={handleSubmit} className='createListing-form'>
-                <ul style={{ color: 'red', paddingLeft: '40px', paddingTop: '40px' }}>
+                <ul style={{ color: 'rgb(246, 18, 18)', paddingLeft: '40px', paddingTop: '40px' }}>
                     {errors.length > 0 && errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label className='label'> Address
@@ -113,7 +113,7 @@ const CreateSpotForm = () => {
                 </label>
                 <label className='label'> Preview Image
                     <input
-                        type='text'
+                        type='url'
                         value={url}
                         onChange={e => {
                             setUrl(e.target.value);
