@@ -1,0 +1,29 @@
+.review-title {
+    font-size: 28px;
+    text-align: center;
+    color: #222;
+    padding: 20px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.review-container {
+    display: flex;
+    flex-direction: column;
+    margin: 40px;
+}
+
+.select-rating {
+    padding-bottom: 20px;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.review-detail {
+    outline: none;
+    color: #222;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.review-detail:focus {
+    border: 2px solid #222222
+}

@@ -11,6 +11,7 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 
 
 const SpotDetails = () => {
+
     const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
@@ -41,8 +42,6 @@ const SpotDetails = () => {
 
     }, [dispatch, spotId]);
 
-    if (spot === {}) return (<Redirect to='/404' />);
-
     const handleRemove = e => {
         e.preventDefault();
         dispatch(deleteSpotThunk(spotId));
@@ -53,6 +52,7 @@ const SpotDetails = () => {
     return (
         <>
             <div>
+                {/* {Object.keys(spot).length === 0 ? (<Redirect to='/404' />) : null} */}
                 <div>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </div>
