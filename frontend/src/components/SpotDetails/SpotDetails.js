@@ -40,7 +40,7 @@ const SpotDetails = () => {
 
         dispatch(getReviewsThunk(spotId));
 
-    }, [dispatch, spotId]);
+    }, [dispatch, spotId, avgRating]);
 
     const handleRemove = e => {
         e.preventDefault();
@@ -51,84 +51,88 @@ const SpotDetails = () => {
 
     return (
         <>
-            <div>
-                {/* {Object.keys(spot).length === 0 ? (<Redirect to='/404' />) : null} */}
+            <div className='detail-page'>
+
                 <div>
-                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    {/* {Object.keys(spot).length === 0 ? (<Redirect to='/404' />) : null} */}
+                    <div>
+                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                    </div>
+                    <div className='spot-detail-container'>
+                        <div className='title'>
+                            {spot.name}
+                        </div>
+                        <div className='first-detail-container'>
+                            <div className='brief-detail'>
+                                <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
+                                {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews - `}
+                                {`${spot.city}, ${spot.state}, ${spot.country}`}
+                            </div>
+                            <div>
+                                {user && user.id === spot.ownerId ? (
+                                    <div className='remove-edit-listing-container'>
+                                        <div>
+                                            <button onClick={handleRemove} className='btn'>Remove listing</button>
+                                        </div>
+                                        <div>
+                                            <EditFormModal oldSpot={spot} />
+                                        </div>
+                                    </div>) : null}
+                            </div>
+                        </div>
+                        <div className='image-container'>
+                            <div className='default-img-container'>
+                                {spot.SpotImages && (spot.SpotImages).map(image => (
+                                    image.preview === true ?
+                                        <div>
+                                            <img src={image.url} alt='default' className='default-img' />
+                                        </div>
+                                        : null
+                                ))}
+                            </div>
+                            <div className='other-img-container'>
+                                {spot.SpotImages && (spot.SpotImages).map(image => (
+                                    image.preview === false ?
+                                        <div className='each-img-container'>
+                                            <img src={image.url} alt='spot' className='other-img' />
+                                        </div> : null
+                                ))}
+                            </div>
+                        </div>
+                        <div className='spot-content'>
+                            <div>
+                                <p className='owner-content'> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
+                                <p className='house-content'>6 guests - 2 bedrooms - 3 beds - 1 bath</p>
+                            </div>
+                            <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px' }}> per night</span>
+                            </div>
+                        </div>
+                        <div className='spot-des'>{spot.description}</div>
+                    </div>
                 </div>
-                <div className='spot-detail-container'>
-                    <div className='title'>
-                        {spot.name}
+
+                <div className='review-layout'>
+                    <i className="fa-solid fa-star" style={{ fontSize: '12px', padding: '5px' }}></i>
+                    {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
+                    <div className='leave-review'>
+                        {user && <CreateReviewModal />}
                     </div>
-                    <div className='first-detail-container'>
-                        <div className='brief-detail'>
-                            <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
-                            {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews - `}
-                            {`${spot.city}, ${spot.state}, ${spot.country}`}
-                        </div>
-                        <div>
-                            {user && user.id === spot.ownerId ? (
-                                <div className='remove-edit-listing-container'>
-                                    <div>
-                                        <button onClick={handleRemove} className='btn'>Remove listing</button>
-                                    </div>
-                                    <div>
-                                        <EditFormModal />
-                                    </div>
-                                </div>) : null}
-                        </div>
-                    </div>
-                    <div className='image-container'>
-                        <div className='default-img-container'>
-                            {spot.SpotImages && (spot.SpotImages).map(image => (
-                                image.preview === true ?
-                                    <div>
-                                        <img src={image.url} alt='default' className='default-img' />
-                                    </div>
-                                    : null
-                            ))}
-                        </div>
-                        <div className='other-img-container'>
-                            {spot.SpotImages && (spot.SpotImages).map(image => (
-                                image.preview === false ?
-                                    <div className='each-img-container'>
-                                        <img src={image.url} alt='spot' className='other-img' />
-                                    </div> : null
-                            ))}
-                        </div>
-                    </div>
-                    <div className='spot-content'>
-                        <div>
-                            <p className='owner-content'> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
-                            <p className='house-content'>6 guests - 2 bedrooms - 3 beds - 1 bath</p>
-                        </div>
-                        <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px' }}> per night</span>
-                        </div>
-                    </div>
-                    <div className='spot-des'>{spot.description}</div>
                 </div>
-            </div>
 
-            <div className='review-layout'>
-                <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
-                {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
-            </div>
+                <div className='review-content'>
+                    {reviewsArray.length > 0 && reviewsArray.map(review => (
+                        <div className='review-list'>
+                            <li>{review.review}</li>
 
-            <div>
-                {reviewsArray.length > 0 && reviewsArray.map(review => (
-                    <div className='review-content'>
-                        <li>{review.review}</li>
-                        {user && user.id === review.userId ? (
-                            <button className='btn' onClick={e => {
-                                e.preventDefault();
-                                dispatch(deleteReviewThunk(review.id));
-                            }}>Remove review</button>) : null}
-                    </div>
-                ))}
-            </div>
-
-            <div className='leave-review'>
-                <CreateReviewModal />
+                            {user && user.id === review.userId ? (
+                                <button className='review-btn' onClick={e => {
+                                    e.preventDefault();
+                                    dispatch(deleteReviewThunk(review.id));
+                                }}>Remove review
+                                </button>) : null}
+                        </div>
+                    ))}
+                </div>
             </div>
         </>
 

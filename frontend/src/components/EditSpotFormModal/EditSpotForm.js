@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editSpotThunk } from '../../store/spots';
+import { editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import './editSpotForm.css';
 
-const EditSpotForm = ({ onComplete }) => {
+const EditSpotForm = (props) => {
+    const { onComplete, oldSpot } = props;
     const dispatch = useDispatch();
-    const [address, setAddress] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [name, setName] = useState("");
-    const [description, setDescription] = useState("");
-    const [price, setPrice] = useState(0);
-    const [errors, setErrors] = useState([]);
     const spot = useSelector(state => state.spots);
     const id = spot.singleSpot.id;
-    // const spotImagesArray = spot.singleSpot.SpotImages;
-    // const spotImages = spotImagesArray.map(image => image.url);
+
+    const [address, setAddress] = useState(oldSpot.address);
+    const [city, setCity] = useState(oldSpot.city);
+    const [state, setState] = useState(oldSpot.state);
+    const [country, setCountry] = useState(oldSpot.country);
+    const [name, setName] = useState(oldSpot.name);
+    const [description, setDescription] = useState(oldSpot.description);
+    const [price, setPrice] = useState(oldSpot.price);
+    const [errors, setErrors] = useState([]);
 
     const handleSubmitChange = e => {
         e.preventDefault();
@@ -29,6 +29,7 @@ const EditSpotForm = ({ onComplete }) => {
                 const data = await response.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
+        dispatch(getSpotDetailsThunk(id));
         return newData;
     };
 

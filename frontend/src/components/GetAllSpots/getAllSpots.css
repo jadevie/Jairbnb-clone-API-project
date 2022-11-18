@@ -4,7 +4,7 @@
     gap: 25px;
     row-gap: 50px;
     margin: 80px 0 40px;
-    padding: 0 40px;
+    padding: 0 80px;
     grid-auto-rows: minmax(100px, auto);
 }
 
