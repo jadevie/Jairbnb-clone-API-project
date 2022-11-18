@@ -75,7 +75,7 @@ const SpotDetails = () => {
                                             <button onClick={handleRemove} className='btn'>Remove listing</button>
                                         </div>
                                         <div>
-                                            <EditFormModal />
+                                            <EditFormModal oldSpot={spot} />
                                         </div>
                                     </div>) : null}
                             </div>

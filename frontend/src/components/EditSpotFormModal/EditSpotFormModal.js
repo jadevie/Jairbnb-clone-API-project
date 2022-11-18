@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../../context/Modal';
 import EditSpotForm from './EditSpotForm';
 
-function EditFormModal() {
+function EditFormModal({ oldSpot }) {
     const [showModal, setShowModal] = useState(false);
 
     return (
@@ -10,8 +10,9 @@ function EditFormModal() {
             <button className='btn' onClick={() => setShowModal(true)}>Edit listing</button>
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
-                    {/* <EditSpotForm setShowModal={setShowModal} /> */}
-                    {<EditSpotForm onComplete={() => setShowModal(false)}  />}
+                    {<EditSpotForm
+                        onComplete={() => setShowModal(false)}
+                        oldSpot={oldSpot} />}
                 </Modal>
             )}
         </>
