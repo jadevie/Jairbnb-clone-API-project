@@ -104,7 +104,7 @@ const SpotDetails = () => {
                                 <p className='owner-content'> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
                                 <p className='house-content'>6 guests - 2 bedrooms - 3 beds - 1 bath</p>
                             </div>
-                            <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px' }}> per night</span>
+                            <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px', marginRight: '40px' }}> night</span>
                             </div>
                         </div>
                         <div className='spot-des'>{spot.description}</div>

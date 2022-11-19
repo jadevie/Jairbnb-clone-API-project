@@ -1,5 +1,6 @@
 .detail-page {
-    margin: 20px 100px auto
+    margin: auto;
+    padding: 40px
 }
 
 .spot-detail-container {
@@ -90,8 +91,8 @@
 
 .remove-edit-listing-container {
     display: flex;
-    margin-right: 40px;
     margin-bottom: 10px;
+    margin-right: 40px;
 }
 
 /* remove listing - edit listing btn*/
@@ -131,7 +132,6 @@
 }
 
 .price {
-    margin-right: 40px;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-weight: 600;
     font-size: 20px;
@@ -140,6 +140,7 @@
 
 .spot-des {
     margin-left: 40px;
+    margin-right: 40px;
     padding-top: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #dddddd;
@@ -150,6 +151,7 @@
 .review-layout {
     display: flex;
     margin-left: 40px;
+    margin-right: 40px;
     padding-top: 20px;
     padding-bottom: 20px;
     color: #222;
