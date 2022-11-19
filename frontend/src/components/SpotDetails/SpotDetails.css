@@ -11,8 +11,8 @@
 .first-detail-container {
     display: flex;
     justify-content: space-between;
+    color: #3c3c3c
 }
-
 
 /* container for whole images session */
 .image-container {
@@ -72,6 +72,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
 }
 
 .title {
@@ -87,6 +88,7 @@
     font-size: 14px;
     margin-left: 40px;
     font-weight: 500;
+    display: flex;
 }
 
 .remove-edit-listing-container {
@@ -115,20 +117,21 @@
     display: flex;
     justify-content: space-between;
     margin-left: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    margin-right: 40px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     border-bottom: 1px solid #dddddd;
 }
 
 .owner-content {
     font-size: 22px;
     font-weight: 500;
-    color: #222;
+    color: #222
 }
 
 .house-content {
     font-weight: 400;
-    color: #222;
+    color: #3c3c3c
 }
 
 .price {
@@ -138,13 +141,45 @@
     color: #222;
 }
 
+.more-info-border {
+    border-bottom: 1px solid #dddddd;
+    margin-right: 40px;
+    margin-left: 40px;
+    padding: 20px 0px;
+}
+
+.more-info-container {
+    display: flex;
+    padding: 10px
+}
+
+.more-info-title {
+    font-weight: 500;
+    color: #222;
+}
+
+.more-info-p {
+    color: #3c3c3c;
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.aircover {
+    border-bottom: 1px solid #dddddd;
+    margin-right: 40px;
+    margin-left: 40px;
+    padding: 10px 0px 40px 0px;
+    color: #3c3c3c;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
 .spot-des {
     margin-left: 40px;
     margin-right: 40px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 40px;
+    padding-bottom: 40px;
     border-bottom: 1px solid #dddddd;
-    color: #222;
+    color: #3c3c3c;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -152,7 +187,7 @@
     display: flex;
     margin-left: 40px;
     margin-right: 40px;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-bottom: 20px;
     color: #222;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -165,10 +200,11 @@
     margin-left: 40px;
     margin-right: 40px;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     color: #222;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     overflow-wrap: break-word;
+    color: #3c3c3c
 }
 
 .leave-review {
@@ -187,6 +223,10 @@
     border-radius: 5px;
     padding: 5px;
     font-weight: 500;
+    margin-left: 10px
 }
 
-.review-list {}
+.review-list {
+    display: flex;
+    line-height: 30px;
+}

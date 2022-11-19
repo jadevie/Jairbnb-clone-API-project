@@ -64,8 +64,13 @@ const SpotDetails = () => {
                         </div>
                         <div className='first-detail-container'>
                             <div className='brief-detail'>
-                                <i className="fa-solid fa-star" style={{ fontSize: '12px' }}></i>
-                                {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews - `}
+                                <i className="fa-solid fa-star" style={{
+                                    fontSize: '12px', paddingTop: '2px'
+                                }}></i>
+                                <div style={{ paddingLeft: '5px', paddingRight: '20px' }}>  {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews `}</div>
+
+                                <i className="fa-solid fa-chess-pawn"></i>
+                                <div style={{ paddingLeft: '5px', paddingRight: '20px', fontWeight: '400' }}>Superhost </div>
                                 {`${spot.city}, ${spot.state}, ${spot.country}`}
                             </div>
                             <div>
@@ -104,9 +109,40 @@ const SpotDetails = () => {
                                 <p className='owner-content'> {spot.Owner && `Entire house hosted by ${spot.Owner.firstName}`}</p>
                                 <p className='house-content'>6 guests - 2 bedrooms - 3 beds - 1 bath</p>
                             </div>
-                            <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px', marginRight: '40px' }}> night</span>
+                            <div className='price'>{`$${spot.price}`}<span style={{ fontWeight: 400, fontSize: '16px', color: '#3c3c3c' }}> night</span>
                             </div>
                         </div>
+
+                        <div className='more-info-border'>
+                            <div className='more-info-container'>
+                                <i className="fa-solid fa-chess-pawn" style={{ paddingRight: '20px', fontWeight: '300', fontSize: '20px' }}></i>
+                                <div>
+                                    <p className='more-info-title'>{spot.Owner && `${spot.Owner.firstName} is a Superhost`}</p>
+                                    <p className='more-info-p'>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
+                                </div>
+                            </div>
+
+                            <div className='more-info-container'>
+                                <i class="fa-solid fa-key" style={{ paddingRight: '20px', fontSize: '18px' }}></i>
+                                <div>
+                                    <p className='more-info-title'>Great check-in experience</p>
+                                    <p className='more-info-p'>100% of recent guests gave the check-in process a 5-star rating.</p>
+                                </div>
+
+                            </div>
+
+                            <div className='more-info-container'>
+                                <i class="fa-regular fa-calendar" style={{ paddingRight: '20px', fontWeight: '300', fontSize: '18px' }}></i>
+                                <p className='more-info-title'>Free cancellation for 48 hours.</p>
+                            </div>
+
+
+                        </div>
+                        <div className='aircover'>
+                            <h2 style={{ color: '#ff375c', fontSize: '32px', marginLeft: '-20px' }}>air<span style={{ color: '#222' }}>cover</span></h2>
+                            <p>Every booking includes free protection from Host cancellations, listing inaccuracies, and other issues like trouble checking in.</p>
+                        </div>
+
                         <div className='spot-des'>{spot.description}</div>
                     </div>
                 </div>
