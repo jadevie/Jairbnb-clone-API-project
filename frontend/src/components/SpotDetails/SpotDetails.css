@@ -1,6 +1,7 @@
 .detail-page {
     margin: auto;
-    padding: 40px
+    padding: 40px;
+    max-width: 1280px;
 }
 
 .spot-detail-container {
@@ -16,7 +17,7 @@
 
 /* container for whole images session */
 .image-container {
-    min-width: 80vw;
+    max-width: 1280px;
     height: 55vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
