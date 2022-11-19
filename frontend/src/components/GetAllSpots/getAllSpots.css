@@ -11,6 +11,8 @@
 .city-avg-container {
     display: flex;
     justify-content: space-between;
+    padding-top: 10px;
+    font-size: 15px
 }
 
 

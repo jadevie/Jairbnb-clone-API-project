@@ -29,8 +29,28 @@ const images = [
   },
   {
     "spotId": 2,
-    "url": "https://images.pexels.com/photos/4450329/pexels-photo-4450329.jpeg",
+    "url": "https://images.pexels.com/photos/1488267/pexels-photo-1488267.png",
     "preview": true
+  },
+  {
+    "spotId": 2,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 2,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 2,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 2,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
   },
   {
     "spotId": 3,
@@ -38,9 +58,49 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 3,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 3,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 3,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 3,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 4,
     "url": "https://images.pexels.com/photos/259588/pexels-photo-259588.jpeg",
     "preview": true
+  },
+  {
+    "spotId": 4,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 4,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 4,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 4,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
   },
   {
     "spotId": 5,
@@ -48,9 +108,49 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 5,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 5,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 5,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 5,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 6,
     "url": "https://images.pexels.com/photos/262405/pexels-photo-262405.jpeg",
     "preview": true
+  },
+  {
+    "spotId": 6,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 6,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 6,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 6,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
   },
   {
     "spotId": 7,
@@ -58,9 +158,49 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 7,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 7,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 7,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 7,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 8,
     "url": "https://images.pexels.com/photos/159869/farmhouse-summer-holiday-holiday-summer-159869.jpeg",
     "preview": true
+  },
+  {
+    "spotId": 8,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 8,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 8,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 8,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
   },
   {
     "spotId": 9,
@@ -68,9 +208,49 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 9,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 9,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 9,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 9,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 10,
     "url": "https://images.pexels.com/photos/2259917/pexels-photo-2259917.jpeg",
     "preview": true
+  },
+  {
+    "spotId": 10,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 10,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 10,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 10,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
   },
   {
     "spotId": 11,
@@ -78,10 +258,50 @@ const images = [
     "preview": true
   },
   {
+    "spotId": 11,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 11,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 11,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 11,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
+  {
     "spotId": 12,
     "url": "https://images.pexels.com/photos/711935/pexels-photo-711935.jpeg",
     "preview": true
-  }
+  },
+  {
+    "spotId": 12,
+    "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 12,
+    "url": "https://images.pexels.com/photos/462235/pexels-photo-462235.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 12,
+    "url": "https://images.pexels.com/photos/342800/pexels-photo-342800.jpeg",
+    "preview": false
+  },
+  {
+    "spotId": 12,
+    "url": "https://images.pexels.com/photos/2249959/pexels-photo-2249959.jpeg",
+    "preview": false
+  },
 ];
 
 module.exports = {
