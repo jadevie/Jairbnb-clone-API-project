@@ -24,7 +24,8 @@ const CreateReview = ({ onComplete }) => {
                 })
                 .catch(async response => {
                     const data = await response.json();
-                    if (data && data.errors) setErrors(Object.values(data.errors));
+                    console.log(data);
+                    if (data && data.message) setErrors([data.message]);
                 });
         };
     };
@@ -32,7 +33,7 @@ const CreateReview = ({ onComplete }) => {
         <div>
             <h4 className='review-title'>Review</h4>
             <form onSubmit={handleSubmit} className='review-container'>
-                <ul>
+                <ul style={{ color: 'rgb(246, 18, 18)', paddingLeft: '10px', paddingBottom: '20px' }}>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <label className='select-rating'>Select your rating

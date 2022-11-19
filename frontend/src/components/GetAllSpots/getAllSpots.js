@@ -28,16 +28,18 @@ const GetAllSpots = () => {
                             <div key={"state" + spot.id}>
                                 {`${spot.city}, ${spot.state}`}
                             </div>
-                            <div style={{ fontWeight: "300" }} key={"rating" + spot.id}>
-                                <i class="fa-solid fa-star"></i>
+                            <div style={{ fontWeight: "350" }} key={"rating" + spot.id}>
+                                <i class="fa-solid fa-star" style={{ fontSize: '14px' }}></i>
                                 {spot.avgRating && (spot.avgRating)}
                             </div>
                         </div>
-                        <p style={{ fontWeight: "300" }} key={"miles" + spot.id}>91 miles away</p>
-                        <p style={{ fontWeight: "300" }} key={"date" + spot.id}>Dec 10-15</p>
+                        <p style={{ color: '#777777', fontWeight: "300", fontSize: '15px' }} key={"miles" + spot.id}>91 miles away</p>
+                        <p style={{ color: '#777777', fontWeight: "300", fontSize: '15px' }} key={"date" + spot.id}>Dec 10-15</p>
                         <div>
-                            <span style={{ fontWeight: "bold" }} key={"price" + spot.id}>{`$${spot.price}`} </span>
-                            <span style={{ fontWeight: "300" }} key={"night" + spot.id}> night</span>
+                            <span style={{
+                                fontWeight: "bold"
+                            }} key={"price" + spot.id}>{`$${spot.price}`} </span>
+                            <span style={{ fontWeight: "300", fontSize: '15px' }} key={"night" + spot.id}> night</span>
                         </div>
                     </div>
                 ))}

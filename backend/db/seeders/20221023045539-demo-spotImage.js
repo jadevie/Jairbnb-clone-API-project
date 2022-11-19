@@ -29,7 +29,7 @@ const images = [
   },
   {
     "spotId": 2,
-    "url": "https://images.pexels.com/photos/4450329/pexels-photo-4450329.jpeg",
+    "url": "https://images.pexels.com/photos/1488267/pexels-photo-1488267.png",
     "preview": true
   },
   {
@@ -281,8 +281,8 @@ const images = [
     "spotId": 12,
     "url": "https://images.pexels.com/photos/711935/pexels-photo-711935.jpeg",
     "preview": true
-  }
-   {
+  },
+  {
     "spotId": 12,
     "url": "https://images.pexels.com/photos/1080721/pexels-photo-1080721.jpeg",
     "preview": false
