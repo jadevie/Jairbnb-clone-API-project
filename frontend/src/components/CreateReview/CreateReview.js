@@ -26,7 +26,7 @@ const CreateReview = ({ onComplete }) => {
                 })
                 .catch(async response => {
                     const data = await response.json();
-                    if (data && data.message) setErrors([data.message]);
+                    if (data && data.errors) setErrors(Object.values(data.errors));
                 });
         };
     };
