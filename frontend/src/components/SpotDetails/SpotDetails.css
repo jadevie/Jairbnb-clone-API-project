@@ -1,3 +1,29 @@
+@media screen and (max-width: 743px) {
+    .other-img {
+        display: none;
+    }
+
+    .other-img-container {
+        display: none;
+    }
+
+    .each-img-container {
+        display: none;
+    }
+
+    .image-container {
+        display: none;
+    }
+
+    .default-img-container {
+        display: inline-flex;
+        width: 500px;
+        height: 500px;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+}
+
 .detail-page {
     margin: auto;
     padding: 40px;

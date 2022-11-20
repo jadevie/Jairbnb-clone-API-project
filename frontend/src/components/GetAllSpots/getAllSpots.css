@@ -29,3 +29,39 @@
     overflow: hidden;
     border-radius: 10px;
 }
+
+@media screen and (max-width: 549px) {
+    .spot-container {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media screen and (min-width: 550px) and (max-width: 949px) {
+    .spot-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 950px) and (max-width: 1127px) {
+    .spot-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1128px) and (max-width: 1639px) {
+    .spot-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (min-width: 1640px) and (max-width: 1869px) {
+    .spot-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+@media screen and (min-width: 1900px) {
+    .spot-container {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
