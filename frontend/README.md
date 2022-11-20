@@ -1,76 +1,53 @@
+## About Jairbnb:
 
-# Create React App Template
+Jairbnb is a web application inspired by Airbnb, that provides an online marketplace for lodging, primarily homestays for vacation rentals, and tourism actitivies.
 
-A no-frills template from which to create React + Redux applications with
-[Create React App](https://github.com/facebook/create-react-app).
+Click here to explore more: [Jairbnb live site]
 
-```sh
-npx create-react-app my-app --template @appacademy/react-redux-v17 --use-npm
-```
+This project is built with:
+- Javascript
+- Sequelize
+ PostgreSQL
+- Express
+- React
+- Redux
 
-## Available Scripts
+## Feauture Directions:
 
-In the project directory, you can run:
+### Load all available spots:
+![](assets/display-all-screenshot.png)
 
-### `npm start`
+### Load specific spot:
+![](assets/display-one-spot-screenshot.png)
+![](assets/load-one-spot-continue.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Sign up new account
+You will be able to create new account and log in at the same time
+ ![](assets/sign-up-screenshot.png)
 
-### `npm test`
+### Sign in/ Demo User:
+You will be able to text feautures without sign up by click on the "Demo User" in the sign in form.
+ ![](assets/sign-in-screenshot.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Create new spot:
+You will be able to host your spot
+ ![](assets/create-spot-screenshot.png)
 
-### `npm run build`
+### Update new spot:
+You will be able to update your spot
+ ![](assets/edit-spot-screenshot.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Delete spot:
+You will be able to delete your spot
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Leave review:
+You will be able to leave review for other spots
+ ![](assets/review-screenshot.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Delete review
+You will be able to delete your review
 
-### `npm run eject`
+<!-- external links -->
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[Jairbnb live site]: https://slack.com/help/articles/202288908-Format-your-messages
