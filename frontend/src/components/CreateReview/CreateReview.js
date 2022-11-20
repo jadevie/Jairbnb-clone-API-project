@@ -6,8 +6,10 @@ import './createReview.css';
 
 const CreateReview = ({ onComplete }) => {
     const [stars, setStars] = useState(0);
+    const [hover, setHover] = useState(0);
     const [review, setReview] = useState("");
     const [errors, setErrors] = useState([]);
+
     const dispatch = useDispatch();
     const { spotId } = useParams();
 
@@ -24,27 +26,35 @@ const CreateReview = ({ onComplete }) => {
                 })
                 .catch(async response => {
                     const data = await response.json();
-                    console.log(data);
-                    if (data && data.message) setErrors([data.message]);
+                    if (data && data.errors) setErrors(Object.values(data.errors));
                 });
         };
     };
     return (
         <div>
             <h4 className='review-title'>Review</h4>
+
             <form onSubmit={handleSubmit} className='review-container'>
                 <ul style={{ color: 'rgb(246, 18, 18)', paddingLeft: '10px', paddingBottom: '20px' }}>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <label className='select-rating'>Select your rating
-                    <input
-                        onChange={e => setStars(e.target.value)}
-                        value={stars}
-                        type='number'
-                        min={1}
-                        max={5}
-                    />
-                </label>
+
+                <div className='star-rating'><span>Select your rating   </span>
+                    {[...Array(5)].map((star, i) => {
+                        i += 1;
+                        return (
+                            <button
+                                type='button'
+                                key={i}
+                                className={i <= ((stars && hover) || hover) ? 'on' : 'off'}
+                                onClick={() => setStars(i)}
+                                onMouseEnter={() => setHover(i)}
+                                onMouseLeave={() => setHover(stars)}
+                            >
+                                <span className='star'><i class="fa-solid fa-star" style={{ fontSize: '25px' }}></i></span>
+                            </button>);
+                    })}
+                </div >
                 <textarea
                     className='review-detail'
                     placeholder='Review here'
