@@ -152,7 +152,7 @@ const SpotDetails = () => {
                     <i className="fa-solid fa-star" style={{ fontSize: '12px', padding: '5px' }}></i>
                     {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
                     <div className='leave-review'>
-                        {(user && !reviewFromUser) && <CreateReviewModal />}
+                        {(user && !reviewFromUser && spot.ownerId !== user.id) && <CreateReviewModal />}
                     </div>
                 </div>
 
