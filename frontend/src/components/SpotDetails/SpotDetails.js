@@ -13,7 +13,6 @@ import ErrorPage from '../ErrorPage/ErrorPage';
 const SpotDetails = () => {
 
     const [errors, setErrors] = useState([]);
-
     const dispatch = useDispatch();
     const history = useHistory();
     const { spotId } = useParams();
@@ -23,7 +22,9 @@ const SpotDetails = () => {
     const user = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews);
     const reviewsArray = Object.values(reviews.spotReviews);
+    const reviewFromUser = reviewsArray.find(review => review.userId === user.id);
 
+    console.log(reviewFromUser);
     let sum = 0;
     let avgRating = 0;
     reviewsArray.forEach(review => {
@@ -151,7 +152,7 @@ const SpotDetails = () => {
                     <i className="fa-solid fa-star" style={{ fontSize: '12px', padding: '5px' }}></i>
                     {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
                     <div className='leave-review'>
-                        {user && <CreateReviewModal />}
+                        {(user && !reviewFromUser) && <CreateReviewModal />}
                     </div>
                 </div>
 
