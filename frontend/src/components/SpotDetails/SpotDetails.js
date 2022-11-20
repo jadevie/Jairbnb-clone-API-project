@@ -22,7 +22,10 @@ const SpotDetails = () => {
     const user = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews);
     const reviewsArray = Object.values(reviews.spotReviews);
-    const reviewFromUser = reviewsArray.find(review => review.userId === user.id);
+    let reviewFromUser;
+    if (user) {
+        reviewFromUser = reviewsArray.find(review => review.userId === user.id);
+    }
 
     console.log(reviewFromUser);
     let sum = 0;
@@ -53,7 +56,6 @@ const SpotDetails = () => {
     return (
         <>
             <div className='detail-page'>
-
                 <div>
                     {/* {Object.keys(spot).length === 0 ? (<Redirect to='/404' />) : null} */}
                     <div>
@@ -152,7 +154,7 @@ const SpotDetails = () => {
                     <i className="fa-solid fa-star" style={{ fontSize: '12px', padding: '5px' }}></i>
                     {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
                     <div className='leave-review'>
-                        {(user && !reviewFromUser && spot.ownerId !== user.id) && <CreateReviewModal />}
+                        {(user && !reviewFromUser) && <CreateReviewModal />}
                     </div>
                 </div>
 
