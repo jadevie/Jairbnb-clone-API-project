@@ -29,9 +29,6 @@ function App() {
           <Route exact path='/spots/:spotId'>
             <SpotDetails />
           </Route>
-          <Route exact path="/signup">
-            <SignupFormPage />
-          </Route>
           <Route exact path='/hosting'>
             <CreateSpotForm />
           </Route>
@@ -43,8 +40,7 @@ function App() {
             <Redirect to='/404' />
           </Route>
         </Switch>
-      )
-      }
+      )}
     </>
   );
 }

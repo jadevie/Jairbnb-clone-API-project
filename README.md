@@ -4,6 +4,12 @@ Jairbnb is a web application inspired by Airbnb, that provides an online marketp
 
 Click here to explore more: [Jairbnb live site]
 
+## Wiki Link
+- [Backend Routes]
+- [Database Schema]
+- [Feature List]
+- [Frontend Routes]
+
 This project is built with:
 - Javascript
 - Sequelize
@@ -51,3 +57,7 @@ You will be able to delete your review
 <!-- external links -->
 
 [Jairbnb live site]: https://slack.com/help/articles/202288908-Format-your-messages
+[Backend Routes]: https://github.com/jadevie/Jairbnb-clone-API-project/wiki/API-Documentation
+[Database Schema]: https://github.com/jadevie/Jairbnb-clone-API-project/wiki/Database-Schema
+[Feature List]: https://github.com/jadevie/Jairbnb-clone-API-project/wiki/Feature-List
+[Frontend Routes]:https://github.com/jadevie/Jairbnb-clone-API-project/wiki/Frontend-Routes
