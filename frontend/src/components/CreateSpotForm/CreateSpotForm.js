@@ -42,7 +42,7 @@ const CreateSpotForm = () => {
     };
 
     return (
-        <div>
+        <div className="new-listing-container">
             <h2 id='createListingTitle'>Create New Listing </h2>
             <form onSubmit={handleSubmit} className='createListing-form'>
                 <ul style={{ color: 'rgb(246, 18, 18)', paddingLeft: '40px', paddingTop: '40px' }}>
