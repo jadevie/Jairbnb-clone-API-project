@@ -11,7 +11,7 @@ function EditFormModal({ oldSpot }) {
             {showModal && (
                 <Modal onClose={() => setShowModal(false)}>
                     {<EditSpotForm
-                        onComplete={() => setShowModal(false)}
+                        hideModal={() => setShowModal(false)}
                         oldSpot={oldSpot} />}
                 </Modal>
             )}

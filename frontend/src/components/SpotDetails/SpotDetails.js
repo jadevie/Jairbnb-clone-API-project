@@ -8,10 +8,7 @@ import CreateReviewModal from '../CreateReview/CreateReviewModal';
 import './SpotDetails.css';
 import ErrorPage from '../ErrorPage/ErrorPage';
 
-
-
 const SpotDetails = () => {
-
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -27,7 +24,6 @@ const SpotDetails = () => {
         reviewFromUser = reviewsArray.find(review => review.userId === user.id);
     }
 
-    console.log(reviewFromUser);
     let sum = 0;
     let avgRating = 0;
     reviewsArray.forEach(review => {
@@ -61,6 +57,7 @@ const SpotDetails = () => {
                     <div>
                         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                     </div>
+
                     <div className='spot-detail-container'>
                         <div className='title'>
                             {spot.name}

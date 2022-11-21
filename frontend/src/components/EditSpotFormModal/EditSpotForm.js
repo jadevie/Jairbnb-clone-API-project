@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
+import { editSpot, editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import './editSpotForm.css';
 
 const EditSpotForm = (props) => {
-    const { onComplete, oldSpot } = props;
+    const { hideModal, oldSpot } = props;
     const dispatch = useDispatch();
     const spot = useSelector(state => state.spots);
     const id = spot.singleSpot.id;
@@ -18,20 +18,31 @@ const EditSpotForm = (props) => {
     const [price, setPrice] = useState(oldSpot.price);
     const [errors, setErrors] = useState([]);
 
-    const handleSubmitChange = e => {
+    const handleSubmitChange = async e => {
         e.preventDefault();
         setErrors([]);
         const editedSpot = { address, city, state, country, name, description, price };
 
-        const newData = dispatch(editSpotThunk(editedSpot, id))
-            .then(() => onComplete())
+        await dispatch(editSpotThunk(editedSpot, id))
+            .then(() => hideModal())
             .catch(async response => {
                 const data = await response.json();
                 if (data && data.errors) setErrors(Object.values(data.errors));
             });
         dispatch(getSpotDetailsThunk(id));
-        return newData;
     };
+
+    // 2nd way to write:
+    //     try {
+    //         await dispatch(editSpotThunk(editSpot, id));
+    //         hideModal();
+    //         dispatch(getSpotDetailsThunk(id));
+    //     }
+    //     catch (response) {
+    //         const data = await response.json();
+    //         if (data && data.errors) setErrors(Object.values(data.errors));
+    //     }
+    // };
 
     return (
         <>
@@ -108,9 +119,9 @@ const EditSpotForm = (props) => {
                         <button type='submit' className='submit-btn'>Submit</button>
                     </form>
                 </div>
-
             </div>
         </>
     );
 };
+
 export default EditSpotForm;
