@@ -1,9 +1,38 @@
+.icons-container {
+    margin: 40px 0 40px;
+    padding: 0 80px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.icon-name-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #777777;
+    font-weight: 300;
+    filter: contrast(30%);
+    padding-bottom: 10px;
+    border: 3px solid transparent;
+}
+
+.nav-icons {
+    margin-bottom: 10px;
+}
+
+.icon-name-container:hover {
+    filter: contrast(100%);
+    color: #222;
+    font-weight: 500;
+    border-bottom: 3px solid #969292;
+}
+
 .spot-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
     row-gap: 50px;
-    margin: 80px 0 40px;
+    margin: 40px 0 40px;
     padding: 0 80px;
     grid-auto-rows: minmax(100px, auto);
 }
