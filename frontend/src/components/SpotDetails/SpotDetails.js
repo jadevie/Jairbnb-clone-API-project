@@ -136,7 +136,6 @@ const SpotDetails = () => {
                                 <p className='more-info-title'>Free cancellation for 48 hours.</p>
                             </div>
 
-
                         </div>
                         <div className='aircover'>
                             <h2 style={{ color: '#ff375c', fontSize: '32px', marginLeft: '-20px' }}>air<span style={{ color: '#222' }}>cover</span></h2>
@@ -151,7 +150,7 @@ const SpotDetails = () => {
                     <i className="fa-solid fa-star" style={{ fontSize: '12px', padding: '5px' }}></i>
                     {spot.avgStarRating && `${avgRating} - ${reviewsArray.length} reviews`}
                     <div className='leave-review'>
-                        {(user.id !== spot.ownerId && user && !reviewFromUser) && <CreateReviewModal />}
+                        {(user && !reviewFromUser) && <CreateReviewModal />}
                     </div>
                 </div>
 
