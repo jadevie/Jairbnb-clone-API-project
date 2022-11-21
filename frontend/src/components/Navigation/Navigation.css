@@ -29,7 +29,6 @@
 
 #profile-button:hover {
     box-shadow: 1px 1px 1px 1px #DDDDDD;
-    transition: 0.2s;
 }
 
 .profile-dropdown {
@@ -45,7 +44,6 @@
 }
 
 .dropdown-menu {
-    /* float: right; */
     position: absolute;
     border: 1px solid #dddddd;
     background: #FFFFFF;
@@ -64,7 +62,7 @@
     font-weight: 400;
     width: 100%;
     text-align: left;
-    padding: 5px;
+    padding: 10px 0px;
 }
 
 .link:hover {
@@ -76,13 +74,14 @@
     border: none;
     outline: none;
     cursor: pointer;
+
     font-size: 15px;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #222222;
     font-weight: 400;
     min-width: 160px;
     text-align: left;
-    padding: 5px
+    padding: 10px 0px
 }
 
 .logout-btn:hover {
@@ -101,7 +100,7 @@
     font-weight: 600;
     min-width: 160px;
     text-align: left;
-    padding: 5px
+    padding: 10px 0px
 }
 
 .login-button:hover {
@@ -119,9 +118,20 @@
     font-weight: 400;
     min-width: 160px;
     text-align: left;
-    padding: 5px
+    padding: 10px 0px
 }
 
 .signup-button:hover {
     background-color: #DDDDDD;
+}
+
+.name {
+    font-weight: bold;
+    padding: 10px 0px
+}
+
+.username {
+    font-weight: bold;
+    padding: 10px 0px;
+    border-bottom: 2px solid #dddddd;
 }

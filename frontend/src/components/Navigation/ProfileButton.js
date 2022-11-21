@@ -34,12 +34,18 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
             <div className="profile-container">
                 <button onClick={openMenu} id="profile-button">
                     <i className="fa-solid fa-bars" style={{ padding: '0px 5px', fontSize: '20px' }}></i>
-                    <i class="fa-solid fa-circle-user" style={{ padding: '5px', fontSize: '20px', fontWeight: '400' }}></i>
+                    <i class="fa-solid fa-circle-user" style={{ padding: '5px', fontSize: '22px', color: '#777777' }}></i>
                 </button>
                 {showMenu && (
                     user ? <ul className="profile-dropdown">
-                        <div style={{ padding: '5px', fontWeight: 'bold' }}>{user.username}</div>
-                        <Link to="/hosting" className='link'>Host an experience</Link>
+                        <div className="name">{user.firstName}
+                        </div>
+                        <div className="username">{user.username}
+                        </div>
+                        <div style={{ padding: '10px 0px' }}>
+                            <Link to="/hosting" className='link'>Host an experience</Link>
+                        </div>
+
                         <div>
                             <button onClick={logout} className='logout-btn'>Log Out</button>
                         </div>
