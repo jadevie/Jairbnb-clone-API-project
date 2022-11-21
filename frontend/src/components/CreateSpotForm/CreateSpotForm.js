@@ -31,11 +31,21 @@ const CreateSpotForm = () => {
                 });
             if (newSpot) {
                 const id = newSpot.id;
-                const newImage = await dispatch(addSpotImageThunk(image, id))
+                const imgComingSoon = {
+                    url: "https://images.pexels.com/photos/4439444/pexels-photo-4439444.jpeg",
+                    preview: 'false'
+                };
+                await dispatch(addSpotImageThunk(image, id))
                     .catch(async response => {
                         const data = await response.json();
                         if (data && data.errors) setErrors(Object.values(data.errors));
                     });
+
+                await dispatch(addSpotImageThunk(imgComingSoon, id));
+                dispatch(addSpotImageThunk(imgComingSoon, id));
+                dispatch(addSpotImageThunk(imgComingSoon, id));
+                dispatch(addSpotImageThunk(imgComingSoon, id));
+
                 history.push(`/spots/${newSpot.id}`);
             }
         }
