@@ -45,7 +45,6 @@ const CreateSpotForm = () => {
                 dispatch(addSpotImageThunk(imgComingSoon, id));
                 dispatch(addSpotImageThunk(imgComingSoon, id));
                 dispatch(addSpotImageThunk(imgComingSoon, id));
-
                 history.push(`/spots/${newSpot.id}`);
             }
         }

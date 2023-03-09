@@ -157,8 +157,8 @@ const SpotDetails = () => {
                 <div className='review-content'>
                     {reviewsArray.length > 0 && reviewsArray.map(review => (
                         <div className='review-list'>
-                            <li>{review.review}</li>
-
+                            <li style={{ fontWeight: 'bold' }}>{review.User && review.User.firstName}</li>
+                            <p>{review.review}</p>
                             {user && user.id === review.userId ? (
                                 <button className='review-btn' onClick={e => {
                                     e.preventDefault();

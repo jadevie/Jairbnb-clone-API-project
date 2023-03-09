@@ -255,5 +255,6 @@
 
 .review-list {
     display: flex;
+    flex-direction: column;
     line-height: 30px;
 }
