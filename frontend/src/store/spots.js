@@ -7,6 +7,7 @@ const ADD_SPOT_IMAGE = 'spots/ADD_SPOT_IMAGE';
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const EDIT_SPOT = 'spots/EDIT_SPOT';
+const CREATE_BOOKING = 'spots/CREATE_BOOKING';
 
 //* Action creater *//
 export const getAllSpots = spots => {
@@ -47,6 +48,13 @@ export const deleteSpot = id => {
 export const editSpot = spot => {
     return {
         type: EDIT_SPOT,
+        spot
+    };
+};
+
+export const createBooking = spot => {
+    return {
+        type: CREATE_BOOKING,
         spot
     };
 };
@@ -129,6 +137,22 @@ export const editSpotThunk = (data, id) => async dispatch => {
     }
 };
 
+
+export const createBookingThunk = (spotId, booking) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(booking)
+    });
+
+    if (response.ok) {
+        const newData = await response.json();
+        dispatch(createBooking(newData));
+        return newData;
+    }
+};
+
+
 //* Reducer *//
 const initialState = { allSpots: {}, singleSpot: {} };
 
@@ -162,6 +186,10 @@ const spotsReducer = (state = initialState, action) => {
             delete newState[action.id];
             return newState;
         case EDIT_SPOT:
+            newState = { ...state };
+            newState.singleSpot = action.spot;
+            return newState;
+        case CREATE_BOOKING:
             newState = { ...state };
             newState.singleSpot = action.spot;
             return newState;

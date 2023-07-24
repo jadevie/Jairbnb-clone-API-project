@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/jadevie/API-project/issues"
   },
-  "homepage": "https://github.com/jadevie/API-project#readme"
+  "homepage": "https://github.com/jadevie/API-project#readme",
+  "dependencies": {
+    "react-dates": "^21.8.0"
+  }
 }
