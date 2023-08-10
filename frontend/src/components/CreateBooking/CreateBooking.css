@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    width: 350px;
-    height: 500px;
+    min-width: 350px;
+    max-height: 425px;
     border: 1px solid rgb(221, 221, 221);
     border-radius: 12px;
     padding: 24px;
@@ -24,4 +24,51 @@
 
 .DateInput_input::placeholder {
     color: black
+}
+
+.datePicker {
+    text-align: center;
+}
+
+
+.btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-color: #e31c5f;
+    color: #FFFFFF;
+    padding: 15px 15px;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.noCharge {
+    text-align: center;
+    color: #3c3c3c
+}
+
+.detailPrice {
+    display: flex;
+    justify-content: space-between;
+}
+
+.paymentBreakdown {
+    text-decoration: underline;
+}
+
+.finalPriceWrapper {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #dddddd;
+    margin-top: 20px;
+    padding: 25px 0;
+}
+
+.finalPrice {
+    font-weight: bold;
+
 }

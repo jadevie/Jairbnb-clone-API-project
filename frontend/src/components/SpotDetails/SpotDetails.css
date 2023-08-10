@@ -150,6 +150,10 @@
     border-bottom: 1px solid #dddddd;
 }
 
+.leftDetail {
+    max-width: 700px;
+}
+
 .owner-content {
     font-size: 22px;
     font-weight: 500;

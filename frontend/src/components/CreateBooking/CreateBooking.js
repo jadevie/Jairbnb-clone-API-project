@@ -9,6 +9,8 @@ import { useParams } from 'react-router-dom';
 import './CreateBooking.css';
 
 export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
+    let currentDate = new Date().toJSON().slice(0, 10);
+    console.log(currentDate);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [onFocus, setOnFocus] = useState([startDate, endDate]);
@@ -17,6 +19,7 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
 
     const start = Moment(startDate).format('YYYY-MM-DD'); //2023-05-15
     const end = Moment(endDate).format('YYYY-MM-DD'); //2023-05-20
+
 
     let totalDays = 0;
     const thirtyDays = [4, 6, 9, 11];
@@ -50,9 +53,9 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
     };
     findTotal();
 
-    const totalPrice = totalDays * price;
-
-
+    const totalPrice = (totalDays || 1) * price;
+    const cleaningFee = (totalDays || 1) * 50;
+    const serviceFee = Number((totalPrice * 0.14).toFixed(0));
 
     const handleBooking = async e => {
         e.preventDefault();
@@ -73,7 +76,7 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
                     {avgStarRating && `${avgRating} - ${reviews} reviews`}
                 </div>
             </div>
-            <div>
+            <div className='datePicker'>
                 <DateRangePicker
                     startDate={startDate} // momentPropTypes.momentObj or null,
                     endDate={endDate} // momentPropTypes.momentObj or null,
@@ -85,13 +88,26 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
                     onFocusChange={focusedInput => setOnFocus(focusedInput)} // PropTypes.func.isRequired,
                 ></DateRangePicker>
             </div>
-            <div>Guests</div>
-            <button onClick={handleBooking}>Reserve</button>
-            <div>You won't be charged yet</div>
-            <div>{price} x {totalDays} nights ${totalPrice}</div>
-            <div>Cleaning fee ${50 * totalDays}</div>
-            <div>Jairbnb service fee ${(totalPrice * 0.14).toFixed(0)}</div>
-            <div></div>
-        </div>
+
+            <button onClick={handleBooking} className='btn'>Reserve</button>
+            <div className='noCharge'>You won't be charged yet</div>
+
+            <div className='detailPrice'>
+                <div className='paymentBreakdown'>{price} x {totalDays ? totalDays : 1} nights</div>
+                <div>${totalPrice}</div>
+            </div>
+            <div className='detailPrice'>
+                <div className='paymentBreakdown'>Cleaning fee</div>
+                <div>${cleaningFee}</div>
+            </div>
+            <div className='detailPrice'>
+                <div className='paymentBreakdown'>Jairbnb service fee</div>
+                <div>${serviceFee}</div>
+            </div>
+            <div className='finalPriceWrapper'>
+                <div className='finalPrice'>Total before taxes</div>
+                <div className='finalPrice'>${totalPrice + cleaningFee + serviceFee}</div>
+            </div>
+        </div >
     );
 };
