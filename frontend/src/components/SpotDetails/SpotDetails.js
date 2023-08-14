@@ -145,7 +145,11 @@ const SpotDetails = () => {
                                 <div className='spot-des'>{spot.description}</div>
                             </div>
                             <div>
-                                <CreateBooking price={spot.price} avgStarRating={spot.avgStarRating} avgRating={avgRating} reviews={reviewsArray.length} />
+                                <CreateBooking
+                                    user={user}
+                                    price={spot.price}
+                                    avgStarRating={spot.avgStarRating} avgRating={avgRating}
+                                    reviews={reviewsArray.length} />
                             </div>
                         </div>
                     </div>

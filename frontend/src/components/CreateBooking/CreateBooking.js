@@ -3,20 +3,16 @@ import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Moment from 'moment';
-import { useDispatch } from 'react-redux';
-import { createBookingThunk } from '../../store/spots';
-import { useParams } from 'react-router-dom';
 import './CreateBooking.css';
+import CreateBookingModal from './CreateBookingModal';
 
-export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
+export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
+}) => {
     let currentDate = new Date().toJSON().slice(0, 10);
     console.log(currentDate);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [onFocus, setOnFocus] = useState([startDate, endDate]);
-    const dispatch = useDispatch();
-    const { spotId } = useParams();
-
     const start = Moment(startDate).format('YYYY-MM-DD'); //2023-05-15
     const end = Moment(endDate).format('YYYY-MM-DD'); //2023-05-20
 
@@ -57,15 +53,6 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
     const cleaningFee = (totalDays || 1) * 50;
     const serviceFee = Number((totalPrice * 0.14).toFixed(0));
 
-    const handleBooking = async e => {
-        e.preventDefault();
-        const booking = {
-            startDate: start,
-            endDate: end
-        };
-        await dispatch(createBookingThunk(spotId, booking));
-    };
-
     return (
         <div className='wrapper'>
             <div className='info-wrapper'>
@@ -88,8 +75,16 @@ export const CreateBooking = ({ price, avgStarRating, avgRating, reviews }) => {
                     onFocusChange={focusedInput => setOnFocus(focusedInput)} // PropTypes.func.isRequired,
                 ></DateRangePicker>
             </div>
-
-            <button onClick={handleBooking} className='btn'>Reserve</button>
+            <CreateBookingModal
+                user={user}
+                start={start}
+                end={end}
+                price={price}
+                totalPrice={totalPrice}
+                cleaningFee={cleaningFee}
+                serviceFee={serviceFee}
+                totalDays={totalDays}
+            />
             <div className='noCharge'>You won't be charged yet</div>
 
             <div className='detailPrice'>
