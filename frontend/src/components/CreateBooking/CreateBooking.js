@@ -8,8 +8,8 @@ import CreateBookingModal from './CreateBookingModal';
 
 export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
 }) => {
-    let currentDate = new Date().toJSON().slice(0, 10);
-    console.log(currentDate);
+    // let currentDate = new Date().toJSON().slice(0, 10);
+    // console.log(currentDate);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [onFocus, setOnFocus] = useState([startDate, endDate]);

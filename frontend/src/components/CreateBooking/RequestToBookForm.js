@@ -16,7 +16,6 @@ export const RequestToBookForm = ({ user, hideModal, start,
     const { spotId } = useParams();
     const history = useHistory();
 
-
     const handleBooking = async e => {
         e.preventDefault();
         const booking = {
@@ -29,9 +28,6 @@ export const RequestToBookForm = ({ user, hideModal, start,
                 history.push('/trips');
             });
         }
-        //if not log in yet, show log in modal
-
-
     };
 
     return (
