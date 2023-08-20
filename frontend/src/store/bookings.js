@@ -27,6 +27,17 @@ export const getAllBookingsThunk = () => async dispatch => {
     }
 };
 
+export const deleteBookingThunk = id => async dispatch => {
+    const response = await csrfFetch(`api/bookings/${id}`, {
+        method: 'DELETE'
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(deleteBooking(data));
+        return data;
+    };
+};
+
 const initialState = {};
 
 const bookingReducer = (state = initialState, action) => {
@@ -36,6 +47,10 @@ const bookingReducer = (state = initialState, action) => {
             newState = { ...state };
             const bookingsData = action.bookings.Bookings;
             bookingsData.forEach(booking => (newState[booking.id]) = booking);
+            return newState;
+        case DELETE_BOOKING:
+            newState = { ...state };
+            delete newState[action.bookingId];
             return newState;
         default:
             return state;

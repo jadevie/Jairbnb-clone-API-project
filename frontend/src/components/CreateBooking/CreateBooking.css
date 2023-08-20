@@ -46,6 +46,16 @@
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+.disabledBtn {
+    padding: 15px 15px;
+    border: 1px solid #dddddd;
+    border-radius: 15px;
+    font-size: 20px;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    cursor: not-allowed;
+    background-color: #dadde1;
+}
+
 .noCharge {
     text-align: center;
     color: #3c3c3c
