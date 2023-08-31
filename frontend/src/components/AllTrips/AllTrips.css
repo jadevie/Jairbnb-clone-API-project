@@ -1,3 +1,8 @@
+.trips {
+    padding: 40px 40px 0px 80px;
+    font-size: 30px;
+}
+
 .booking-spot-container {
     display: flex;
     gap: 20px;
@@ -30,5 +35,4 @@
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 30px;
     padding-right: 50px;
-
 }

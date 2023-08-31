@@ -1,0 +1,9 @@
+.deleteWrapper {
+    height: 200px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.question {
+    padding: 40px;
+}

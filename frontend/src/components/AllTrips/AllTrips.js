@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllBookingsThunk } from '../../store/bookings';
 import './AllTrips.css';
@@ -7,19 +7,18 @@ import { DeleteBookingModal } from '../DeleteBooking/DeleteBookingModal';
 export const AllTrips = () => {
     const dispatch = useDispatch();
     const allBookings = useSelector(state => state.bookings);
-    console.log(allBookings);
 
-    const [totalBookings, setTotalBooking] = useState((Object.values(allBookings)).length);
-
-
+    const totalBookings = (Object.values(allBookings)).length;
 
     useEffect(() => {
         dispatch(getAllBookingsThunk());
     }, [dispatch, totalBookings]);
 
+
     return (
         <div>
-            <div>{allBookings ? "Trips" : "No trips booked...yet!"}</div>
+            <div className='trips'>
+                {allBookings ? "Trips" : "No trips booked...yet!"}</div>
             <div>
                 {allBookings && Object.values(allBookings).map(booking => (
                     <div className='booking-spot-container'>
@@ -42,7 +41,7 @@ export const AllTrips = () => {
                         <DeleteBookingModal
                             id={booking.id}
                             totalBookings={totalBookings}
-                            setTotalBooking={setTotalBooking} />
+                        />
                     </div>
                 ))}
             </div>

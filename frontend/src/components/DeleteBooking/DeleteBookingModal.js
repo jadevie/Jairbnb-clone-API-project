@@ -6,7 +6,7 @@ export const DeleteBookingModal = ({ id, totalBookings, setTotalBooking }) => {
     const [showModal, setShowModal] = useState(false);
     return (
         <div>
-            <button className='btn' onClick={() => setShowModal(true)}></button>
+            <button className='btn' onClick={() => setShowModal(true)}>Cancel</button>
             {showModal && <Modal onClose={() => setShowModal(false)}>
                 <DeleteBookingForm
                     id={id}

@@ -3,7 +3,7 @@ import './CreateBooking.css';
 import { useDispatch } from 'react-redux';
 import { createBookingThunk } from '../../store/spots';
 import { useHistory, useParams } from 'react-router-dom';
-
+import './RequestToBook.css';
 export const RequestToBookForm = ({ user, hideModal, start,
     end,
     price,
@@ -31,8 +31,8 @@ export const RequestToBookForm = ({ user, hideModal, start,
     };
 
     return (
-        <div>
-            <div>Price Details</div>
+        <div className='requestToBookWrapper'>
+            <div className='priceInfo'>Price Details</div>
             <div className='detailPrice'>
                 <div className='paymentBreakdown'>{price} x {totalDays ? totalDays : 1} nights</div>
                 <div>${totalPrice}</div>
@@ -49,7 +49,7 @@ export const RequestToBookForm = ({ user, hideModal, start,
                 <div className='finalPrice'>Total(USD)</div>
                 <div className='finalPrice'>${totalPrice + cleaningFee + serviceFee}</div>
             </div>
-            <button onClick={handleBooking}>Confirm booking</button>
+            <button className='btn' onClick={handleBooking}>Confirm booking</button>
         </div>
     );
 };

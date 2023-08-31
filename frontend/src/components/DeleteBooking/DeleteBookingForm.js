@@ -1,26 +1,24 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteBookingThunk } from '../../store/bookings';
-// import { useHistory } from 'react-router-dom';
+import './DeleteBookingForm.css';
 
-export const DeleteBookingForm = ({ id, hideModal, totalBookings, setTotalBooking }) => {
+export const DeleteBookingForm = ({ id, hideModal, totalBookings }) => {
     const dispatch = useDispatch();
-    // const history = useHistory();
 
     const handleDelete = async e => {
         e.preventDefault();
         await dispatch(deleteBookingThunk(id)).then(
             () => {
                 hideModal();
-                setTotalBooking(totalBookings - 1);
-                // history.push('/trips');
+                totalBookings = totalBookings - 1;
             });
     };
 
     return (
-        <div>
-            <div>Are you sure you want to cancel this booking?</div>
-            <button onClick={handleDelete}>Confirm cancellation</button>
-        </div>
+        <div className='deleteWrapper'>
+            <div className='question'>Are you sure you want to cancel this booking?</div>
+            <button className='btn' onClick={handleDelete}>Confirm cancellation</button>
+        </div >
     );
 };

@@ -1,0 +1,9 @@
+.requestToBookWrapper {
+    height: 300px;
+    padding: 40px;
+    text-align: center;
+}
+
+.priceInfo {
+    font-size: 20px;
+}

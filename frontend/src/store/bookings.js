@@ -10,10 +10,10 @@ export const getAllBookings = bookings => {
     };
 };
 
-export const deleteBooking = bookingId => {
+export const deleteBooking = booking => {
     return {
         type: DELETE_BOOKING,
-        bookingId
+        booking
     };
 };
 
@@ -22,7 +22,6 @@ export const getAllBookingsThunk = () => async dispatch => {
     if (response.ok) {
         const data = await response.json();
         dispatch(getAllBookings(data));
-        // console.log(data);
         return data;
     }
 };
@@ -50,7 +49,7 @@ const bookingReducer = (state = initialState, action) => {
             return newState;
         case DELETE_BOOKING:
             newState = { ...state };
-            delete newState[action.bookingId];
+            newState = {};
             return newState;
         default:
             return state;
