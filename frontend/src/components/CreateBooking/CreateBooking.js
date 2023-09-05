@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Moment from 'moment';
 import './CreateBooking.css';
 import CreateBookingModal from './CreateBookingModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { getAllBookingsBySpotThunk } from '../../store/spots';
 
 export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
 }) => {
@@ -13,7 +16,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
     const [onFocus, setOnFocus] = useState([startDate, endDate]);
     const start = Moment(startDate).format('YYYY-MM-DD'); //2023-05-15
     const end = Moment(endDate).format('YYYY-MM-DD'); //2023-05-20
-
+    const spotId = useParams();
 
     let totalDays = 0;
     const thirtyDays = [4, 6, 9, 11];
@@ -51,6 +54,26 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
     const cleaningFee = (totalDays || 1) * 50;
     const serviceFee = Number((totalPrice * 0.14).toFixed(0));
 
+    const bookingsBySpot = useSelector(state => state.spots.singleSpot);
+
+    const findBlockedDays = () => {
+        let days = [];
+        if (bookingsBySpot.bookings) {
+            let bookingArray = bookingsBySpot.bookings.Bookings;
+            const bookingDays = bookingArray.filter(booking => booking.spotId == spotId.spotId);
+
+            //find date range to block
+            bookingDays.forEach(booking => {
+                const range = Moment(booking.endDate).diff(Moment(booking.startDate), 'days') + 1;
+                for (let i = 0; i < range; i++) {
+                    days.push(Moment(booking.startDate).add(i, 'd').format('YYYY-MM-DD'));
+                }
+                days.push(Moment(booking.startDate).format('YYYY-MM-DD'), Moment(booking.endDate).format('YYYY-MM-DD'));
+            });
+            return days;
+        }
+    };
+
     return (
         <div className='wrapper'>
             <div className='info-wrapper'>
@@ -71,6 +94,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
                     }} // PropTypes.func.isRequired,
                     focusedInput={onFocus} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setOnFocus(focusedInput)} // PropTypes.func.isRequired,
+                    isDayBlocked={day => findBlockedDays().some(date => day.isSame(date, 'day'))}
                 ></DateRangePicker>
             </div>
             <CreateBookingModal

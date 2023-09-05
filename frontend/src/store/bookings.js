@@ -1,7 +1,9 @@
 import { csrfFetch } from "./csrf";
 
+
 const GET_ALL_BOOKINGS = 'bookings/GET_ALL_BOOKINGS';
 const DELETE_BOOKING = 'bookings/DELETE_BOOKING';
+
 
 export const getAllBookings = bookings => {
     return {
@@ -16,6 +18,7 @@ export const deleteBooking = booking => {
         booking
     };
 };
+
 
 export const getAllBookingsThunk = () => async dispatch => {
     const response = await fetch(`api/bookings/current`);

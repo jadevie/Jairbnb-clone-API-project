@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { deleteSpotThunk, getSpotDetailsThunk } from '../../store/spots';
+import { deleteSpotThunk, getAllBookingsBySpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import EditFormModal from '../EditSpotFormModal/EditSpotFormModal';
 import { deleteReviewThunk, getReviewsThunk } from '../../store/reviews';
 import CreateReviewModal from '../CreateReview/CreateReviewModal';
@@ -39,6 +39,7 @@ const SpotDetails = () => {
             });
 
         dispatch(getReviewsThunk(spotId));
+        dispatch(getAllBookingsBySpotThunk(spotId));
 
     }, [dispatch, spotId, avgRating]);
 
