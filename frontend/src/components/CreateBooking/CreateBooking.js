@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'react-dates/initialize';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import Moment from 'moment';
 import './CreateBooking.css';
 import CreateBookingModal from './CreateBookingModal';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getAllBookingsBySpotThunk } from '../../store/spots';
 
 export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
 }) => {
@@ -62,7 +61,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
             let bookingArray = bookingsBySpot.bookings.Bookings;
             const bookingDays = bookingArray.filter(booking => booking.spotId == spotId.spotId);
 
-            //find date range to block
+            //find date range
             bookingDays.forEach(booking => {
                 const range = Moment(booking.endDate).diff(Moment(booking.startDate), 'days') + 1;
                 for (let i = 0; i < range; i++) {
