@@ -1,7 +1,7 @@
 // backend/utils/auth.js
 const jwt = require('jsonwebtoken');
 const { jwtConfig } = require('../config');
-const { User, Spot, Booking, Review, ReviewImage, SpotImage } = require('../db/models');
+const { User, Spot, Booking, Review} = require('../db/models');
 
 const { secret, expiresIn } = jwtConfig;
 

@@ -60,7 +60,7 @@
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #222222;
     font-weight: 400;
-    width: 100%;
+    min-width: 100%;
     text-align: left;
     padding: 10px 0px;
 }

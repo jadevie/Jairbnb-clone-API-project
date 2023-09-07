@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editSpot, editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
+import {editSpotThunk, getSpotDetailsThunk } from '../../store/spots';
 import './editSpotForm.css';
 
 const EditSpotForm = (props) => {

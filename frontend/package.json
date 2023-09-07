@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.8.3",
     "js-cookie": "^3.0.1",
     "react": "^18.2.0",
+    "react-calendar": "^4.2.1",
     "react-dom": "^18.2.0",
     "react-redux": "^7.2.9",
     "react-router-dom": "^5.3.4",
@@ -37,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@types/react-dates": "^21.8.3",
     "redux-logger": "^3.0.6"
   },
   "proxy": "http://localhost:8000"

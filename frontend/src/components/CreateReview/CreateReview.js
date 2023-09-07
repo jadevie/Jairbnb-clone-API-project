@@ -30,6 +30,7 @@ const CreateReview = ({ onComplete }) => {
                 });
         };
     };
+
     return (
         <div>
             <h4 className='review-title'>Review</h4>

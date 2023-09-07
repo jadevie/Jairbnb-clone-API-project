@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import { Link, Redirect, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import * as sessionActions from '../../store/session';
-import CreateSpotForm from "../CreateSpotForm";
+
 
 const ProfileButton = ({ user, setLogin, setShowModal }) => {
     const dispatch = useDispatch();
@@ -37,10 +37,14 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
                     <i class="fa-solid fa-circle-user" style={{ padding: '5px', fontSize: '22px', color: '#777777' }}></i>
                 </button>
                 {showMenu && (
-                    user ? <ul className="profile-dropdown">
+                    user ?
+                        <ul className="profile-dropdown">
                         <div className="name">{user.firstName}
                         </div>
                         <div className="username">{user.username}
+                        </div>
+                        <div>
+                            <Link to="/trips" className='link' style={{ fontWeight: 'bold' }}>Trips</Link>
                         </div>
                         <div style={{ padding: '10px 0px' }}>
                             <Link to="/hosting" className='link'>Host an experience</Link>

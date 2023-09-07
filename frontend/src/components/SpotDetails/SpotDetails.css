@@ -140,7 +140,7 @@
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.spot-content {
+.spot-wrapper {
     display: flex;
     justify-content: space-between;
     margin-left: 40px;
@@ -150,28 +150,23 @@
     border-bottom: 1px solid #dddddd;
 }
 
+.leftDetail {
+    max-width: 700px;
+}
+
 .owner-content {
     font-size: 22px;
     font-weight: 500;
-    color: #222
+    color: #222;
 }
 
 .house-content {
     font-weight: 400;
-    color: #3c3c3c
-}
-
-.price {
-    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 600;
-    font-size: 20px;
-    color: #222;
+    color: #3c3c3c;
 }
 
 .more-info-border {
     border-bottom: 1px solid #dddddd;
-    margin-right: 40px;
-    margin-left: 40px;
     padding: 20px 0px;
 }
 
@@ -193,19 +188,14 @@
 
 .aircover {
     border-bottom: 1px solid #dddddd;
-    margin-right: 40px;
-    margin-left: 40px;
     padding: 10px 0px 40px 0px;
     color: #3c3c3c;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .spot-des {
-    margin-left: 40px;
-    margin-right: 40px;
     padding-top: 40px;
     padding-bottom: 40px;
-    border-bottom: 1px solid #dddddd;
     color: #3c3c3c;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -255,5 +245,6 @@
 
 .review-list {
     display: flex;
+    flex-direction: column;
     line-height: 30px;
 }

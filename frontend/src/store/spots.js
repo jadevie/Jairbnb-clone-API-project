@@ -7,6 +7,8 @@ const ADD_SPOT_IMAGE = 'spots/ADD_SPOT_IMAGE';
 const GET_SPOT_DETAILS = 'spots/GET_SPOT_DETAILS';
 const DELETE_SPOT = 'spots/DELETE_SPOT';
 const EDIT_SPOT = 'spots/EDIT_SPOT';
+const CREATE_BOOKING = 'spots/CREATE_BOOKING';
+const GET_ALL_BOOKINGS_BY_SPOT = 'bookings/GET_ALL_BOOKINGS_BY_SPOT';
 
 //* Action creater *//
 export const getAllSpots = spots => {
@@ -48,6 +50,20 @@ export const editSpot = spot => {
     return {
         type: EDIT_SPOT,
         spot
+    };
+};
+
+export const createBooking = spot => {
+    return {
+        type: CREATE_BOOKING,
+        spot
+    };
+};
+
+export const getAllBookingsBySpot = bookings => {
+    return {
+        type: GET_ALL_BOOKINGS_BY_SPOT,
+        bookings
     };
 };
 
@@ -129,6 +145,32 @@ export const editSpotThunk = (data, id) => async dispatch => {
     }
 };
 
+
+export const createBookingThunk = (spotId, booking) => async dispatch => {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(booking)
+    });
+
+    if (response.ok) {
+        const newData = await response.json();
+        dispatch(createBooking(newData));
+        return newData;
+    }
+};
+
+
+export const getAllBookingsBySpotThunk = id => async dispatch => {
+    const response = await fetch(`/api/spots/${id}/bookings`);
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getAllBookingsBySpot(data));
+        return data;
+    }
+};
+
+
 //* Reducer *//
 const initialState = { allSpots: {}, singleSpot: {} };
 
@@ -164,6 +206,14 @@ const spotsReducer = (state = initialState, action) => {
         case EDIT_SPOT:
             newState = { ...state };
             newState.singleSpot = action.spot;
+            return newState;
+        case CREATE_BOOKING:
+            newState = { ...state };
+            newState.singleSpot = action.spot;
+            return newState;
+        case GET_ALL_BOOKINGS_BY_SPOT:
+            newState = { ...state };
+            newState.singleSpot['bookings'] = action.bookings;
             return newState;
         default:
             return state;
