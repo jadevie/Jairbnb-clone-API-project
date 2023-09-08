@@ -93,7 +93,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
                     }} // PropTypes.func.isRequired,
                     focusedInput={onFocus} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setOnFocus(focusedInput)} // PropTypes.func.isRequired,
-                    isDayBlocked={day => findBlockedDays().some(date => day.isSame(date, 'day'))}
+                    isDayBlocked={day => findBlockedDays()?.some(date => day.isSame(date, 'day'))}
                 ></DateRangePicker>
             </div>
             <CreateBookingModal
