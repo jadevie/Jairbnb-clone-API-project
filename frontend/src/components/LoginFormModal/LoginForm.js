@@ -3,17 +3,25 @@ import * as sessionActions from '../../store/session';
 import { useDispatch } from 'react-redux';
 import './LoginForm.css';
 
+import { useParams } from 'react-router-dom';
+import { getAllBookingsBySpotThunk } from '../../store/spots';
+
 const LoginForm = ({ setShowModal }) => {
     const dispatch = useDispatch();
     const [credential, setCredential] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
+    const { spotId } = useParams();
 
     const handleSubmit = e => {
         e.preventDefault();
         setErrors([]);
         return dispatch(sessionActions.loginUserThunk({ credential, password }))
+            .then(() => {
+                if (spotId) dispatch(getAllBookingsBySpotThunk(spotId));
+                // setShowModal(false);
+            })
             .then(() => setShowModal(false))
             .catch(async res => {
                 const data = await res.json();
@@ -27,6 +35,10 @@ const LoginForm = ({ setShowModal }) => {
             credential: 'Demo-lition',
             password: 'password'
         }))
+            .then(() => {
+                if (spotId) dispatch(getAllBookingsBySpotThunk(spotId));;
+                // setShowModal(false);
+            })
             .then(() => setShowModal(false));
     };
 

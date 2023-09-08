@@ -1,13 +1,9 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { getAllBookingsBySpotThunk } from '../../store/spots';
 
 
 export const MustPickDayForm = ({ id, hideModal }) => {
-    const dispatch = useDispatch();
 
     const handleSubmit = () => {
-        dispatch(getAllBookingsBySpotThunk(id));
         hideModal();
     };
 

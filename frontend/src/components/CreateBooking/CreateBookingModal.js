@@ -16,10 +16,9 @@ function CreateBookingModal({ user, start,
     totalDays,
     id }) {
     const [showModal, setShowModal] = useState(false);
+    const dayIsNotSelectedYet = (isNaN(Number(start[0]))) || (isNaN(Number(end[0])));
 
-    const isDaySelectYet = (isNaN(Number(start[0]))) && (isNaN(Number(end[0])));
-
-    // console.log(isDaySelectYet);
+    console.log(dayIsNotSelectedYet);
 
     const owner = useSelector(state => state.spots.singleSpot);
 
@@ -35,7 +34,8 @@ function CreateBookingModal({ user, start,
             {showModal && (
                 user ?
                     <Modal onClose={() => setShowModal(false)}>
-                        {!isDaySelectYet ?
+                        {dayIsNotSelectedYet ?
+                            <MustPickDayForm /> :
                             <RequestToBookForm
                                 user={user}
                                 hideModal={() => setShowModal(false)}
@@ -45,14 +45,28 @@ function CreateBookingModal({ user, start,
                                 totalPrice={totalPrice}
                                 cleaningFee={cleaningFee}
                                 serviceFee={serviceFee}
-                                totalDays={totalDays} /> :
-                            <MustPickDayForm
-                                id={id}
-                                hideModal={() => setShowModal(false)} />
+                                totalDays={totalDays} />
                         }
                     </Modal> :
+                    // <Modal onClose={() => setShowModal(false)}>
+                    //     {!isDaySelectYet ?
+                    //         <RequestToBookForm
+                    //             user={user}
+                    //             hideModal={() => setShowModal(false)}
+                    //             start={start}
+                    //             end={end}
+                    //             price={price}
+                    //             totalPrice={totalPrice}
+                    //             cleaningFee={cleaningFee}
+                    //             serviceFee={serviceFee}
+                    //             totalDays={totalDays} /> :
+                    //         <MustPickDayForm
+                    //             id={id}
+                    //             hideModal={() => setShowModal(false)} />
+                    //     }
+                    // </Modal> :
                     <Modal onClose={() => setShowModal(false)}>
-                        <LoginForm />
+                        <LoginForm setShowModal={setShowModal} />
                     </Modal>
             )
             }
