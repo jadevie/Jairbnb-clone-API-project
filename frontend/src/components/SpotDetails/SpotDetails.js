@@ -37,7 +37,6 @@ const SpotDetails = () => {
                 const data = await res.json();
                 if (data && data.message) setErrors([data.message]);
             });
-
         dispatch(getReviewsThunk(spotId));
         dispatch(getAllBookingsBySpotThunk(spotId));
 

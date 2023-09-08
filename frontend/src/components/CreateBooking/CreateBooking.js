@@ -8,8 +8,7 @@ import CreateBookingModal from './CreateBookingModal';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
-export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
-}) => {
+export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews }) => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [onFocus, setOnFocus] = useState([startDate, endDate]);
@@ -54,6 +53,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
     const serviceFee = Number((totalPrice * 0.14).toFixed(0));
 
     const bookingsBySpot = useSelector(state => state.spots.singleSpot);
+    // console.log(bookingsBySpot.bookings);
 
     const findBlockedDays = () => {
         let days = [];
@@ -72,6 +72,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
             return days;
         }
     };
+    findBlockedDays();
 
     return (
         <div className='wrapper'>
@@ -94,6 +95,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
                     focusedInput={onFocus} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
                     onFocusChange={focusedInput => setOnFocus(focusedInput)} // PropTypes.func.isRequired,
                     isDayBlocked={day => findBlockedDays()?.some(date => day.isSame(date, 'day'))}
+                    disabled={user ? false : true}
                 ></DateRangePicker>
             </div>
             <CreateBookingModal
@@ -105,6 +107,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews,
                 cleaningFee={cleaningFee}
                 serviceFee={serviceFee}
                 totalDays={totalDays}
+                id={spotId.spotId}
             />
             <div className='noCharge'>You won't be charged yet</div>
 
