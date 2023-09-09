@@ -53,7 +53,7 @@ export const CreateBooking = ({ user, price, avgStarRating, avgRating, reviews }
     const serviceFee = Number((totalPrice * 0.14).toFixed(0));
 
     const bookingsBySpot = useSelector(state => state.spots.singleSpot);
-    // console.log(bookingsBySpot.bookings);
+    console.log(bookingsBySpot.bookings);
 
     const findBlockedDays = () => {
         let days = [];

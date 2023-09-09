@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-export const MustPickDayForm = ({ id, hideModal }) => {
+export const MustPickDayForm = ({ hideModal }) => {
 
     const handleSubmit = () => {
         hideModal();
@@ -9,7 +9,7 @@ export const MustPickDayForm = ({ id, hideModal }) => {
 
     return (
         <div>
-            <div>You must pick days</div>
+            <div>Unavailable to check-in. Please choose different dates</div>
             <button onClick={handleSubmit}>Check availability</button>
         </div >
 
