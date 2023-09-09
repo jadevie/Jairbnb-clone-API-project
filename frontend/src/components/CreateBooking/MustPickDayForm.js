@@ -8,9 +8,10 @@ export const MustPickDayForm = ({ hideModal }) => {
     };
 
     return (
-        <div>
-            <div>Unavailable to check-in. Please choose different dates</div>
-            <button onClick={handleSubmit}>Check availability</button>
+        <div className='UnavailableWrapper'>
+            <div className='question'>Unavailable to check-in. Please choose different dates
+            </div>
+            <button className='btn' onClick={handleSubmit}>Check availability</button>
         </div >
 
     );

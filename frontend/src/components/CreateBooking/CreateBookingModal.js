@@ -27,7 +27,7 @@ function CreateBookingModal({
     console.log(spotBooking, start, end);
 
     const checkAvailability = () => {
-        if (spotBooking) {
+        if (spotBooking.length) {
             for (let i = 0; i < spotBooking.length; i++) {
                 const booking = spotBooking[i];
                 const bookingStartDate = Moment(booking.startDate).format('YYYY-MM-DD');
@@ -41,6 +41,7 @@ function CreateBookingModal({
             }
             return true;
         }
+        if (!spotBooking.length) return true;
     };
     // console.log(checkAvailability());
 

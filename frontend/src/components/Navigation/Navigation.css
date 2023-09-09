@@ -32,6 +32,9 @@
 }
 
 .profile-dropdown {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
     position: absolute;
     border: 1px solid #dddddd;
     background: #FFFFFF;
@@ -59,10 +62,10 @@
     text-decoration: none;
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #222222;
-    font-weight: 400;
     min-width: 100%;
     text-align: left;
     padding: 10px 0px;
+    font-weight: bold;
 }
 
 .link:hover {

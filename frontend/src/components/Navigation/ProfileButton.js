@@ -39,21 +39,12 @@ const ProfileButton = ({ user, setLogin, setShowModal }) => {
                 {showMenu && (
                     user ?
                         <ul className="profile-dropdown">
-                        <div className="name">{user.firstName}
-                        </div>
-                        <div className="username">{user.username}
-                        </div>
-                        <div>
-                            <Link to="/trips" className='link' style={{ fontWeight: 'bold' }}>Trips</Link>
-                        </div>
-                        <div style={{ padding: '10px 0px' }}>
+                            <div className="name">{user.firstName}</div>
+                            <div className="username">{user.username}</div>
+                            <Link to="/trips" className='link'>Trips</Link>
                             <Link to="/hosting" className='link'>Host an experience</Link>
-                        </div>
-
-                        <div>
                             <button onClick={logout} className='logout-btn'>Log Out</button>
-                        </div>
-                    </ul> :
+                        </ul> :
                         <ul className="dropdown-menu">
                             <div ><button className="login-button" onClick={() => {
                                 setLogin(true);
