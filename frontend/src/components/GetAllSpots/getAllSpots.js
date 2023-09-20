@@ -20,7 +20,7 @@ const GetAllSpots = () => {
 
     return (
         <>
-            <div className="icons-container">
+            {/* <div className="icons-container">
                 <button>
                     <span className="icon-name-container">
                         <img className="nav-icons" src="https://a0.muscache.com/pictures/c0fa9598-4e37-40f3-b734-4bd0e2377add.jpg" alt="" />
@@ -87,7 +87,7 @@ const GetAllSpots = () => {
                         <span>Amazing views</span>
                     </span>
                 </button>
-            </div>
+            </div> */}
 
             <div className="spot-container">
                 {allSpots && Object.values(allSpots.allSpots).map(spot => (
